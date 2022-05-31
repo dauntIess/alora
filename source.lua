@@ -295,6 +295,16 @@ function createTracer(to,from)
     end
 end
 
+function highlight(v)
+    local highlight = Instance.new('Highlight', v)
+    highlight.FillTransparency = 0.2
+    highlight.FillColor = Color3.new(1,0,0)
+    highlight.OutlineTransparency = 1
+    highlight.OutlineColor = Color3.new(1,1,1)
+    highlight.Adornee = v
+    highlight.DepthMode = 'AlwaysOnTop'
+end
+
 oldSounds = {}
 for i,v in next, localPlayer.PlayerGui.Music:GetDescendants() do
 	if v:IsA("Sound") then
@@ -812,7 +822,7 @@ local movementGroup,movementFrame = miscTab:createGroup(0)
 local misc,miscFrame = miscTab:createGroup(0)
 local misc2,miscFrame2 = miscTab:createGroup(1)
 
-
+local cross,crossFrame = miscTab:createGroup(0)
 local toggleTab,toggleFrame = miscTab:createGroup(0)
 
 movementGroup:addToggle({text = "Bunny Hop",flag = "bunny_hop",callback = function()
@@ -855,11 +865,11 @@ rayIgnore.ChildAdded:Connect(function(obj)
 			OriginalRate.Name = "OriginalRate"
 			OriginalRate.Parent = smoke
 			if library.flags["remove_smoke"] then
-				smoke.ParticleEmitter.Rate = 1
+				smoke.ParticleEmitter.Rate = 45
 			end
             smoke.Material = Enum.Material.ForceField
 			if library.flag["smoke_radius"] then
-				smoke.Transparency = 0
+				smoke.Transparency = 3
                 smoke.Color = library.flags["smoker_color"]
 			end
         end)
@@ -881,11 +891,11 @@ if rayIgnore:FindFirstChild("Smokes") then
 		OriginalRate.Name = "OriginalRate"
 		OriginalRate.Parent = smoke
 		if library.flags["remove_smoke"] then
-			smoke.ParticleEmitter.Rate = 0.5
+			smoke.ParticleEmitter.Rate = 45
 		end
-        smoke.Material = Enum.Material.ForceField
+        smoke.Material = Enum.Material.Plastic
 		if library.flags["smoke_radius"] then
-			smoke.Transparency = 0.2
+			smoke.Transparency = 3
 			smoke.Color = library.flags["smoker_color"]
 		end
     end)
@@ -897,9 +907,9 @@ misc:addToggle({text = "No Recoil",flag = "remove_recoil"})
 misc:addToggle({text = "Remove Flash",flag = "remove_flash",callback = function(v) localPlayer.PlayerGui.Blnd.Blind.Visible = not v end})
 misc:addToggle({text = 'Remove Blood', flag = 'Enabled', callback = function(bool) client.splatterBlood = bool and newBloodSplatter or oldBloodSplatter; end})
 misc:addToggle({text = "Remove Bullets",flag = "no_bullet"})
-misc:addToggle({text = "Remove Smoke",flag = "remove_smoke"})
+misc:addToggle({text = "Reduce Smoke",flag = "remove_smoke"})
 misc:addToggle({text = "Smoke Radius",flag = "smoke_radius"})
-misc:addColorpicker({text = "Smoke Radius Color",ontop = true,flag = "smoker_color",color = Color3.new(0.4,0.4,0.4)})
+misc:addColorpicker({text = "Smoke Radius Color",ontop = true,flag = "smoker_color",color = Color3.new(1,0,0)})
 
 misc2:addToggle({text = "Backtrack",flag = "backtrack_enabled"})
 misc2:addToggle({text = "Hitsound",flag = "hitsound_enabled"})
@@ -1196,6 +1206,29 @@ misc2:addSlider({text = "Backtrack Time",flag = "backtrack_time",value = 500,min
 misc2:addSlider({text = "Backtrack Transparency",flag = "backtrack_transparency",value = 75,min = 0,max = 100})
 misc2:addSlider({text = "Hitsound Volume",flag = "hitsound_volume",value = 2,min = 1,max = 10})
 
+local outline = false
+local override = false
+local crosshair_length = 1
+local thickness = 1
+
+cross:addToggle({text = 'Override Crosshair',flag = 'custom_cross',callback = function() updateCross() end})
+
+cross:addToggle({text = 'Outline',flag = 'crossOutline', callback = function(value) 
+    outline = value
+    updateCross()
+end})
+cross:addSlider({text = 'Crosshair Lenght',flag = 'crossLength',min = 1, max = 15,value = 10,callback = function(value)
+    if library.flags["custom_cross"] then
+        crosshair_length = value
+        updateCross()
+    end
+end})
+cross:addSlider({text = 'Thickness',flag = 'crossThick',min = 1, max = 5,value = 1,callback = function(value)
+    if library.flags["custom_cross"] then
+        thickness = value
+        updateCross()
+    end
+end})
 
 local miscTabToggle = true
 toggleTab:addButton({text = "Toggle Tabs",callback = function()
@@ -1203,8 +1236,10 @@ toggleTab:addButton({text = "Toggle Tabs",callback = function()
     movementFrame.Visible = miscTabToggle
     miscFrame.Visible = miscTabToggle
     miscFrame2.Visible  = miscTabToggle
+    crossFrame.Visible = not miscTabToggle
 end})
 
+crossFrame.Visible = false
 
 local rifles,rifleFrame = skinsTab:createGroup(0)
 local snipers,sniperFrame = skinsTab:createGroup(1)
@@ -2348,6 +2383,44 @@ function runSSG()
             end
             Model:Destroy()
             game.ReplicatedStorage.Viewmodels["v_outlaw"].Name = "v_Scout"
+        end
+    end
+end
+
+function updateCross()
+    local crosshair = localPlayer.PlayerGui.GUI.Crosshairs.Crosshair
+    crosshair.LeftFrame.BorderColor3 = Color3.new(0,0,0)
+    crosshair.RightFrame.BorderColor3 = Color3.new(0,0,0)
+    crosshair.TopFrame.BorderColor3 = Color3.new(0,0,0)
+    crosshair.BottomFrame.BorderColor3 = Color3.new(0,0,0)
+    crosshair.Dot.BorderColor3 = Color3.new(0,0,0)
+    for _, guiPart in pairs(crosshair:GetChildren()) do
+        if string.find(guiPart.Name, "Frame") then
+            guiPart.BorderSizePixel = 0
+            if library.flags["custom_cross"] == true then
+                crosshair.LeftFrame.Size = UDim2.new(0, crosshair_length, 0, thickness)
+                crosshair.RightFrame.Size = UDim2.new(0, crosshair_length, 0, thickness)
+                crosshair.TopFrame.Size = UDim2.new(0, thickness, 0, crosshair_length)
+                crosshair.BottomFrame.Size = UDim2.new(0, thickness, 0, crosshair_length)
+                if outline == true then
+                    crosshair.LeftFrame.BorderSizePixel = 1
+                    crosshair.RightFrame.BorderSizePixel = 1
+                    crosshair.TopFrame.BorderSizePixel = 1
+                    crosshair.BottomFrame.BorderSizePixel = 1
+                    crosshair.Dot.BorderSizePixel = 1
+                else
+                    crosshair.LeftFrame.BorderSizePixel = 0
+                    crosshair.RightFrame.BorderSizePixel = 0
+                    crosshair.TopFrame.BorderSizePixel = 0
+                    crosshair.BottomFrame.BorderSizePixel = 0
+                    crosshair.Dot.BorderSizePixel = 0
+                end
+            else
+                crosshair.LeftFrame.Size = UDim2.new(0, 10, 0, 2)
+                crosshair.RightFrame.Size = UDim2.new(0, 10, 0, 2)
+                crosshair.TopFrame.Size = UDim2.new(0, 2, 0, 10)
+                crosshair.BottomFrame.Size = UDim2.new(0, 2, 0, 10)
+            end
         end
     end
 end
