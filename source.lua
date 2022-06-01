@@ -492,7 +492,7 @@ meta.__namecall = newcclosure(function(self,...)
                     local hitsound = Instance.new("Sound",workspace)
                     hitsound.SoundId = hitsounds[library.flags["hitsound_value"]]
                     hitsound.PlayOnRemove = true
-                    hitsound.Volume = library.flags["hitsound_volume"]
+                    hitsound.Volume = 4
                     hitsound:Destroy()
                 end
                 
@@ -865,11 +865,11 @@ rayIgnore.ChildAdded:Connect(function(obj)
 			OriginalRate.Name = "OriginalRate"
 			OriginalRate.Parent = smoke
 			if library.flags["remove_smoke"] then
-				smoke.ParticleEmitter.Rate = 45
+				smoke.ParticleEmitter.Rate = 100 - library.flags["smoke_reduction"]
 			end
             smoke.Material = Enum.Material.ForceField
 			if library.flag["smoke_radius"] then
-				smoke.Transparency = 3
+				smoke.Transparency = 10
                 smoke.Color = library.flags["smoker_color"]
 			end
         end)
@@ -891,11 +891,11 @@ if rayIgnore:FindFirstChild("Smokes") then
 		OriginalRate.Name = "OriginalRate"
 		OriginalRate.Parent = smoke
 		if library.flags["remove_smoke"] then
-			smoke.ParticleEmitter.Rate = 45
+			smoke.ParticleEmitter.Rate = 100 - library.flags["smoke_reduction"]
 		end
         smoke.Material = Enum.Material.Plastic
 		if library.flags["smoke_radius"] then
-			smoke.Transparency = 3
+			smoke.Transparency = 10
 			smoke.Color = library.flags["smoker_color"]
 		end
     end)
@@ -912,7 +912,6 @@ misc:addToggle({text = "Smoke Radius",flag = "smoke_radius"})
 misc:addColorpicker({text = "Smoke Radius Color",ontop = true,flag = "smoker_color",color = Color3.new(1,0,0)})
 
 misc2:addToggle({text = "Backtrack",flag = "backtrack_enabled"})
-misc2:addToggle({text = "Hitsound",flag = "hitsound_enabled"})
 misc2:addToggle({text = "Old Gun Sounds", callback = function(val)
     if val == true then
         OldGunSounds = game:GetService("RunService").RenderStepped:Connect(function()
@@ -1197,14 +1196,15 @@ misc2:addToggle({text = "Old Gun Sounds", callback = function(val)
         OldGunSounds:Disconnect()
     end
 end})
+misc2:addToggle({text = "Hitsound",flag = "hitsound_enabled"})
 misc2:addToggle({text = "Show Watermark",flag = "watermark_enabled",callback = function(val) aloraWatermark.Visible = val end})
 misc2:addToggle({text = "Show Bomb Info",flag = "bomb_vitals",callback = function(val) bombText.Visible = val end})
 misc2:addToggle({text = "Show Spectators",flag = "spec_list",callback = function(val) speclistText.Visible = val end})
 misc2:addList({text = "Hit Sound",flag = "hitsound_value",values = {"Rust","Skeet","Neverlose","Minecraft","jewelxx","hexx","krxxxk","slots","sonic"}})
 --misc2:addButton({text = "Set HP to 1", callback = function() game.ReplicatedStorage.Events.FallDamage:FireServer(localPlayer.Character.Humanoid.Health-1) end})
-misc2:addSlider({text = "Backtrack Time",flag = "backtrack_time",value = 500,min = 1,max = 2000})
+misc2:addSlider({text = "Backtrack Latency",flag = "backtrack_time",value = 500,min = 1,max = 2000})
 misc2:addSlider({text = "Backtrack Transparency",flag = "backtrack_transparency",value = 75,min = 0,max = 100})
-misc2:addSlider({text = "Hitsound Volume",flag = "hitsound_volume",value = 2,min = 1,max = 10})
+misc2:addSlider({text = "Smoke Reduction %",flag = "smoke_reduction",value = 50,min = 1,max = 100})
 
 local outline = false
 local override = false
