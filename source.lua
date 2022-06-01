@@ -12,9 +12,9 @@
 
 --]]
 repeat wait() until game:IsLoaded()
-if game:GetService("CoreGui"):FindFirstChild("sjorlib") then game:GetService("CoreGui"):FindFirstChild("sjorlib"):Destroy() end
+if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
-local ver = "1.3.45c"
+local ver = "dev"
 --files
 if not isfolder("alora") then
     makefolder("alora")
