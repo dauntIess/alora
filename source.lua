@@ -14,7 +14,7 @@
 repeat wait() until game:IsLoaded()
 if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
-local ver = "1.16.4"
+local ver = "1.16.5"
 --files
 if not isfolder("alora") then
     makefolder("alora")
@@ -577,12 +577,42 @@ configGroup1:addButton({text = "Refresh Configs",callback = library.refreshConfi
 
 library:refreshConfigs()
 
-serverGroup:addToggle({text = "Boost Perfomance",flag = "fpsboost"})
-serverGroup:addToggle({text = "Disable Lighting Effects", flag = "disablefx"})
-serverGroup:addDivider()
-serverGroup:addToggle({text = "Change Map Color", flag = "togglemapcolor"})
-serverGroup:addColorpicker({text = "Map Color",ontop = true,flag = "map color",color = Color3.new(0.8,0.8,0.8)})
-
+serverGroup:addToggle({text = "Global Shadows","gfxx", callback = function(val)
+    if val then
+        lighting.GlobalShadows = true
+    else
+        lighting.GlobalShadows = false
+    end
+end})
+serverGroup:addButton({text = "Delete Graphics",callback = function()
+	workspace:FindFirstChildOfClass('Terrain').WaterWaveSize = 0
+	workspace:FindFirstChildOfClass('Terrain').WaterWaveSpeed = 0
+	workspace:FindFirstChildOfClass('Terrain').WaterReflectance = 0
+	workspace:FindFirstChildOfClass('Terrain').WaterTransparency = 0
+	game:GetService("Lighting").FogEnd = 999e3
+	for i,v in pairs(game:GetDescendants()) do
+		if v:IsA("Part") or v:IsA('BasePart') or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+			v.Material = "Glass"
+		elseif v:IsA("Decal") then
+			v.Transparency = 1
+		elseif v:IsA("Explosion") then
+			v.BlastPressure = 1
+			v.BlastRadius = 1
+		end
+	end
+    for _, v in pairs(workspace.Map.Regen:GetDescendants()) do
+		if v:IsA("BasePart") then
+			v.Material = "Glass"
+        --    v.Color = Color3.new(0,0,0)
+		end
+	end
+	for i,v in pairs(game:GetService("Lighting"):GetDescendants()) do
+		if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
+			v.Enabled = false
+            
+		end
+	end
+end})
 serverGroup:addButton({text = "Rejoin Server", callback = function()
     teleportService:Teleport(game.PlaceId, localPlayer)
 end})
@@ -692,7 +722,7 @@ local innerTransparency = 1
 local depthMode = 'AlwaysOnTop'
 
 
-mainGroup:addToggle({text = 'Highlight Chams',flag = 'highlights', function()
+mainGroup:addToggle({text = 'Glow',flag = 'highlights', function()
     for _, player in pairs(players:GetPlayers()) do
         if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
             player.Character:FindFirstChild('Highlight').OutlineColor = color
@@ -719,7 +749,7 @@ viewmodelGroup:addToggle({text = "Weapon Chams",flag = "weapon_chams"})
 viewmodelGroup:addToggle({text = "Remove Arms",flag = "remove_arms"})
 viewmodelGroup:addToggle({text = "Remove Gloves",flag = "remove_gloves"})
 viewmodelGroup:addToggle({text = "Remove Sleeves",flag = "remove_sleeves"})
-viewmodelGroup:addToggle({text = "Force Crosshair",flag = "force_cross"})
+
 
 other:addColorpicker({text = "Glow Fill Color",ontop = true,flag = "glow_color",color = Color3.new(1, 0.7, 1),callback = function(value)
     color = value
@@ -805,7 +835,6 @@ local misc,miscFrame = miscTab:createGroup(0)
 local misc2,miscFrame2 = miscTab:createGroup(1)
 
 local cross,crossFrame = miscTab:createGroup(0)
-local drawingGroup,drawingFrame = miscTab:createGroup(1)
 local toggleTab,toggleFrame = miscTab:createGroup(0)
 
 movementGroup:addToggle({text = "Bunny Hop",flag = "bunny_hop",callback = function()
@@ -1193,9 +1222,7 @@ local outline = false
 local override = false
 local crosshair_length = 1
 local thickness = 1
-
-cross:addToggle({text = 'Override Crosshair',flag = 'custom_cross',callback = function() updateCross() end})
-
+cross:addToggle({text = 'Customise Crosshair',flag = 'custom_cross',callback = function() updateCross() end})
 cross:addToggle({text = 'Outline',flag = 'crossOutline', callback = function(value) 
     outline = value
     updateCross()
@@ -1212,80 +1239,8 @@ cross:addSlider({text = 'Thickness',flag = 'crossThick',min = 1, max = 5,value =
         updateCross()
     end
 end})
-
-local lines = {}
-local lastPos = camera.ViewportSize.Y-90
-local veloIndicator = Drawing.new("Text");veloIndicator.Center = true;veloIndicator.Outline = true;veloIndicator.Color = Color3.new(1,1,1);veloIndicator.Font = 2;veloIndicator.Size = 13;veloIndicator.Visible = false;veloIndicator.Text = "0"
-local wIndicator = Drawing.new("Text");wIndicator.Center = true;wIndicator.Outline = true;wIndicator.Color = Color3.new(1,1,1);wIndicator.Font = 2;wIndicator.Size = 13;wIndicator.Visible = false;wIndicator.Text = "-"
-local aIndicator = Drawing.new("Text");aIndicator.Center = true;aIndicator.Outline = true;aIndicator.Color = Color3.new(1,1,1);aIndicator.Font = 2;aIndicator.Size = 13;aIndicator.Visible = false;aIndicator.Text = "-"
-local sIndicator = Drawing.new("Text");sIndicator.Center = true;sIndicator.Outline = true;sIndicator.Color = Color3.new(1,1,1);sIndicator.Font = 2;sIndicator.Size = 13;sIndicator.Visible = false;wIndicator.Text = "-"
-local dIndicator = Drawing.new("Text");dIndicator.Center = true;dIndicator.Outline = true;dIndicator.Color = Color3.new(1,1,1);dIndicator.Font = 2;dIndicator.Size = 13;dIndicator.Visible = false;dIndicator.Text = "-"
-local spaceIndicator = Drawing.new("Text");spaceIndicator.Center = true;spaceIndicator.Outline = true;spaceIndicator.Color = Color3.new(1,1,1);spaceIndicator.Font = 2;spaceIndicator.Size = 13;spaceIndicator.Visible = false;spaceIndicator.Text = "-"
-local ctrlIndicator = Drawing.new("Text");ctrlIndicator.Center = true;ctrlIndicator.Outline = true;ctrlIndicator.Color = Color3.new(1,1,1);ctrlIndicator.Font = 2;ctrlIndicator.Size = 13;ctrlIndicator.Visible = false;ctrlIndicator.Text = "-"
-
-drawingGroup:addToggle({text = "Drawing Enabled",flag = "drawing_enabled",callback = function()
-    while library.flags["drawing_enabled"] do wait()
-        local normalY = camera.ViewportSize.Y-90
-        local alive = isAlive()
-        local value = alive and math.floor(math.clamp((localPlayer.Character.HumanoidRootPart.Velocity * Vector3.new(1,0,1)).magnitude*14.85,0,400)) or 0
-        if library.flags["velo_graph"] then
-            local width = library.flags["graph_width"]+1
-            local line = Drawing.new("Line")
-            table.insert(lines,line)
-            line.From = Vector2.new(camera.ViewportSize.X/2 + (60*width - width),lastPos)
-            line.To = Vector2.new(camera.ViewportSize.X/2 + 60*width,normalY - value/4)
-            line.Thickness = 1
-            line.Transparency = 1
-            line.Color = Color3.new(1,1,1)
-            line.Visible = true
-            if #lines > 1 then
-                if #lines > 110 then
-                    lines[1]:Remove()
-                    table.remove(lines,1)
-                    for i = 2,8 do
-                        lines[i].Transparency = i/10
-                    end
-                    local count = 0
-                    for i=110,110-6,-1 do
-                        count = count + 1
-                        lines[i].Transparency = count/10
-                    end
-                    lines[110-7].Transparency = 1
-                end
-                for i,v in ipairs(lines) do
-                    v.To = v.To - Vector2.new(width,0)
-                    v.From = v.From - Vector2.new(width,0)
-                end
-            end
-            lastPos = line.To.Y
-        end
-        if library.flags["velo_indicator"] then
-            veloIndicator.Text = tostring(value)
-            veloIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-75)
-        end
-        if library.flags["wasd_indicator"] then
-            wIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50)
-            aIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50) + Vector2.new(-40,25)
-            sIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50) + Vector2.new(0,25)
-            dIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50) + Vector2.new(40,25)
-            spaceIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50) + Vector2.new(40,0)
-            ctrlIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50) + Vector2.new(-40,0)
-
-            wIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.W) and "W" or "-"
-            aIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.A) and "A" or "-"
-            sIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.S) and "S" or "-"
-            dIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.D) and "D" or "-"
-            spaceIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.Space) and "J" or "-"
-            ctrlIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.LeftControl) and "C" or "-"
-        end
-    end
-end})
-
-drawingGroup:addToggle({text = "Velocity Graph",flag = "velo_graph"})
-drawingGroup:addToggle({text = "Velocity Indicator",flag = "velo_indicator"})
-drawingGroup:addToggle({text = "WASD Indicator",flag = "wasd_indicator"})
-drawingGroup:addSlider({text = "Graph Width",flag = "graph_width",min = 1,max = 5,value = 1})
-
+cross:addDivider()
+cross:addToggle({text = "Force Crosshair",flag = "force_cross"})
 
 local miscTabToggle = true
 toggleTab:addButton({text = "Toggle Tabs",callback = function()
@@ -1294,11 +1249,9 @@ toggleTab:addButton({text = "Toggle Tabs",callback = function()
     miscFrame.Visible = miscTabToggle
     miscFrame2.Visible  = miscTabToggle
     crossFrame.Visible = not miscTabToggle
-	drawingFrame.Visible = not miscTabToggle
 end})
 
 crossFrame.Visible = false
-drawingFrame.Visible = false
 
 local rifles,rifleFrame = skinsTab:createGroup(0)
 local snipers,sniperFrame = skinsTab:createGroup(1)
@@ -2617,6 +2570,11 @@ btPart.CanCollide = false
 btPart.Anchored = true
 btPart.Name = "btp"
 
+workspace.ChildAdded:Connect(function(new)
+	if new.Name == "C4" and new:IsA("Model") then
+        createESP(new)
+    end
+end)
 
 local BombTimer = 40
 local sexinfo = "Bomb Vitals\nTimer: -\nSite: -"
@@ -2624,8 +2582,12 @@ local sexinfo = "Bomb Vitals\nTimer: -\nSite: -"
 workspace.ChildAdded:Connect(function(new)
 	if new.Name == "C4" and library.flags["bomb_vitals"] == true then
 
-        local fakebomb = Instance.new("Part");fakebomb.Parent = new;fakebomb.Size = Vector3.new(1,1,1);fakebomb.Anchored = true
-			
+        local fakebomb = Instance.new("Part")
+        fakebomb.Parent = new
+        fakebomb.Size = Vector3.new(1,1,1)
+        fakebomb.Anchored = true
+
+
         new.PrimaryPart = fakebomb
 
         local bombPlant = "-"
@@ -2852,26 +2814,7 @@ function onStep()
         lighting.Ambient = oldAmbient
         lighting.OutdoorAmbient = oldOutdoorAmbient
     end
-	if library.flags["fpsboost"] == true then
-		workspace:FindFirstChildOfClass('Terrain').WaterWaveSize = 0
-		workspace:FindFirstChildOfClass('Terrain').WaterWaveSpeed = 0
-		workspace:FindFirstChildOfClass('Terrain').WaterReflectance = 0
-		workspace:FindFirstChildOfClass('Terrain').WaterTransparency = 0
-		for _, v in pairs(workspace.Map.Regen:GetDescendants()) do
-			if v:IsA("BasePart") then
-				v.Material = "Plastic"
-			elseif v:IsA('Decal') then
-				v.Transparency = 1
-			end
-		end
-	end
-	if library.flags["disablefx"] == true then 
-		for i,v in pairs(game:GetService("Lighting"):GetDescendants()) do
-			if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
-				v.Enabled = false
-			end
-		end
-	end
+
     lighting.TimeOfDay = library.flags["time_changer"] and library.flags["time_value"]/2 or lighting.TimeOfDay
     localPlayer.Cash.Value = library.flags["inf_cash"] and 16000 or localPlayer.Cash.Value
     if library.flags["watermark_enabled"] then
