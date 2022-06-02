@@ -2624,12 +2624,8 @@ local sexinfo = "Bomb Vitals\nTimer: -\nSite: -"
 workspace.ChildAdded:Connect(function(new)
 	if new.Name == "C4" and library.flags["bomb_vitals"] == true then
 
-        local fakebomb = Instance.new("Part")
-        fakebomb.Parent = new
-        fakebomb.Size = Vector3.new(1,1,1)
-        fakebomb.Anchored = true
-
-
+        local fakebomb = Instance.new("Part");fakebomb.Parent = new;fakebomb.Size = Vector3.new(1,1,1);fakebomb.Anchored = true
+			
         new.PrimaryPart = fakebomb
 
         local bombPlant = "-"
