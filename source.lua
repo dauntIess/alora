@@ -14,7 +14,7 @@
 repeat wait() until game:IsLoaded()
 if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
-local ver = "dev"
+local ver = "1.16.2"
 --files
 if not isfolder("alora") then
     makefolder("alora")
@@ -577,17 +577,22 @@ configGroup1:addButton({text = "Refresh Configs",callback = library.refreshConfi
 
 library:refreshConfigs()
 
-
+serverGroup:addToggle({text = "Global Shadows","gfxx", callback = function(val)
+    if val then
+        lighting.GlobalShadows = true
+    else
+        lighting.GlobalShadows = false
+    end
+end})
 serverGroup:addButton({text = "Delete Graphics",callback = function()
 	workspace:FindFirstChildOfClass('Terrain').WaterWaveSize = 0
 	workspace:FindFirstChildOfClass('Terrain').WaterWaveSpeed = 0
 	workspace:FindFirstChildOfClass('Terrain').WaterReflectance = 0
 	workspace:FindFirstChildOfClass('Terrain').WaterTransparency = 0
-	game:GetService("Lighting").GlobalShadows = false
-	game:GetService("Lighting").FogEnd = 5e3
+	game:GetService("Lighting").FogEnd = 999e3
 	for i,v in pairs(game:GetDescendants()) do
-		if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-			v.Material = "Plastic"
+		if v:IsA("Part") or v:IsA('BasePart') or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+			v.Material = "Glass"
 		elseif v:IsA("Decal") then
 			v.Transparency = 1
 		elseif v:IsA("Explosion") then
@@ -595,9 +600,16 @@ serverGroup:addButton({text = "Delete Graphics",callback = function()
 			v.BlastRadius = 1
 		end
 	end
+    for _, v in pairs(workspace.Map.Regen:GetDescendants()) do
+		if v:IsA("BasePart") then
+			v.Material = "Glass"
+        --    v.Color = Color3.new(0,0,0)
+		end
+	end
 	for i,v in pairs(game:GetService("Lighting"):GetDescendants()) do
 		if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
 			v.Enabled = false
+            
 		end
 	end
 end})
@@ -1251,9 +1263,9 @@ local skinToggle,skinToggleFrame = skinsTab:createGroup(0)
 
 rifles:addToggle({text = "AK47 Models", flag = "ak_skin"})
 rifles:addList({text = "Skin", flag = "selected_ak", values = {"Disabled","Default", "Aquamarine Revenge","Asiimov","Bloodsport","Case Hardened","Chromatic Abberation","Dragon","Hallows","Legion of Anubis","Neon Rider","Nightmare","Redline","Team Cringe","True King","Vulcan","Wild Lotus"}, callback = runAK }) 
-rifles:addList({text = "Model", flag = "selected_ak2",values = {"Disabled","Default","Pearl I","Pearl II","Ivory","funeral's"}, callback = runAK }) 
+rifles:addList({text = "Model", flag = "selected_ak2",values = {"Disabled","Default","Pearl I","Pearl II","Ivory","funeral's","draco"}, callback = runAK }) 
 rifles:addList({text = "Legacy", flag = "selected_ak3", values = {"Disabled","Default","Elite Build","Fuel Injector","Illumina","Neon Revolution","Phantom Disruptor","Point Disarray","Rat Rod","The Empress","Wasteland Rebel","X-Ray"}, callback = runAK})
-rifles:addDivider()
+
 
 snipers:addToggle({text = "AWP Models", flag = "awp_skin"}) 
 snipers:addList({text = "Skin", flag = "selected_awp", values = {"Disabled","Default","Ancient Dragon","Cosmos","Christmas","Chromatic Abberation","Dragon Lore","Gungnir","Prince","Megumin","Mecha Dragon","Sea Creature","Oni Taiji","Hyper Beast","Twitch","Nerf","Chan"}, callback = runAWP }) 
@@ -1274,6 +1286,7 @@ knife:addList({text = "Knives", flag = "selected_knife",values = {"Default","Dar
 knife:addButton({text = "Load", callback = function() runKnife() end})
 
 local skinTabToggle = true
+skinToggle:addButton({text = "Load Selected Skins", callback = function() print("pressed") end})
 skinToggle:addButton({text = "Toggle Tabs", callback = function()
     skinTabToggle = not skinTabToggle
     rifleFrame.Visible  =  skinTabToggle
@@ -2134,6 +2147,17 @@ function runAK()
 	        game.ReplicatedStorage.Viewmodels["v_AK47"]:Destroy()
 	        local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
 	        game:GetObjects('rbxassetid://9766269711')[1].Parent = Model1
+	        Model = game.ReplicatedStorage.Viewmodels.Model
+	        for _, Child in pairs(Model:GetChildren()) do
+	        	Child.Parent = Model.Parent
+	        end
+	        Model:Destroy()
+	        game.ReplicatedStorage.Viewmodels["funeral's AK47"].Name = "v_AK47"
+        elseif library.flags["selected_ak2"] == "draco" then
+            --AK47 | Dragon
+	        game.ReplicatedStorage.Viewmodels["v_AK47"]:Destroy()
+	        local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+	        game:GetObjects('rbxassetid://9794270542')[1].Parent = Model1
 	        Model = game.ReplicatedStorage.Viewmodels.Model
 	        for _, Child in pairs(Model:GetChildren()) do
 	        	Child.Parent = Model.Parent
