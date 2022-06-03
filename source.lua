@@ -600,7 +600,7 @@ serverGroup:addButton({text = "Delete Graphics",callback = function()
 	game:GetService("Lighting").FogEnd = 999e3
 	for i,v in pairs(game:GetDescendants()) do
 		if v:IsA("Part") or v:IsA('BasePart') or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-			v.Material = "Glass"
+			v.Material = "Plastic"
 		elseif v:IsA("Decal") then
 			v.Transparency = 1
 		elseif v:IsA("Explosion") then
