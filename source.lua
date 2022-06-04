@@ -36,13 +36,11 @@ local mouse = localPlayer:GetMouse()
 local debris = game:GetService("Debris")
 local rayIgnore = workspace.Ray_Ignore
 local client = getsenv(localPlayer.PlayerGui.Client)
-
+getgenv().collision = {camera, workspace.Ray_Ignore, workspace.Debris}
 
 local aloraWatermark = Drawing.new("Text");aloraWatermark.Font = 2;aloraWatermark.Position = Vector2.new(995,285);aloraWatermark.Visible = false;aloraWatermark.Size = 13;aloraWatermark.Color = Color3.new(1,1,1);aloraWatermark.Outline = true
 local speclistText = Drawing.new("Text");speclistText.Font = 2;speclistText.Position = Vector2.new(1100,300);speclistText.Visible = false;speclistText.Size = 13;speclistText.Color = Color3.new(1,1,1);speclistText.Outline = true
 local bombText = Drawing.new("Text");bombText.Font = 2;bombText.Position = Vector2.new(1000,300);bombText.Visible = false;bombText.Size = 13;bombText.Color = Color3.new(1,1,1);bombText.Outline = true
-
-
 
 local skyboxes = {
     ["Purple Nebula"] = {
@@ -303,15 +301,6 @@ function createTracer(to,from)
     end
 end
 
-function highlight(v)
-    local highlight = Instance.new('Highlight', v)
-    highlight.FillTransparency = 0.2
-    highlight.FillColor = Color3.new(1,0,0)
-    highlight.OutlineTransparency = 1
-    highlight.OutlineColor = Color3.new(1,1,1)
-    highlight.Adornee = v
-    highlight.DepthMode = 'AlwaysOnTop'
-end
 
 oldSounds = {}
 for i,v in next, localPlayer.PlayerGui.Music:GetDescendants() do
@@ -461,7 +450,7 @@ meta.__namecall = newcclosure(function(self,...)
     end
 
     if method == "SetPrimaryPartCFrame" and library.flags["viewmodel_changer"] then
-        args[1] *= CFrame.new((library.flags["viewmodel_x"]-20)/10,(library.flags["viewmodel_y"]-20)/10,(library.flags["viewmodel_z"]-20)/10)
+        args[1] *= CFrame.new(Vector3.new(math.rad(library.flags["viewmodel_x"]-180),math.rad(library.flags["viewmodel_y"]-180),math.rad(library.flags["viewmodel_z"]-180))) * CFrame.Angles(0, 0, math.rad(library.flags["viewmodel_roll"]-180))
     end
 
     if method == "FireServer" then
@@ -585,17 +574,17 @@ configGroup1:addButton({text = "Refresh Configs",callback = library.refreshConfi
 
 library:refreshConfigs()
 
-serverGroup:addToggle({text = "Global Shadows","gfxx", callback = function(val)
+serverGroup:addToggle({text = "Disable Global Shadows","gfxx", callback = function(val)
     if val then
-        lighting.GlobalShadows = true
-    else
         lighting.GlobalShadows = false
+    else
+        lighting.GlobalShadows = true
     end
 end})
 serverGroup:addButton({text = "Delete Graphics",callback = function()
 	workspace:FindFirstChildOfClass('Terrain').WaterWaveSize = 0
 	workspace:FindFirstChildOfClass('Terrain').WaterWaveSpeed = 0
-	workspace:FindFirstChildOfClass('Terrain').WaterReflectance = 0
+	workspace:FindFirstChildOfClass('Terrain').WaterReflectance = 1
 	workspace:FindFirstChildOfClass('Terrain').WaterTransparency = 0
 	game:GetService("Lighting").FogEnd = 999e3
 	for i,v in pairs(game:GetDescendants()) do
@@ -621,9 +610,8 @@ serverGroup:addButton({text = "Delete Graphics",callback = function()
 		end
 	end
 end})
-serverGroup:addButton({text = "Rejoin Server", callback = function()
-    teleportService:Teleport(game.PlaceId, localPlayer)
-end})
+serverGroup:addDivider()
+serverGroup:addButton({text = "Rejoin Server", callback = function() teleportService:Teleport(game.PlaceId, localPlayer) end})
 
 local aimbotGroup = aimbotTab:createGroup(0)
 local rifleGroup,rifleFrame = aimbotTab:createGroup(1)
@@ -708,6 +696,9 @@ aimbotGroup:addList({text = "Weapon",skipflag = true,flag = "aimbot_weapon",valu
     otherFrame.Visible = val == "Other"
 end})
 
+
+
+
 local mainGroup,mainFrame = visualsTab:createGroup(0)
 local viewmodelGroup,viewmodelFrame = visualsTab:createGroup(1)
 local other,otherFrame = visualsTab:createGroup(1)
@@ -736,7 +727,7 @@ mainGroup:addToggle({text = 'Glow',flag = 'highlights', function()
             player.Character:FindFirstChild('Highlight').OutlineColor = color
             player.Character:FindFirstChild('Highlight').OutlineTransparency = outlineTransparency
             player.Character:FindFirstChild('Highlight').FillTransparency = innerTransparency
-            player.Character:FindFirstChild('Highlight').FillColor = color
+            player.Character:FindFirstChild('Highlight').FillColor = color2
             player.Character:FindFirstChild('Highlight').DepthMode = depthMode
         end
     end
@@ -768,7 +759,7 @@ other:addColorpicker({text = "Glow Fill Color",ontop = true,flag = "glow_color",
     end
 end})
 
-other:addColorpicker({text = "Glow Outline Color",ontop = true,flag = "glow_color",color = Color3.new(1, 0.3, 1),callback = function(value)
+other:addColorpicker({text = "Glow Outline Color",ontop = true,flag = "glow_color2",color = Color3.new(1, 0.3, 1),callback = function(value)
     color2 = value
     for _, player in pairs(players:GetPlayers()) do
         if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
@@ -784,16 +775,16 @@ other:addList({text = "Glow Type",flag = "glow_mode",values = {'AlwaysOnTop','Oc
         end
     end
 end})
-other:addSlider({text = 'Outline Glow Transparency',flag = "glow_outtrans",value = 100,min = 0, max = 100,callback = function(value)
-    outlineTransparency = value / 100
+other:addSlider({text = 'Outline Glow Transparency',flag = "glow_outtrans",value = 10,min = 0, max = 10,callback = function(value)
+    outlineTransparency = value / 10
     for _, player in pairs(players:GetPlayers()) do
         if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
             player.Character:FindFirstChild('Highlight').OutlineTransparency = outlineTransparency
         end
     end
 end})
-other:addSlider({text = 'Inner Transparency',flag = "glow_intrans",value = 100,min = 0, max = 100,callback = function(value)
-    innerTransparency = value / 100
+other:addSlider({text = 'Inner Transparency',flag = "glow_intrans",value = 10,min = 0, max = 10,callback = function(value)
+    innerTransparency = value / 10
     for _, player in pairs(players:GetPlayers()) do
         if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
             player.Character:FindFirstChild('Highlight').FillTransparency = innerTransparency
@@ -817,9 +808,10 @@ config:addList({text = "Material",flag = "weapon_material", multiselect = false,
 config:addList({text = "Skybox",flag = "selected_skybox",callback = updateSkybox,values = {"Aesthetic Night","Elegant Morning","Elegant Morning","Midnight","Morning Glow","Neptune","Night Sky","Pink Daylight","Purple Nebula","Redshift","Setting Sun"}})
 
 
-config1:addSlider({text = "Viewmodel X",flag = "viewmodel_x",value = 20,min = 0,max = 40})
-config1:addSlider({text = "Viewmodel Y",flag = "viewmodel_y",value = 20,min = 0,max = 40})
-config1:addSlider({text = "Viewmodel Z",flag = "viewmodel_z",value = 20,min = 0-40,max = 40})
+config1:addSlider({text = "Viewmodel X",flag = "viewmodel_x",value = 180,min = 0,max = 360})
+config1:addSlider({text = "Viewmodel Y",flag = "viewmodel_y",value = 180,min = 0,max = 360})
+config1:addSlider({text = "Viewmodel Z",flag = "viewmodel_z",value = 180,min = 0,max = 360})
+config1:addSlider({text = "Viewmodel Roll",flag = "viewmodel_roll",value = 180,min = 0,max = 360})
 config1:addSlider({text = "Time",flag = "time_value",value = 24,min = 0,max = 48})
 config1:addSlider({text = "Weapon Transparency",flag = "weap_trans",value = 0,min = 0,max = 10})
 config1:addSlider({text = "Weapon Reflectance",flag = "weap_refl",value = 0,min = 0,max = 10})
@@ -1289,8 +1281,12 @@ pistols:addList({text = "Models", flag = "selected_deagle2", values = {"Disabled
 
 knife:addToggle({text = "Knife Models", flag = "changeKnife"})
 knife:addList({text = "Your Knife", flag = "knife_type", values = {"Default","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
-knife:addList({text = "Knives", flag = "selected_knife",values = {"None","Ban Hammer","Butterfly Bloodwidow","Butterfly Hallows","Butterfly Naval","Butterfly Ruby","Butterfly Sapphire","Butterfly Twitch","Butterfly Vanilla","Darkheart","Fists","Illumina","funeral's"}})
-knife:addList({text = "Bayonets", flag = "selected_knife",values = {"None","Bayonet Twitch","Bayonet Intertwine","Bayonet Hallows","Bayonet Sapphire"}})
+knife:addDivider()
+knife:addTextbox({text = "Old Knives",flag = "nilnil"})
+knife:addList({text = "Butterflies", flag = "selected_knife",values = {"None","Butterfly Bloodwidow","Butterfly Hallows","Butterfly Naval","Butterfly Ruby","Butterfly Sapphire","Butterfly Twitch","Butterfly Vanilla"}})
+knife:addList({text = "Bayonets", flag = "selected_knife1",values = {"None","Bayonet Twitch","Bayonet Intertwine","Bayonet Hallows","Bayonet Sapphire"}})
+knife:addDivider()
+knife:addList({text = "Custom Models", flag = "selected_knife2",values = {"None","Ban Hammer","Darkheart","Fists","Illumina","funeral's"}})
 knife:addDivider()
 knife:addButton({text = "Load", callback = function() runKnife() end})
 local skinTabToggle = true
@@ -1307,7 +1303,7 @@ knifeFrame.Visible  = false
 
 function runKnife()
     if library.flags["changeKnife"] then
-        if library.flags["selected_knife"] == "Darkheart" then
+        if library.flags["selected_knife2"] == "Darkheart" then
             if library.flags["knife_type"] == "Default" then
                 game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
                 game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
@@ -1374,7 +1370,7 @@ function runKnife()
                 game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_RHandle"].TextureID = "rbxassetid://6568014567"
                 game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_Blade"].TextureID = "rbxassetid://6568014567"
             end
-        elseif library.flags["selected_knife"] == "Ban Hammer" then
+        elseif library.flags["selected_knife2"] == "Ban Hammer" then
             if library.flags["knife_type"] == "Default" then
                 game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
                 game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
@@ -1405,7 +1401,7 @@ function runKnife()
                 game.ReplicatedStorage.Viewmodels["v_Ban Hammer"].Name = "v_".. library.flags["knife_type"]
                 game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]].Handle.TextureID = "rbxassetid://7911043090"
             end
-        elseif library.flags["selected_knife"] == "Illumina" then
+        elseif library.flags["selected_knife2"] == "Illumina" then
             if library.flags["knife_type"] == "Default" then
                 game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
                 game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
@@ -1436,7 +1432,7 @@ function runKnife()
                 game.ReplicatedStorage.Viewmodels["v_Illumina"].Name = "v_".. library.flags["knife_type"]
                 game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]].Handle.TextureID = "rbxassetid://7911043090"
             end
-        elseif library.flags["selected_knife"] == "Fists" then
+        elseif library.flags["selected_knife2"] == "Fists" then
             if library.flags["knife_type"] == "Default" then
                 game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
                 game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
@@ -1684,7 +1680,7 @@ function runKnife()
                 game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
                 game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
             end
-        elseif library.flags["selected_knife"] == "funeral's" then
+        elseif library.flags["selected_knife2"] == "funeral's" then
             if library.flags["knife_type"] == "Default" then
                 game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
                 game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
@@ -1720,7 +1716,7 @@ function runKnife()
                 game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
                 game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
             end
-        elseif library.flags["selected_knife"] == "Bayonet Hallows" then
+        elseif library.flags["selected_knife1"] == "Bayonet Hallows" then
             if library.flags["knife_type"] == "Default" then
                 game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
                 game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
@@ -1747,7 +1743,7 @@ function runKnife()
             else
                 game.ReplicatedStorage.Viewmodels["v_Bayonet hallows"].Name = "v_".. library.flags["knife_type"]
             end
-        elseif library.flags["selected_knife"] == "Bayonet Sapphire" then
+        elseif library.flags["selected_knife1"] == "Bayonet Sapphire" then
             if library.flags["knife_type"] == "Default" then
                 game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
                 game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
@@ -1774,7 +1770,7 @@ function runKnife()
             else
                 game.ReplicatedStorage.Viewmodels["v_Bayonet Sapphire"].Name = "v_".. library.flags["knife_type"]
             end
-        elseif library.flags["selected_knife"] == "Bayonet Intertwine" then
+        elseif library.flags["selected_knife1"] == "Bayonet Intertwine" then
             if library.flags["knife_type"] == "Default" then
                 game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
                 game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
@@ -1801,7 +1797,7 @@ function runKnife()
             else
                 game.ReplicatedStorage.Viewmodels["v_Bayonet Intertwine"].Name = "v_".. library.flags["knife_type"]
             end
-        elseif library.flags["selected_knife"] == "Bayonet Twitch" then
+        elseif library.flags["selected_knife1"] == "Bayonet Twitch" then
             if library.flags["knife_type"] == "Default" then
                 game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
                 game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
@@ -3042,7 +3038,6 @@ game.Players.LocalPlayer.Additionals.TotalDamage.Changed:Connect(function(val)
 	end)()
 end)
 
---HexagonK
 client.splatterBlood = function() end
 
 runService.RenderStepped:Connect(onStep)
