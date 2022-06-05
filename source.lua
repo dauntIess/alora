@@ -14,7 +14,7 @@
 repeat wait() until game:IsLoaded()
 if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
-local ver = "1.2.4c"
+local ver = "1.16.9b"
 --files
 if not isfolder("alora") then
     makefolder("alora")
@@ -708,26 +708,6 @@ mainGroup:addToggle({text = "Name ESP",flag = "name_enabled"})
 mainGroup:addToggle({text = "Health Bar",flag = "healthbar_enabled"})
 
 
-local color = Color3.new(1,1,1)
-local color2 = Color3.new(0,0,0)
-local outlineTransparency = 0
-local innerTransparency = 1
-local depthMode = 'AlwaysOnTop'
-
-
-mainGroup:addToggle({text = 'Glow',flag = 'highlights', function()
-    for _, player in pairs(players:GetPlayers()) do
-        if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
-            player.Character:FindFirstChild('Highlight').OutlineColor = color
-            player.Character:FindFirstChild('Highlight').OutlineTransparency = outlineTransparency
-            player.Character:FindFirstChild('Highlight').FillTransparency = innerTransparency
-            player.Character:FindFirstChild('Highlight').FillColor = color2
-            player.Character:FindFirstChild('Highlight').DepthMode = depthMode
-        end
-    end
-end
-})
-
 mainGroup:addDivider()
 mainGroup:addToggle({text = "Skybox Changer",flag = "skybox_changer",callback = updateSkybox})
 mainGroup:addToggle({text = "World Gradient",flag = "world_gradient"})
@@ -743,7 +723,24 @@ viewmodelGroup:addToggle({text = "Remove Arms",flag = "remove_arms"})
 viewmodelGroup:addToggle({text = "Remove Gloves",flag = "remove_gloves"})
 viewmodelGroup:addToggle({text = "Remove Sleeves",flag = "remove_sleeves"})
 
+local color = Color3.new(1,1,1)
+local color2 = Color3.new(0,0,0)
+local outlineTransparency = 0
+local innerTransparency = 1
+local depthMode = 'AlwaysOnTop'
 
+other:addToggle({text = 'Player Glow',flag = 'highlights', function()
+    for _, player in pairs(players:GetPlayers()) do
+        if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
+            player.Character:FindFirstChild('Highlight').OutlineColor = color
+            player.Character:FindFirstChild('Highlight').OutlineTransparency = outlineTransparency
+            player.Character:FindFirstChild('Highlight').FillTransparency = innerTransparency
+            player.Character:FindFirstChild('Highlight').FillColor = color2
+            player.Character:FindFirstChild('Highlight').DepthMode = depthMode
+        end
+    end
+end
+})
 other:addColorpicker({text = "Glow Fill Color",ontop = true,flag = "glow_color",color = Color3.new(1, 0.7, 1),callback = function(value)
     color = value
     for _, player in pairs(players:GetPlayers()) do
@@ -761,14 +758,7 @@ other:addColorpicker({text = "Glow Outline Color",ontop = true,flag = "glow_colo
         end
     end
 end})
-other:addList({text = "Glow Type",flag = "glow_mode",values = {'AlwaysOnTop','Occluded'},callback = function(value)
-    depthMode = value
-    for _, player in pairs(players:GetPlayers()) do
-        if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
-            player.Character:FindFirstChild('Highlight').DepthMode = depthMode
-        end
-    end
-end})
+
 other:addSlider({text = 'Outline Glow Transparency',flag = "glow_outtrans",value = 10,min = 0, max = 10,callback = function(value)
     outlineTransparency = value / 10
     for _, player in pairs(players:GetPlayers()) do
@@ -785,7 +775,14 @@ other:addSlider({text = 'Inner Transparency',flag = "glow_intrans",value = 10,mi
         end
     end
 end})
-
+other:addList({text = "Glow Type",flag = "glow_mode",values = {'AlwaysOnTop','Occluded'},callback = function(value)
+    depthMode = value
+    for _, player in pairs(players:GetPlayers()) do
+        if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
+            player.Character:FindFirstChild('Highlight').DepthMode = depthMode
+        end
+    end
+end})
 
 config:addColorpicker({text = "Box Color",ontop = true,flag = "box_color",color = Color3.new(0.4,0.4,0.4)})
 config:addColorpicker({text = "Name Color",ontop = true,flag = "name_color",color = Color3.new(0.4,0.4,0.4)})
@@ -866,18 +863,10 @@ rayIgnore.ChildAdded:Connect(function(obj)
     if obj.Name == "Smokes" then
         obj.ChildAdded:Connect(function(smoke)
 			runService.RenderStepped:Wait()
-			local OriginalRate = Instance.new("NumberValue")
-			OriginalRate.Value = smoke.ParticleEmitter.Rate
-			OriginalRate.Name = "OriginalRate"
-			OriginalRate.Parent = smoke
 			if library.flags["remove_smoke"] then
 				smoke.ParticleEmitter.Rate = 100 - library.flags["smoke_reduction"]
 			end
             smoke.Material = Enum.Material.ForceField
-			if library.flag["smoke_radius"] then
-				smoke.Transparency = 10
-                smoke.Color = library.flags["smoker_color"]
-			end
         end)
     end
 end)
@@ -899,11 +888,7 @@ if rayIgnore:FindFirstChild("Smokes") then
 		if library.flags["remove_smoke"] then
 			smoke.ParticleEmitter.Rate = 100 - library.flags["smoke_reduction"]
 		end
-        smoke.Material = Enum.Material.Plastic
-		if library.flags["smoke_radius"] then
-			smoke.Transparency = 10
-			smoke.Color = library.flags["smoker_color"]
-		end
+        smoke.Material = Enum.Material.ForceField
     end)
 end
 
@@ -914,8 +899,7 @@ misc:addToggle({text = "Remove Flash",flag = "remove_flash",callback = function(
 misc:addToggle({text = 'Remove Blood', flag = 'Enabled', callback = function(bool) client.splatterBlood = bool and newBloodSplatter or oldBloodSplatter; end})
 misc:addToggle({text = "Remove Bullets",flag = "no_bullet"})
 misc:addToggle({text = "Reduce Smoke",flag = "remove_smoke"})
-misc:addToggle({text = "Smoke Radius",flag = "smoke_radius"})
-misc:addColorpicker({text = "Smoke Radius Color",ontop = true,flag = "smoker_color",color = Color3.new(1,0,0)})
+misc:addToggle({text = "Force Crosshair",flag = "force_cross"})
 
 misc2:addToggle({text = "Backtrack",flag = "backtrack_enabled"})
 misc2:addToggle({text = "Old Gun Sounds", callback = function(val)
@@ -1207,7 +1191,6 @@ misc2:addToggle({text = "Show Watermark",flag = "watermark_enabled",callback = f
 misc2:addToggle({text = "Show Bomb Info",flag = "bomb_vitals",callback = function(val) bombText.Visible = val end})
 misc2:addToggle({text = "Show Spectators",flag = "spec_list",callback = function(val) speclistText.Visible = val end})
 misc2:addList({text = "Hit Sound",flag = "hitsound_value",values = {"Rust","Skeet","Neverlose","Minecraft","jewelxx","hexx","krxxxk","slots","sonic"}})
---misc2:addButton({text = "Set HP to 1", callback = function() game.ReplicatedStorage.Events.FallDamage:FireServer(localPlayer.Character.Humanoid.Health-1) end})
 misc2:addSlider({text = "Backtrack Latency",flag = "backtrack_time",value = 500,min = 1,max = 2000})
 misc2:addSlider({text = "Backtrack Transparency",flag = "backtrack_transparency",value = 75,min = 0,max = 100})
 misc2:addSlider({text = "Smoke Reduction %",flag = "smoke_reduction",value = 50,min = 1,max = 100})
@@ -1233,8 +1216,7 @@ cross:addSlider({text = 'Thickness',flag = 'crossThick',min = 1, max = 5,value =
         updateCross()
     end
 end})
-cross:addDivider()
-cross:addToggle({text = "Force Crosshair",flag = "force_cross"})
+
 
 local miscTabToggle = true
 toggleTab:addButton({text = "Toggle Tabs",callback = function()
@@ -1252,6 +1234,7 @@ local snipers,sniperFrame = skinsTab:createGroup(1)
 
 local pistols,pistolFrame = skinsTab:createGroup(0)
 local knife,knifeFrame = skinsTab:createGroup(1)
+local glove,gloveFrame = skinsTab:createGroup(1)
 
 local skinToggle,skinToggleFrame = skinsTab:createGroup(1)
 
@@ -1267,6 +1250,10 @@ rifles:addDivider()
 rifles:addToggle({text = "M4A1-S", flag = "a1_skin"})
 rifles:addList({text = "Skins",flag = "selected_a1",values= {"Disabled","Default"}})
 rifles:addList({text = "CS Skins", flag = "selected_a11", values = {"Disabled","Default"}}) 
+rifles:addDivider()
+rifles:addToggle({text = "SG", flag = "sg_skin"})
+rifles:addList({text = "Skins",flag = "selected_sg",values= {"Disabled","Default"}})
+rifles:addDivider()
 
 snipers:addToggle({text = "AWP", flag = "awp_skin"}) 
 snipers:addList({text = "Skins",flag = "selected_awp",values = {"Disabled","Default","Darkness","Grepkin","Grim","Hika","Nerf","Pinkie","Regina","Scapter","Weeb","[CBCL] Blastech","[CBCL] JTF2"}})
@@ -1277,16 +1264,34 @@ snipers:addToggle({text = "Scout", flag = "SSG_skin"})
 snipers:addList({text = "Skins", flag = "selected_ssg", values = {"Disabled","Default","Hellborn","Neon Regulation","Xmas"}, callback = runSSG}) 
 snipers:addList({text = "Models", flag = "selected_ssg2", values = {"Disabled", "Default","OG Xmas", "Newan", "Outlaw"}, callback = runSSG}) 
 
+pistols:addToggle({text = "Glock", flag = "glock_skin"}) 
+pistols:addList({text = "Skins", flag = "selected_glock", values = {"Disabled","Default"}}) 
+pistols:addList({text = "Models", flag = "selected_glock2", values = {"Disabled", "Default"}})
+pistols:addDivider()
+pistols:addToggle({text = "USP-S", flag = "usp_skin"}) 
+pistols:addList({text = "Skins", flag = "selected_usp", values = {"Disabled","Default"}}) 
+pistols:addList({text = "Models", flag = "selected_usp2", values = {"Disabled", "Default"}})
+pistols:addDivider()
+pistols:addToggle({text = "P2000", flag = "p2k_skin"}) 
+pistols:addList({text = "Skins", flag = "selected_p2k", values = {"Disabled","Default"}}) 
+pistols:addList({text = "Models", flag = "selected_p2k2", values = {"Disabled", "Default"}})
+pistols:addDivider()
 pistols:addToggle({text = "Desert Eagle", flag = "deagle_skin"}) 
 pistols:addList({text = "Skins", flag = "selected_deagle", values = {"Disabled","Default","Code Red","Glittery","Grim","Honor-Bound","Independence","Racer","Scapter","Skin Committee","Weeb","Xmas","[CBCL] DropX","[CBCL] TC"}, callback = runDeagle}) 
 pistols:addList({text = "Models", flag = "selected_deagle2", values = {"Disabled", "Default", "Cyber"}, callback = runDeagle})
+pistols:addDivider()
 
 knife:addToggle({text = "Knives", flag = "knife_changer"})
 knife:addList({text = "Your Knife", flag = "knife_type", values = {"Default Knives","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
 knife:addDivider()
 knife:addList({text = "Butterflies", flag = "selected_knife",values = {"None","Butterfly Bloodwidow","Butterfly Hallows","Butterfly Naval","Butterfly Ruby","Butterfly Sapphire","Butterfly Twitch","Butterfly Vanilla"}})
 knife:addList({text = "Bayonets", flag = "selected_knife1",values = {"None","Bayonet Twitch","Bayonet Intertwine","Bayonet Hallows","Bayonet Sapphire"}})
-knife:addList({text = "Models", flag = "selected_knife2",values = {"None","Ban Hammer","Darkheart","Fists","Illumina","funeral's"}})
+knife:addList({text = "Extras", flag = "selected_knife2",values = {"None","Ban Hammer","Darkheart","Fists","Illumina","funeral's"}})
+
+glove:addToggle({text = "Gloves",flag = "glove_changer"})
+glove:addList({text = "Skins",flag = "selected_glove",values = {"Disabled", "Default"}})
+glove:addList({text = "Customs",flag = "selected_glove1",values = {"Disabled", "Default"}})
+
 local skinTabToggle = true
 
 skinToggle:addToggle({text = "Auto Load",flag = "autoload"})
@@ -1300,10 +1305,12 @@ skinToggle:addButton({text = "Toggle Tabs", callback = function()
     sniperFrame.Visible =  skinTabToggle
     pistolFrame.Visible = not skinTabToggle
     knifeFrame.Visible = not skinTabToggle
+    gloveFrame.Visible = not skinTabToggle
 end})
 
 pistolFrame.Visible = false
 knifeFrame.Visible  = false
+gloveFrame.Visible = false
 
 function setM4()
     if game.ReplicatedStorage["Viewmodels"]:FindFirstChild("v_M4A4", true) then
