@@ -14,7 +14,7 @@
 repeat wait() until game:IsLoaded()
 if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
-local ver = "1.2.1c"
+local ver = "1.2.4c"
 --files
 if not isfolder("alora") then
     makefolder("alora")
