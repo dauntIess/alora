@@ -45,7 +45,7 @@ local bombStats = Drawing.new("Text");bombStats.Font = 2;bombStats.Position = Ve
 
 local bvitalsText = Drawing.new("Text");bvitalsText.Font = 2;bvitalsText.Position = Vector2.new(605,145);bvitalsText.Visible = false;bvitalsText.Text="Bomb Vitals";bvitalsText.Size = 13;bvitalsText.Color = Color3.new(1,1,1);bvitalsText.Outline = true
 local bvitalsOutline = Drawing.new("Square");bvitalsOutline.Color = Color3.new(0,0,0);bvitalsOutline.Position = Vector2.new(387,160);bvitalsOutline.Visible = false;bvitalsOutline.Size = (Vector2.new(502,5));bvitalsOutline.Filled = true
-local bvitals = Drawing.new("Square");bvitals.Color = Color3.new(1,0.498039216,0);bvitals.Position = Vector2.new(388,161);bvitals.Visible = false;bvitals.Size = (Vector2.new(250,3));bvitals.Filled = true
+local bvitals = Drawing.new("Square");bvitals.Color = Color3.new(1,0.498039216,0);bvitals.Position = Vector2.new(388,161);bvitals.Visible = false;bvitals.Size = (Vector2.new(500,3));bvitals.Filled = true
 
 local skyboxes = {
     ["Purple Nebula"] = {
