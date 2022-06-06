@@ -39,9 +39,9 @@ local client = getsenv(localPlayer.PlayerGui.Client)
 getgenv().collision = {camera, workspace.Ray_Ignore, workspace.Debris}
 
 local aloraWatermark = Drawing.new("Text");aloraWatermark.Font = 2;aloraWatermark.Position = Vector2.new(995,285);aloraWatermark.Visible = false;aloraWatermark.Size = 13;aloraWatermark.Color = Color3.new(1,1,1);aloraWatermark.Outline = true
-local speclistText = Drawing.new("Text");speclistText.Font = 2;speclistText.Position = Vector2.new(1047,300);speclistText.Visible = false;speclistText.Size = 13;speclistText.Color = Color3.new(1,1,1);speclistText.Outline = true
+local speclistText = Drawing.new("Text");speclistText.Font = 2;speclistText.Position = Vector2.new(1044,300);speclistText.Visible = false;speclistText.Size = 13;speclistText.Color = Color3.new(1,1,1);speclistText.Outline = true
 
-local bombStats = Drawing.new("Text");bombStats.Font = 2;bombStats.Position = Vector2.new(622,254);bombStats.Visible = false;bombStats.Size = 13;bombStats.Color = Color3.new(1,1,1);bombStats.Outline = true
+local bombStats = Drawing.new("Text");bombStats.Font = 2;bombStats.Position = Vector2.new(620,254);bombStats.Visible = false;bombStats.Size = 13;bombStats.Color = Color3.new(1,1,1);bombStats.Outline = true
 
 local bvitalsText = Drawing.new("Text");bvitalsText.Font = 2;bvitalsText.Position = Vector2.new(640,235);bvitalsText.Visible = false;bvitalsText.Text="Bomb Vitals";bvitalsText.Size = 13;bvitalsText.Color = Color3.new(1,1,1);bvitalsText.Outline = true
 local bvitalsOutline = Drawing.new("Square");bvitalsOutline.Color = Color3.new(0,0,0);bvitalsOutline.Position = Vector2.new(402,250);bvitalsOutline.Visible = false;bvitalsOutline.Size = (Vector2.new(502,5));bvitalsOutline.Filled = true
@@ -2907,13 +2907,14 @@ workspace.ChildAdded:Connect(function(new)
 				wait(1)
 				BombTimer = BombTimer - 1
                 bombStats.Text = "Timer: "..tostring(BombTimer.. "/40")
-                sexinfo = "Timer: "..tostring(BombTimer.. "/40").."; Site: "..bombPlant
+                sexinfo = "Timer: "..tostring(BombTimer.. "/40").." ; Site: "..bombPlant
                 bvitalsOutline.Size = (Vector2.new(502,5));bvitals.Size = (Vector2.new(BombTimer*12.5,3))
 			until BombTimer == 0 or workspace.Status.RoundOver.Value == true
             wait(2)
             sexinfo = "Timer: - ; Site: -"
             bombStats.Visible = false;bvitalsOutline.Visible = false;bvitals.Visible = false;bvitalsText.Visible = false
             BombTimer = 40
+			bvitals.Size = (Vector2.new(500,3))
 		end)
 	end
 end)
