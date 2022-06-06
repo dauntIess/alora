@@ -14,7 +14,7 @@
 repeat wait() until game:IsLoaded()
 if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
-local ver = "1.17.0"
+local ver = "1.17.3"
 --files
 if not isfolder("alora") then
     makefolder("alora")
@@ -45,7 +45,7 @@ local bombStats = Drawing.new("Text");bombStats.Font = 2;bombStats.Position = Ve
 
 local bvitalsText = Drawing.new("Text");bvitalsText.Font = 2;bvitalsText.Position = Vector2.new(650,235);bvitalsText.Visible = false;bvitalsText.Text="Bomb Vitals";bvitalsText.Size = 13;bvitalsText.Color = Color3.new(1,1,1);bvitalsText.Outline = true
 local bvitalsOutline = Drawing.new("Square");bvitalsOutline.Color = Color3.new(0,0,0);bvitalsOutline.Position = Vector2.new(432,250);bvitalsOutline.Visible = false;bvitalsOutline.Size = (Vector2.new(502,5));bvitalsOutline.Filled = true
-local bvitals = Drawing.new("Square");bvitals.Color = Color3.new(1,0.498039216,0);bvitals.Position = Vector2.new(433,251);bvitals.Visible = false;bvitals.Size = (Vector2.new(250,3));bvitals.Filled = true
+local bvitals = Drawing.new("Square");bvitals.Color = Color3.new(1,0.498039216,0);bvitals.Position = Vector2.new(433,251);bvitals.Visible = false;bvitals.Size = (Vector2.new(500,3));bvitals.Filled = true
 local skyboxes = {
     ["Purple Nebula"] = {
         ["SkyboxBk"] = "rbxassetid://159454299",
@@ -322,8 +322,6 @@ for i,v in next, localPlayer.PlayerGui.Music:GetDescendants() do
 		end
 	end
 end
-
-
 
 local espObjects = {}
 function createEsp(plr)
@@ -854,7 +852,7 @@ movementGroup:addToggle({text = "Fast Crouch", callback = function(val)
 	if val == true then
 		runService:BindToRenderStep("Stamina", 100, function()
 			if client.crouchcooldown ~= 0 then
-				client.crouchcooldown = 0.4
+				client.crouchcooldown = 0.6
 			end
 		end)
 	elseif val == false then
@@ -2725,19 +2723,6 @@ function updateCross()
     end
 end
 
-workspace.Debris.ChildAdded:connect(function(obj)
-    checkdebris(obj)
-end)
-
-function checkdebris(obj)
-    spawn(function()
-        if obj.Name == 'Bullet' then
-            if library.flags["no_bullet"] == true then
-                obj:Destroy()
-            end
-        end
-    end)
-end
 
 local btFolder = Instance.new("Folder",workspace)
 players.PlayerAdded:Connect(function(plr)
@@ -2890,13 +2875,7 @@ workspace.ChildAdded:Connect(function(new)
                 bombPlant = "B"
             end
             
-            local highlight = Instance.new('Highlight',new)
-            highlight.FillTransparency = 0.7
-            highlight.FillColor = Color3.new(1,0,0)
-            highlight.OutlineTransparency = 1
-            highlight.OutlineColor = Color3.new(1,1,1)
-            highlight.Adornee = new
-            highlight.DepthMode = 'AlwaysOnTop'
+            local highlight = Instance.new('Highlight',new);highlight.FillTransparency = 0.7;highlight.FillColor = Color3.new(1,0,0);highlight.OutlineTransparency = 1;highlight.OutlineColor = Color3.new(1,1,1);highlight.Adornee = new;highlight.DepthMode = 'AlwaysOnTop'
 			
 			repeat
 			    bvitalsOutline.Visible = true
