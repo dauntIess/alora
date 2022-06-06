@@ -39,7 +39,7 @@ local client = getsenv(localPlayer.PlayerGui.Client)
 getgenv().collision = {camera, workspace.Ray_Ignore, workspace.Debris}
 
 local aloraWatermark = Drawing.new("Text");aloraWatermark.Font = 2;aloraWatermark.Position = Vector2.new(995,285);aloraWatermark.Visible = false;aloraWatermark.Size = 13;aloraWatermark.Color = Color3.new(1,1,1);aloraWatermark.Outline = true
-local speclistText = Drawing.new("Text");speclistText.Font = 2;speclistText.Position = Vector2.new(1044,300);speclistText.Visible = false;speclistText.Size = 13;speclistText.Color = Color3.new(1,1,1);speclistText.Outline = true
+local speclistText = Drawing.new("Text");speclistText.Font = 2;speclistText.Position = Vector2.new(1040,300);speclistText.Visible = false;speclistText.Size = 13;speclistText.Color = Color3.new(1,1,1);speclistText.Outline = true
 
 local bombStats = Drawing.new("Text");bombStats.Font = 2;bombStats.Position = Vector2.new(620,254);bombStats.Visible = false;bombStats.Size = 13;bombStats.Color = Color3.new(1,1,1);bombStats.Outline = true
 
