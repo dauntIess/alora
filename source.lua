@@ -12,7 +12,7 @@
 
 --]]
 repeat wait() until game:IsLoaded()
-if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
+--if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
 local ver = "1.17.3"
 --files
@@ -23,7 +23,7 @@ if not isfolder("alora/"..tostring(game.GameId)) then
     makefolder("alora/"..tostring(game.GameId))
 end
 --vars
-local library,menu,tabholder = loadstring(game:HttpGet("https://raw.githubusercontent.com/sj0rs1/alora/main/library.lua"))()
+local library,menu,tabholder = loadstring(game:HttpGet("https://raw.githubusercontent.com/dauntIess/alora/main/sjors"))()
 local userInputService = game:GetService("UserInputService")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local teleportService = game:GetService("TeleportService")
@@ -150,8 +150,6 @@ local hitsounds = {
     slots = "rbxassetid://9717785933",
     sonic = "rbxassetid://9717784691"
 }
-
-
 
 local hitboxList = {
     Head = {"Head"},
@@ -416,7 +414,7 @@ end
 local btInfo = {parent = nil,folder = nil}
 local preventBt = false
 local silentPart = nil
-
+local hookJp = nil
 local hookWs = nil
 local timeout = 0
 local meta = getrawmetatable(game)
@@ -428,11 +426,14 @@ local oldNewindex = meta.__newindex
 
 
 meta.__newindex = newcclosure(function(self,idx,val)
-if self.Name == "Crosshair" and idx == "Visible" and val == false and localPlayer.PlayerGui.GUI.Crosshairs.Scope.Visible == false and library.flags["force_cross"] == true then
-			val = true
-		end
-		return oldNewindex(self,idx,val)
-	end)
+    if self.Name == "Crosshair" and idx == "Visible" and val == false and localPlayer.PlayerGui.GUI.Crosshairs.Scope.Visible == false and library.flags["force_cross"] == true then
+		val = true
+	end
+    if idx == "JumpPower" and hookJp then
+        val = 22
+    end
+    return oldNewindex(self,idx,val)
+end)
 
 meta.__namecall = newcclosure(function(self,...)
     local args = {...}
@@ -596,7 +597,7 @@ serverGroup:addButton({text = "Delete Graphics",callback = function()
 	end
     for _, v in pairs(workspace.Map.Regen:GetDescendants()) do
 		if v:IsA("BasePart") then
-			v.Material = "Glass"
+			v.Material = "Plastic"
         --    v.Color = Color3.new(0,0,0)
 		end
 	end
@@ -829,6 +830,7 @@ local misc,miscFrame = miscTab:createGroup(0)
 local misc2,miscFrame2 = miscTab:createGroup(1)
 
 local cross,crossFrame = miscTab:createGroup(0)
+local drawingGroup,drawingFrame = miscTab:createGroup(1)
 local toggleTab,toggleFrame = miscTab:createGroup(0)
 
 movementGroup:addToggle({text = "Bunny Hop",flag = "bunny_hop",callback = function()
@@ -922,7 +924,7 @@ misc2:addToggle({text = "Old Gun Sounds", callback = function(val)
                         player.Gun.SShoot.SoundId = "rbxassetid://1665639883"
                         player.Gun.Equip.SoundId = "rbxassetid://6564247176"
                         player.Gun.Remove.SoundId = "rbxassetid://1665639103"
-                        player.Gun.Shoot.SoundId = "rbxassetid://223013951"
+                        player.Gun.Shoot.SoundId = "rbxassetid://6564247176"
                         player.Gun.Apply.SoundId = "rbxassetid://1665639351"
                         player.Gun.Turn1.SoundId = "rbxassetid://925145888"
                         player.Gun.Turn2.SoundId = "rbxassetid://925145967"
@@ -1157,7 +1159,7 @@ misc2:addToggle({text = "Old Gun Sounds", callback = function(val)
                     end
                     if player.EquippedTool.Value == "M4A4" then
                         player.Gun.Equip.SoundId = "rbxassetid://1665638797"
-                        player.Gun.Shoot.SoundId = "rbxassetid://202918741"
+                        player.Gun.Shoot.SoundId = "rbxassetid://4827208824"
                         player.Gun.bolt.SoundId = "rbxassetid://1684291592"
                         player.Gun.boltin.SoundId = "rbxassetid://1684291797"
                         player.Gun.boltrelease.SoundId = "rbxassetid://1684291797"
@@ -1219,6 +1221,83 @@ cross:addSlider({text = 'Thickness',flag = 'crossThick',min = 1, max = 5,value =
         updateCross()
     end
 end})
+cross:addDivider()
+cross:addToggle({text = "Jumpbug",flag = "jump_bug"})
+cross:addToggle({text = "Edgebug",flag = "edge_bug"})
+cross:addKeybind({text = "EB Bind",flag = "eb_bind",key = Enum.KeyCode.E})
+cross:addKeybind({text = "JB Bind",flag = "jb_bind",key = Enum.UserInputType.MouseButton3})
+
+local lines = {}
+local lastPos = camera.ViewportSize.Y-90
+local veloIndicator = Drawing.new("Text");veloIndicator.Center = true;veloIndicator.Outline = true;veloIndicator.Color = Color3.new(1,1,1);veloIndicator.Font = 2;veloIndicator.Size = 13;veloIndicator.Visible = false;veloIndicator.Text = "0"
+local wIndicator = Drawing.new("Text");wIndicator.Center = true;wIndicator.Outline = true;wIndicator.Color = Color3.new(1,1,1);wIndicator.Font = 2;wIndicator.Size = 13;wIndicator.Visible = false;wIndicator.Text = "-"
+local aIndicator = Drawing.new("Text");aIndicator.Center = true;aIndicator.Outline = true;aIndicator.Color = Color3.new(1,1,1);aIndicator.Font = 2;aIndicator.Size = 13;aIndicator.Visible = false;aIndicator.Text = "-"
+local sIndicator = Drawing.new("Text");sIndicator.Center = true;sIndicator.Outline = true;sIndicator.Color = Color3.new(1,1,1);sIndicator.Font = 2;sIndicator.Size = 13;sIndicator.Visible = false;wIndicator.Text = "-"
+local dIndicator = Drawing.new("Text");dIndicator.Center = true;dIndicator.Outline = true;dIndicator.Color = Color3.new(1,1,1);dIndicator.Font = 2;dIndicator.Size = 13;dIndicator.Visible = false;dIndicator.Text = "-"
+local spaceIndicator = Drawing.new("Text");spaceIndicator.Center = true;spaceIndicator.Outline = true;spaceIndicator.Color = Color3.new(1,1,1);spaceIndicator.Font = 2;spaceIndicator.Size = 13;spaceIndicator.Visible = false;spaceIndicator.Text = "-"
+local ctrlIndicator = Drawing.new("Text");ctrlIndicator.Center = true;ctrlIndicator.Outline = true;ctrlIndicator.Color = Color3.new(1,1,1);ctrlIndicator.Font = 2;ctrlIndicator.Size = 13;ctrlIndicator.Visible = false;ctrlIndicator.Text = "-"
+
+drawingGroup:addToggle({text = "Drawing Enabled",flag = "drawing_enabled",callback = function()
+    while library.flags["drawing_enabled"] do wait()
+        local normalY = camera.ViewportSize.Y-90
+        local alive = isAlive()
+        local value = alive and math.floor(math.clamp((localPlayer.Character.HumanoidRootPart.Velocity * Vector3.new(1,0,1)).magnitude*14.85,0,400)) or 0
+        if library.flags["velo_graph"] then
+            local width = library.flags["graph_width"]+1
+            local line = Drawing.new("Line")
+            table.insert(lines,line)
+            line.From = Vector2.new(camera.ViewportSize.X/2 + (60*width - width),lastPos)
+            line.To = Vector2.new(camera.ViewportSize.X/2 + 60*width,normalY - value/4)
+            line.Thickness = 1
+            line.Transparency = 1
+            line.Color = Color3.new(1,1,1)
+            line.Visible = true
+            if #lines > 1 then
+                if #lines > 110 then
+                    lines[1]:Remove()
+                    table.remove(lines,1)
+                    for i = 2,8 do
+                        lines[i].Transparency = i/10
+                    end
+                    local count = 0
+                    for i=110,110-6,-1 do
+                        count = count + 1
+                        lines[i].Transparency = count/10
+                    end
+                    lines[110-7].Transparency = 1
+                end
+                for i,v in ipairs(lines) do
+                    v.To = v.To - Vector2.new(width,0)
+                    v.From = v.From - Vector2.new(width,0)
+                end
+            end
+            lastPos = line.To.Y
+        end
+        if library.flags["velo_indicator"] then
+            veloIndicator.Text = tostring(value)
+            veloIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-75)
+        end
+        if library.flags["wasd_indicator"] then
+            wIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50)
+            aIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50) + Vector2.new(-40,25)
+            sIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50) + Vector2.new(0,25)
+            dIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50) + Vector2.new(40,25)
+            spaceIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50) + Vector2.new(40,0)
+            ctrlIndicator.Position = Vector2.new(camera.ViewportSize.X/2,camera.ViewportSize.Y-50) + Vector2.new(-40,0)
+
+            wIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.W) and "W" or "-"
+            aIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.A) and "A" or "-"
+            sIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.S) and "S" or "-"
+            dIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.D) and "D" or "-"
+            spaceIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.Space) and "J" or "-"
+            ctrlIndicator.Text = userInputService:IsKeyDown(Enum.KeyCode.LeftControl) and "C" or "-"
+        end
+    end
+end})
+drawingGroup:addToggle({text = "Velocity Graph",flag = "velo_graph"})
+drawingGroup:addToggle({text = "Velocity Indicator",flag = "velo_indicator"})
+drawingGroup:addToggle({text = "WASD Indicator",flag = "wasd_indicator"})
+drawingGroup:addSlider({text = "Graph Width",flag = "graph_width",min = 1,max = 5,value = 1})
 
 
 local miscTabToggle = true
@@ -1228,31 +1307,40 @@ toggleTab:addButton({text = "Toggle Tabs",callback = function()
     miscFrame.Visible = miscTabToggle
     miscFrame2.Visible  = miscTabToggle
     crossFrame.Visible = not miscTabToggle
+    drawingFrame.Visible = not miscTabToggle
 end})
 
 crossFrame.Visible = false
+drawingFrame.Visible = false
 
 local rifles,rifleFrame = skinsTab:createGroup(0)
 local snipers,sniperFrame = skinsTab:createGroup(1)
 
-local pistols,pistolFrame = skinsTab:createGroup(1)
-local knife,knifeFrame = skinsTab:createGroup(0)
 local glove,gloveFrame = skinsTab:createGroup(0)
+local pistols,pistolFrame = skinsTab:createGroup(0)
+local knife,knifeFrame = skinsTab:createGroup(1)
 
-local skinToggle,skinToggleFrame = skinsTab:createGroup(1)
+local karambit,karambitFrame = skinsTab:createGroup(1)
+local bayonet,bayonetFrame = skinsTab:createGroup(1)
+local oldbayonet,oldbayonetFrame = skinsTab:createGroup(1)
+local gut,gutFrame = skinsTab:createGroup(1)
+local huntsman,huntsmanFrame = skinsTab:createGroup(1)
+local butterfly,butterflyFrame = skinsTab:createGroup(1)
+local oldbutterfly,oldbutterflyFrame = skinsTab:createGroup(1)
+
+local skinToggle,skinToggleFrame = skinsTab:createGroup(0)
+local skinTabToggle = true
 
 rifles:addToggle({text = "AK47", flag = "ak_skin"})
-rifles:addList({text = "Skins",flag = "selected_ak",values= {"Disabled","Default","Eve","Galaxy Corpse","Goddess","Hallows","Mean Green","Scapter","Skin Committee","Survivor","VAV","Yltude","[CBCL] Hypersonic","[CBCL] Outlaws"}})
+rifles:addList({text = "Skins",flag = "selected_ak",values= {"Disabled","Default","Eve","Galaxy Corpse","Goddess","Hallows","Mean Green","Scapter","Skin Committee","Survivor","Variant Camo","VAV","Yltude","[CBCL] Hypersonic","[CBCL] Outlaws"}})
 rifles:addList({text = "CS Skins", flag = "selected_ak1", values = {"Disabled","Default", "Aquamarine Revenge","Asiimov","Bloodsport","Case Hardened","Chromatic Abberation","Legion of Anubis","Neon Rider","Nightmare","Redline","Vulcan","Wild Lotus"}}) 
 rifles:addList({text = "Models", flag = "selected_ak2",values = {"Disabled","Default","Pearl I","Pearl II","Ivory","Darkheart","Draco"}}) 
 rifles:addDivider()
 rifles:addToggle({text = "M4A4", flag = "m4_skin"})
-rifles:addList({text = "Skins",flag = "selected_m4",values= {"Disabled","Default","Delinquent","Devil","Jester","King","Regina","[CBCL] BOT[s]","[CBCL] Endline"}})
-rifles:addList({text = "CS Skins", flag = "selected_m41", values = {"Disabled","Default","Dragon","Howl","Neon Revolution","Prey"}}) 
+rifles:addList({text = "Skins",flag = "selected_m4",values= {"Disabled","Default","Delinquent","Devil","Jester","King","Regina","[CBCL] BOT[s]","[CBCL] Endline","Dragon","Howl","Neon Revolution","Prey"}})
 rifles:addDivider()
 rifles:addToggle({text = "SG", flag = "sg_skin"})
 rifles:addList({text = "Skins",flag = "selected_sg",values= {"Disabled","Default","Drop Out","Variant Camo","Yltude","[CBCL] DropX"}})
-rifles:addDivider()
 
 snipers:addToggle({text = "AWP", flag = "awp_skin"}) 
 snipers:addList({text = "Skins",flag = "selected_awp",values = {"Disabled","Default","Darkness","Grepkin","Grim","Hika","Nerf","Pinkie","Regina","Scapter","Weeb","[CBCL] Blastech","[CBCL] JTF2"}})
@@ -1263,26 +1351,37 @@ snipers:addToggle({text = "Scout", flag = "SSG_skin"})
 snipers:addList({text = "Skins", flag = "selected_ssg", values = {"Disabled","Default","Hellborn","Neon Regulation","Xmas"}, callback = runSSG}) 
 snipers:addList({text = "Models", flag = "selected_ssg2", values = {"Disabled", "Default","OG Xmas", "Newan", "Outlaw"}, callback = runSSG}) 
 
-pistols:addToggle({text = "Glock", flag = "glock_skin"}) 
-pistols:addList({text = "Skins", flag = "selected_glock", values = {"Disabled","Default","Biotrip","Hallows","RSL","Oxide Blaze","Scapter"}}) 
-pistols:addList({text = "Models", flag = "selected_glock2", values = {"Disabled", "Default","Soul"}})
-pistols:addDivider()
 pistols:addToggle({text = "Desert Eagle", flag = "deagle_skin"}) 
 pistols:addList({text = "Skins", flag = "selected_deagle", values = {"Disabled","Default","Code Red","Glittery","Grim","Honor-Bound","Independence","Racer","Scapter","Skin Committee","Weeb","Xmas","[CBCL] DropX","[CBCL] TC"}, callback = runDeagle}) 
 pistols:addList({text = "Models", flag = "selected_deagle2", values = {"Disabled", "Default", "Cyber"}, callback = runDeagle})
 
 knife:addToggle({text = "Knives", flag = "knife_changer"})
-knife:addList({text = "Your Knife", flag = "knife_type", values = {"Default Knives","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
-knife:addDivider()
-knife:addList({text = "Butterflies", flag = "selected_knife",values = {"None","Butterfly Bloodwidow","Butterfly Hallows","Butterfly Naval","Butterfly Ruby","Butterfly Sapphire","Butterfly Twitch","Butterfly Vanilla"}})
-knife:addList({text = "Bayonets", flag = "selected_knife1",values = {"None","Bayonet Twitch","Bayonet Intertwine","Bayonet Hallows","Bayonet Sapphire"}})
-knife:addList({text = "Extras", flag = "selected_knife2",values = {"None","Ban Hammer","Darkheart","Fists","Illumina","funeral's"}})
+knife:addList({text = "Your Knife", flag = "OldKnife", values = {"Default Knives","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
+
+local sexdogwwdw = {}
+knife:addList({text = "New Type",flag = "NewKnife",values = {"Bayonet","Old Bayonet","Butterfly Knife","Old Butterfly Knife","Karambit","Gut Knife","Huntsman Knife"},callback = function(val)
+    sexdogwwdw = val
+    bayonetFrame.Visible = val == "Bayonet"
+    oldbayonetFrame.Visible = val == "Old Bayonet"
+    butterflyFrame.Visible = val == "Butterfly Knife"
+    oldbutterflyFrame.Visible = val == "Old Butterfly Knife"
+    karambitFrame.Visible = val == "Karambit"
+    gutFrame.Visible = val == "Gut Knife"
+    huntsmanFrame.Visible = val == "Huntsman Knife"
+end})
+
+karambit:addList{text = "Knife Skins",flag = "kara_skin",values = {"Vanilla"}}
+bayonet:addList{text = "Knife Skins",flag = "bay_skin",values = {"Vanilla","Consumed","Cosmos","Crow","Digital","Easy-Bake","Frozen Dream","Goo","Hallows","Intertwine","RSL","Racer","Sapphire","Topaz","Twitch"}}
+oldbayonet:addList{text = "Knife Skins",flag = "oldbay_skin",values = {"Vanilla"}}
+gut:addList{text = "Knife Skins",flag = "gut_skin",values = {"Vanilla"}}
+huntsman:addList{text = "Knife Skins",flag = "hunts_skin",values = {"Vanilla"}}
+butterfly:addList{text = "Knife Skins",flag = "butter_skin",values = {"Vanilla"}}
+oldbutterfly:addList{text = "Knife Skins",flag = "oldbutter_skin",values = {"Vanilla"}}
 
 glove:addToggle({text = "Gloves",flag = "glove_changer"})
 glove:addList({text = "Skins",flag = "selected_glove",values = {"Disabled", "Default"}})
 glove:addList({text = "Customs",flag = "selected_glove1",values = {"Disabled", "Default"}})
 
-local skinTabToggle = true
 
 skinToggle:addToggle({text = "Auto Load",flag = "autoload"})
 skinToggle:addButton({text = "Load Selected",callback = function() loadskins() end})
@@ -1290,85 +1389,113 @@ skinToggle:addButton({text = "Load Selected",callback = function() loadskins() e
 
 skinToggle:addDivider()
 skinToggle:addButton({text = "Toggle Tabs", callback = function()
+
     skinTabToggle = not skinTabToggle
     rifleFrame.Visible  =  skinTabToggle
     sniperFrame.Visible =  skinTabToggle
     pistolFrame.Visible = not skinTabToggle
     knifeFrame.Visible = not skinTabToggle
     gloveFrame.Visible = not skinTabToggle
+    if knifeFrame.Visible == true then
+        bayonetFrame.Visible = sexdogwwdw == "Bayonet"
+        oldbayonetFrame.Visible = sexdogwwdw == "Old Bayonet"
+        butterflyFrame.Visible = sexdogwwdw == "Butterfly Knife"
+        oldbutterflyFrame.Visible = sexdogwwdw == "Old Butterfly Knife"
+        karambitFrame.Visible = sexdogwwdw == "Karambit"
+        gutFrame.Visible = sexdogwwdw == "Gut Knife"
+        huntsmanFrame.Visible = sexdogwwdw == "Huntsman Knife"
+    else
+        bayonetFrame.Visible = false
+        oldbayonetFrame.Visible = false
+        oldbutterflyFrame.Visible = false
+        butterflyFrame.Visible = false
+        karambitFrame.Visible = false
+        gutFrame.Visible = false
+        huntsmanFrame.Visible = false
+    end
+
 end})
 
 pistolFrame.Visible = false
 knifeFrame.Visible  = false
 gloveFrame.Visible = false
+bayonetFrame.Visible = false
+oldbayonetFrame.Visible = false
+oldbutterflyFrame.Visible = false
+butterflyFrame.Visible = false
+karambitFrame.Visible = false
+gutFrame.Visible = false
+huntsmanFrame.Visible = false
 
 
-
-function setGlock()
-    if game.ReplicatedStorage["Viewmodels"]:FindFirstChild("v_Glock", true) then
-		game.ReplicatedStorage.Viewmodels["v_Glock"]:Destroy()
-    	wait()
-    	local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    	game:GetObjects('rbxassetid://7311324429')[1].Parent = Model1
-    	Model = game.ReplicatedStorage.Viewmodels.Model
-    	for _, Child in pairs(Model:GetChildren()) do
-    	    Child.Parent = Model.Parent
-    	end
-    	Model:Destroy()
-	else
-		local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    	game:GetObjects('rbxassetid://7311324429')[1].Parent = Model1
-    	Model = game.ReplicatedStorage.Viewmodels.Model
-    	for _, Child in pairs(Model:GetChildren()) do
-    	    Child.Parent = Model.Parent
-    	end
-    	Model:Destroy()
-	end
+function setBay()
+    if library.flags["OldKnife"] == "Default Knives" then
+        game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
+        game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
+    else
+        game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
+    end
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://7311299522')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
+    end
+    Model:Destroy()
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://7311299522')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
+    end
+    Model:Destroy()
+    if library.flags["OldKnife"] == "Default Knives" then
+        game.ReplicatedStorage.Viewmodels["v_Bayonet"].Name = "v_CT Knife"
+        game.ReplicatedStorage.Viewmodels["v_Bayonet"].Name = "v_T Knife"
+    else
+        game.ReplicatedStorage.Viewmodels["v_Bayonet"].Name = "v_".. library.flags["OldKnife"]
+    end
 end
 
-function runGlock()
-    if library.flags["glock_skin"] then
-        if library.flags["selected_glock"] == "Default" then
-            setGlock()
-        elseif library.flags["selected_glock"] == "Biotrip" then
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Handle2"].TextureID = "rbxassetid://4427338632"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Slide2"].TextureID = "rbxassetid://4427338632"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Mag3"].TextureID = "rbxassetid://4427338632"
-        elseif library.flags["selected_glock"] == "Hallows" then
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Handle2"].TextureID = "rbxassetid://7943856293"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Slide2"].TextureID = "rbxassetid://7943856293"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Mag3"].TextureID = "rbxassetid://7943856293"
-        elseif library.flags["selected_glock"] == "RSL" then
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Handle2"].TextureID = "rbxassetid://3852351204"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Slide2"].TextureID = "rbxassetid://3852351204"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Mag3"].TextureID = "rbxassetid://3852351204"
-        elseif library.flags["selected_glock"] == "Scapter" then
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Handle2"].TextureID = "rbxassetid://2225223374"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Slide2"].TextureID = "rbxassetid://2225223374"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Mag3"].TextureID = "rbxassetid://2225223374"
-        elseif library.flags["selected_glock"] == "Oxide Blaze" then
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Handle2"].TextureID = "rbxassetid://6677162230"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Slide2"].TextureID = "rbxassetid://6677162230"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Mag3"].TextureID = "rbxassetid://6677162230"
-        elseif library.flags["selected_glock"] == "White Sauce" then
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Handle2"].TextureID = "rbxassetid://4370133907"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Slide2"].TextureID = "rbxassetid://4370133907"
-            game.ReplicatedStorage.Viewmodels["v_Glock"]["Mag3"].TextureID = "rbxassetid://4370133907"
-        elseif library.flags["selected_glock2"] ==  "Default"then
-            setGlock()
-        elseif library.flags["selected_glock2"] == "Soul" then
-            game.ReplicatedStorage.Viewmodels["v_Glock"]:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://6477313539')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
+function runKnife()
+    if library.flags["knife_changer"] then
+        if library.flags["NewKnife"] == "Bayonet" then
+            setBay()
+            if library.flags["bay_skin"] == "Vanilla" then
+                setBay()
+            elseif library.flags["bay_skin"] == "Hallows" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://3037384053"
+            elseif library.flags["bay_skin"] == "Twitch" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://3037442406"
+            elseif library.flags["bay_skin"] == "Sapphire" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://3086628858"
+            elseif library.flags["bay_skin"] == "Crow" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://3037381136"
+            elseif library.flags["bay_skin"] == "Cosmos" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://3037403943"
+            elseif library.flags["bay_skin"] == "Digital" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://3037376419"
+            elseif library.flags["bay_skin"] == "Topaz" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://3037434456"
+            elseif library.flags["bay_skin"] == "Racer" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://4614510987"
+            elseif library.flags["bay_skin"] == "RSL" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://3366908735"
+            elseif library.flags["bay_skin"] == "Easy-Bake" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://2231157740"
+            elseif library.flags["bay_skin"] == "Frozen Dream" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://3037412263"
+            elseif library.flags["bay_skin"] == "Intertwine" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://3148103638"
+            elseif library.flags["bay_skin"] == "Goo" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://4229838546"
+            elseif library.flags["bay_skin"] == "Consumed" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]].Handle.TextureID = "rbxassetid://4204673536"
             end
-            Model:Destroy()
-            game.ReplicatedStorage.Viewmodels["v_Soul Pistol"].Name = "v_Glock"
         end
     end
 end
+
 
 function setSG()
     if game.ReplicatedStorage["Viewmodels"]:FindFirstChild("v_SG", true) then
@@ -1391,6 +1518,7 @@ function setSG()
     	Model:Destroy()
 	end
 end
+
 
 function runSG()
     if library.flags["sg_skin"] then
@@ -1527,7 +1655,7 @@ function runM4()
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://9116144313"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://9116144313"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://9116144313"
-        elseif library.flags["selected_m41"] == "Howl" then
+        elseif library.flags["selected_m4"] == "Howl" then
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://6451097179"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://6451097179"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://6451097179"
@@ -1537,7 +1665,7 @@ function runM4()
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://6451097179"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://6451097179"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://6451097179"
-        elseif library.flags["selected_m41"] == "Neon Revolution" then
+        elseif library.flags["selected_m4"] == "Neon Revolution" then
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://9639807810"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://9639807810"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://9639807810"
@@ -1547,7 +1675,7 @@ function runM4()
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://9639807810"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://9639807810"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://9639807810"
-        elseif library.flags["selected_m41"] == "Dragon" then
+        elseif library.flags["selected_m4"] == "Dragon" then
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://6522624583"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://6522624583"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://6522624583"
@@ -1557,7 +1685,7 @@ function runM4()
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://6522624583"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://6522624583"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://6522624583"
-        elseif library.flags["selected_m41"] == "Prey" then
+        elseif library.flags["selected_m4"] == "Prey" then
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://6662202702"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://6662202702"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://6662202702"
@@ -1571,532 +1699,6 @@ function runM4()
     end
 end
 
-function runKnife()
-    if library.flags["knife_changer"] then
-        if library.flags["selected_knife2"] == "Darkheart" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9754357997')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9754357997')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Darkheart"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Darkheart"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"].Handle.TextureID = "rbxassetid://7911043090"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"].Handle.TextureID = "rbxassetid://7911043090"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Darkheart"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]].Handle.TextureID = "rbxassetid://7911043090"
-            end
-        elseif library.flags["selected_knife"] == "Butterfly Naval" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9765232669')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9765232669')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Naval"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Naval"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://6568014567"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Naval"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_LHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_RHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_Blade"].TextureID = "rbxassetid://6568014567"
-            end
-        elseif library.flags["selected_knife2"] == "Ban Hammer" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://6558454823')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://6558454823')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            wait()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Ban Hammer"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Ban Hammer"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"].Handle.TextureID = "rbxassetid://7911043090"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"].Handle.TextureID = "rbxassetid://7911043090"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Ban Hammer"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]].Handle.TextureID = "rbxassetid://7911043090"
-            end
-        elseif library.flags["selected_knife2"] == "Illumina" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://6551595860')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://6551595860')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            wait()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Illumina"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Illumina"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"].Handle.TextureID = "rbxassetid://7911043090"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"].Handle.TextureID = "rbxassetid://7911043090"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Illumina"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]].Handle.TextureID = "rbxassetid://7911043090"
-            end
-        elseif library.flags["selected_knife2"] == "Fists" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://6855487373')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://6855487373')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            wait()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Fisticuffs"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Fisticuffs"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"].Handle.TextureID = "rbxassetid://7911043090"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"].Handle.TextureID = "rbxassetid://7911043090"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Fisticuffs"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]].Handle.TextureID = "rbxassetid://7911043090"
-            end
-        elseif library.flags["selected_knife"] == "Butterfly Vanilla" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764897331')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764897331')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            wait()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Vanilla"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Vanilla"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://9639644440"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://9639644440"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://9639644440"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://9639644440"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://9639644440"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://9639644440"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Vanilla"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_LHandle"].TextureID = "rbxassetid://9639644440"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_RHandle"].TextureID = "rbxassetid://9639644440"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_Blade"].TextureID = "rbxassetid://9639644440"
-            end
-        elseif library.flags["selected_knife"] == "Butterfly Sapphire" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764912815')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764912815')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Sapphire"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Sapphire"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://6568014567"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Sapphire"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_LHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_RHandle"].TextureID = "rbxassetid://6568014567"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_Blade"].TextureID = "rbxassetid://6568014567"
-            end
-        elseif library.flags["selected_knife"] == "Butterfly Ruby" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764920083')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764920083')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Ruby"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Ruby"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Ruby"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-            end
-        elseif library.flags["selected_knife"] == "Butterfly Bloodwidow" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764917617')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764917617')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Bloodwidow"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Bloodwidow"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Bloodwidow"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-            end
-        elseif library.flags["selected_knife"] == "Butterfly Twitch" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764914860')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764914860')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Twitch"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Twitch"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Twitch"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-            end
-        elseif library.flags["selected_knife"] == "Butterfly Hallows" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764948637')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9764948637')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Hallows"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Hallows"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Butterfly Hallows"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-            end
-        elseif library.flags["selected_knife2"] == "funeral's" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9765743046')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9765743046')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["funeral's Butterfly"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["funeral's Butterfly"].Name = "v_T Knife"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-            else
-                game.ReplicatedStorage.Viewmodels["funeral's Butterfly"].Name = "v_".. library.flags["knife_type"]
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_LHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_RHandle"].TextureID = "rbxassetid://841632940"
-                game.ReplicatedStorage.Viewmodels["v_"..library.flags["knife_type"]]["Butterfly_Blade"].TextureID = "rbxassetid://841632940"
-            end
-        elseif library.flags["selected_knife1"] == "Bayonet Hallows" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9801158165')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9801158165')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Bayonet hallows"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Bayonet hallows"].Name = "v_T Knife"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Bayonet hallows"].Name = "v_".. library.flags["knife_type"]
-            end
-        elseif library.flags["selected_knife1"] == "Bayonet Sapphire" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9802066772')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9802066772')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Bayonet Sapphire"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Bayonet Sapphire"].Name = "v_T Knife"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Bayonet Sapphire"].Name = "v_".. library.flags["knife_type"]
-            end
-        elseif library.flags["selected_knife1"] == "Bayonet Intertwine" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9802072297')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9802072297')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Bayonet Intertwine"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Bayonet Intertwine"].Name = "v_T Knife"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Bayonet Intertwine"].Name = "v_".. library.flags["knife_type"]
-            end
-        elseif library.flags["selected_knife1"] == "Bayonet Twitch" then
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-                game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-            else
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["knife_type"]]:Destroy()
-            end
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9802062536')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9802062536')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-                Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            if library.flags["knife_type"] == "Default Knives" then
-                game.ReplicatedStorage.Viewmodels["v_Bayonet Twitch"].Name = "v_CT Knife"
-                game.ReplicatedStorage.Viewmodels["v_Bayonet Twitch"].Name = "v_T Knife"
-            else
-                game.ReplicatedStorage.Viewmodels["v_Bayonet Twitch"].Name = "v_".. library.flags["knife_type"]
-            end
-        end
-    end
-end
 
 function setAWP()
     if game.ReplicatedStorage["Viewmodels"]:FindFirstChild("v_AWP", true) then
@@ -2845,12 +2447,6 @@ function loadskins()
     if library.flags["sg_skin"] then
         runSG()
     end
-    if library.flags["glock_skin"] then
-        runGlock()
-    end
-    if library.flags["usp_skin"] then
-        runUSP()
-    end
 end
 
 local BombTimer = 40
@@ -3024,6 +2620,7 @@ function onStep()
     end
     if weapon.alive then
         local currentState = localPlayer.Character.Humanoid:GetState()
+        hookJp = library.flags["jump_bug"] and isButtonDown(library.flags["jb_bind"])
         if weapon.triggerbot and not triggerbotDebounce and isButtonDown(library.flags["trigger_keybind"]) then
             local raycastParams = RaycastParams.new();raycastParams.FilterType = Enum.RaycastFilterType.Blacklist;raycastParams.FilterDescendantsInstances = {camera,localPlayer.Character,workspace.Debris,workspace.Map.SpawnPoints}
             local raycastResult = workspace:Raycast(camera.CFrame.p, camera.CFrame.LookVector * 4096, raycastParams)
@@ -3067,7 +2664,22 @@ function onStep()
                 end
             end
         end
-
+        if library.flags["edge_bug"] and not ebCooldown and isButtonDown(library.flags["eb_bind"]) then
+            if oldState == Enum.HumanoidStateType.Freefall and currentState == Enum.HumanoidStateType.Landed then
+                ebCooldown = true
+                local dir = localPlayer.Character.HumanoidRootPart.Velocity
+                for i=1,5 do wait()
+                    localPlayer.Character.HumanoidRootPart.Velocity = (Vector3.new(1.2,0,1.2) * dir) - Vector3.new(0,15,0)
+                end
+                wait()
+                localPlayer.Character.HumanoidRootPart.Velocity *= Vector3.new(1.8,1,1.8)
+                spawn(function()
+                    wait(0.075)
+                    ebCooldown = false
+                end)
+            end
+        end
+        localPlayer.Cash.Value = library.flags["inf_cash"] and 16000 or localPlayer.Cash.Value
         oldState = currentState
         local btTime = library.flags["backtrack_time"]/1000
         local trans = library.flags["backtrack_transparency"]/100
@@ -3107,6 +2719,19 @@ function onStep()
         client.resetaccuracy()
     end
     localPlayer.PlayerGui.GUI.SuitZoom.Visible = false
+    if not library.flags["drawing_enabled"] or not library.flags["velo_graph"] then
+        for i,v in ipairs(lines) do
+            v:Remove()
+            table.remove(lines,i)
+        end
+    end
+    wIndicator.Visible = library.flags["drawing_enabled"] and library.flags["wasd_indicator"]
+    aIndicator.Visible = library.flags["drawing_enabled"] and library.flags["wasd_indicator"]
+    sIndicator.Visible = library.flags["drawing_enabled"] and library.flags["wasd_indicator"]
+    dIndicator.Visible = library.flags["drawing_enabled"] and library.flags["wasd_indicator"]
+    spaceIndicator.Visible = library.flags["drawing_enabled"] and library.flags["wasd_indicator"]
+    ctrlIndicator.Visible = library.flags["drawing_enabled"] and library.flags["wasd_indicator"]
+    veloIndicator.Visible = library.flags["velo_graph"] and library.flags["drawing_enabled"]
     if library.flags["world_gradient"] then
         lighting.Ambient = library.flags["gradient_color"]
         lighting.OutdoorAmbient = library.flags["outdoor_gradient_color"]
@@ -3126,7 +2751,7 @@ function onStep()
 end
 
 
-game.Players.LocalPlayer.Additionals.TotalDamage.Changed:Connect(function(val)
+localPlayer.Additionals.TotalDamage.Changed:Connect(function(val)
 	if current == 0 then return end
 	coroutine.wrap(function()
 		if library.flags["hitmarkers"] then
