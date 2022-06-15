@@ -14,7 +14,7 @@
 repeat wait() until game:IsLoaded()
 --if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
-local ver = "1.4.0"
+local ver = "1.4.1"
 --files
 if not isfolder("alora") then
     makefolder("alora")
@@ -1315,9 +1315,9 @@ drawingFrame.Visible = false
 
 local rifles,rifleFrame = skinsTab:createGroup(0)
 local snipers,sniperFrame = skinsTab:createGroup(1)
+local pistols,pistolFrame = skinsTab:createGroup(1)
 
 local glove,gloveFrame = skinsTab:createGroup(0)
-local pistols,pistolFrame = skinsTab:createGroup(0)
 local knife,knifeFrame = skinsTab:createGroup(1)
 
 local karambit,karambitFrame = skinsTab:createGroup(1)
@@ -1331,32 +1331,28 @@ local oldbutterfly,oldbutterflyFrame = skinsTab:createGroup(1)
 local skinToggle,skinToggleFrame = skinsTab:createGroup(0)
 local skinTabToggle = true
 
-rifles:addToggle({text = "AK47", flag = "ak_skin"})
-rifles:addList({text = "Skins",flag = "selected_ak",values= {"Disabled","Default","Eve","Galaxy Corpse","Goddess","Hallows","Mean Green","Scapter","Skin Committee","Survivor","Variant Camo","VAV","Yltude","[CBCL] Hypersonic","[CBCL] Outlaws"}})
-rifles:addList({text = "CS Skins", flag = "selected_ak1", values = {"Disabled","Default", "Aquamarine Revenge","Asiimov","Bloodsport","Case Hardened","Chromatic Abberation","Legion of Anubis","Neon Rider","Nightmare","Redline","Vulcan","Wild Lotus"}}) 
-rifles:addList({text = "Models", flag = "selected_ak2",values = {"Disabled","Default","Pearl I","Pearl II","Ivory","Darkheart","Draco"}}) 
+rifles:addToggle({text = "Rifles", flag = "sc_rifles"})
+rifles:addList({text = "AK47",flag = "selected_ak",values= {"Disabled","Stock","Eve","Galaxy Corpse","Goddess","Hallows","Mean Green","Outrunner","Scapter","Skin Committee","Survivor","Variant Camo","VAV","Yltude","[CBCL] Hypersonic","[CBCL] Outlaws"}})
+rifles:addList({text = "AK47 (CS)", flag = "selected_ak1", values = {"Disabled","Stock", "Aquamarine Revenge","Asiimov","Bloodsport","Case Hardened","Chromatic Abberation","Legion of Anubis","Neon Rider","Nightmare","Redline","Vulcan","Wild Lotus"}}) 
+rifles:addList({text = "Models", flag = "selected_ak2",values = {"Disabled","Stock","Pearl I","Pearl II","Ivory","Darkheart","Draco"}}) 
 rifles:addDivider()
-rifles:addToggle({text = "M4A4", flag = "m4_skin"})
-rifles:addList({text = "Skins",flag = "selected_m4",values= {"Disabled","Default","Delinquent","Devil","Jester","King","Regina","[CBCL] BOT[s]","[CBCL] Endline","Dragon","Howl","Neon Revolution","Prey"}})
-rifles:addDivider()
-rifles:addToggle({text = "SG", flag = "sg_skin"})
-rifles:addList({text = "Skins",flag = "selected_sg",values= {"Disabled","Default","Drop Out","Variant Camo","Yltude","[CBCL] DropX"}})
+rifles:addList({text = "M4A4",flag = "selected_m4",values= {"Disabled","Stock","Delinquent","Devil","Jester","King","[CBCL] BOT[s]","[CBCL] Endline","Dragon","[BF] Howl","[BF] Regina"}--[[,callback = function(val) print(val) end]]})
+rifles:addList({text = "M4A1-s",flag = "selected_a1",values= {"Disabled","Stock","Animatic","Heavens Gates","Lunar","[BF] Black Death","[BF] Hyper Beast"}})
+rifles:addList({text = "SG",flag = "selected_sg",values= {"Disabled","Stock","Drop Out","Variant Camo","Yltude","[CBCL] DropX"}})
 
-snipers:addToggle({text = "AWP", flag = "awp_skin"}) 
-snipers:addList({text = "Skins",flag = "selected_awp",values = {"Disabled","Default","Darkness","Grepkin","Grim","Hika","Nerf","Pinkie","Regina","Scapter","Weeb","[CBCL] Blastech","[CBCL] JTF2"}})
-snipers:addList({text = "CS Skins", flag = "selected_awp1", values = {"Disabled","Default","Ancient Dragon","Dragon Lore","Gungnir","Hyper Beast","Mecha Dragon","Nerf","Oni Taiji","Prince","Twitch"}}) 
-snipers:addList({text = "Models", flag = "selected_awp2",values = {"Disabled","Default","Codol","Freedom","Forsaken Operator","Barrett","BSW-460"}}) 
-snipers:addDivider() 
-snipers:addToggle({text = "Scout", flag = "SSG_skin"}) 
-snipers:addList({text = "Skins", flag = "selected_ssg", values = {"Disabled","Default","Hellborn","Neon Regulation","Xmas"}, callback = runSSG}) 
-snipers:addList({text = "Models", flag = "selected_ssg2", values = {"Disabled", "Default","OG Xmas", "Newan", "Outlaw"}, callback = runSSG}) 
+snipers:addToggle({text = "Snipers", flag = "sc_snipers"}) 
+snipers:addList({text = "AWP",flag = "selected_awp",values = {"Disabled","Stock","Darkness","Grepkin","Grim","Hika","Nerf","Pinkie","Regina","Scapter","Weeb","[CBCL] Blastech","[CBCL] JTF2"}})
+snipers:addList({text = "AWP (CS)", flag = "selected_awp1", values = {"Disabled","Stock","Ancient Dragon","Dragon Lore","Gungnir","Hyper Beast","Mecha Dragon","Nerf","Oni Taiji","Prince","Twitch"}}) 
+snipers:addList({text = "Models", flag = "selected_awp2",values = {"Disabled","Stock","Codol","Freedom","Forsaken Operator","Barrett","BSW-460"}}) 
+snipers:addDivider()
+snipers:addList({text = "Scout", flag = "selected_ssg", values = {"Disabled","Stock","Hellborn","Neon Regulation","Xmas"}, callback = runSSG}) 
+snipers:addList({text = "Models", flag = "selected_ssg2", values = {"Disabled", "Stock","OG Xmas", "Newan", "Outlaw"}, callback = runSSG}) 
 
-pistols:addToggle({text = "Desert Eagle", flag = "deagle_skin"}) 
-pistols:addList({text = "Skins", flag = "selected_deagle", values = {"Disabled","Default","Code Red","Glittery","Grim","Honor-Bound","Independence","Racer","Scapter","Skin Committee","Weeb","Xmas","[CBCL] DropX","[CBCL] TC"}, callback = runDeagle}) 
-pistols:addList({text = "Models", flag = "selected_deagle2", values = {"Disabled", "Default", "Cyber"}, callback = runDeagle})
+pistols:addToggle({text = "Pistols", flag = "sc_pistols"}) 
+pistols:addList({text = "Deagle", flag = "selected_deagle", values = {"Disabled","Stock","Code Red","Glittery","Grim","Honor-Bound","Independence","Racer","Scapter","Skin Committee","Weeb","Xmas","[CBCL] DropX","[CBCL] TC"}, callback = runDeagle}) 
 
-knife:addToggle({text = "Knives", flag = "knife_changer"})
-knife:addList({text = "Your Knife", flag = "OldKnife", values = {"Default Knives","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
+knife:addToggle({text = "Knives", flag = "sc_knives"})
+knife:addList({text = "Your Knife", flag = "OldKnife", values = {"Stock Knives","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
 
 local sexdogwwdw = {}
 knife:addList({text = "New Type",flag = "NewKnife",values = {"Bayonet","Old Bayonet","Butterfly Knife","Old Butterfly Knife","Karambit","Old Karambit","Gut Knife","Huntsman Knife"},callback = function(val)
@@ -1370,17 +1366,17 @@ knife:addList({text = "New Type",flag = "NewKnife",values = {"Bayonet","Old Bayo
     huntsmanFrame.Visible = val == "Huntsman Knife"
 end})
 
-karambit:addList{text = "Knife Skins",flag = "kar_skin",values = {"Vanilla","Bloodwidow","Cob Web","Cosmos","Consumed","Death Wish","Digital","Drop Out","Festive","Gold","Goo","Hallows","Jester","Lantern","Liberty Camo","Peppermint","Pizza","Ruby","Scapter","Topaz","Twitch"}}
-bayonet:addList{text = "Knife Skins",flag = "bay_skin",values = {"Vanilla","Consumed","Cosmos","Crow","Digital","Easy-Bake","Frozen Dream","Goo","Hallows","Intertwine","RSL","Racer","Sapphire","Topaz","Twitch"}}
-oldbayonet:addList{text = "Knife Skins",flag = "oldbay_skin",values = {"Vanilla"}}
-oldKara:addList{text = "Knife Skins",flag = "oldkar_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Glossed","Gold","Hallows","Jade Dream","Lantern","Marbelized","Naval","Ruby","Scapter","Splattered","Twitch","Wetland"}}
-huntsman:addList{text = "Knife Skins",flag = "hunts_skin",values = {"Vanilla"}}
-butterfly:addList{text = "Knife Skins",flag = "butter_skin",values = {"Vanilla"}}
-oldbutterfly:addList{text = "Knife Skins",flag = "oldbutter_skin",values = {"Vanilla"}}
+karambit:addList{text = "Karambit",flag = "kar_skin",values = {"Vanilla","Bloodwidow","Cob Web","Cosmos","Consumed","Death Wish","Digital","Drop Out","Festive","Gold","Goo","Hallows","Jester","Lantern","Liberty Camo","Peppermint","Pizza","Ruby","Scapter","Topaz","Twitch"}}
+oldKara:addList{text = "Karambit",flag = "oldkar_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Glossed","Gold","Hallows","Jade Dream","Lantern","Marbelized","Naval","Ruby","Scapter","Splattered","Twitch","Wetland"}}
+bayonet:addList{text = "Bayonet",flag = "bay_skin",values = {"Vanilla","Consumed","Cosmos","Crow","Digital","Easy-Bake","Frozen Dream","Goo","Hallows","Intertwine","RSL","Racer","Sapphire","Topaz","Twitch"}}
+oldbayonet:addList{text = "Bayonet",flag = "oldbay_skin",values = {"Vanilla"}}
+butterfly:addList{text = "Butterfly",flag = "butter_skin",values = {"Vanilla"}}
+oldbutterfly:addList{text = "Butterfly",flag = "oldbutter_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Hallows","Icicle","Jade Dream","Marbelized","Naval","Reaper","Ruby","Scapter","Splattered","Twitch","Wetland","White Boss"}}
+huntsman:addList{text = "Huntsman",flag = "hunts_skin",values = {"Vanilla"}}
 
 glove:addToggle({text = "Gloves",flag = "glove_changer"})
-glove:addList({text = "Skins",flag = "selected_glove",values = {"Disabled", "Default"}})
-glove:addList({text = "Customs",flag = "selected_glove1",values = {"Disabled", "Default"}})
+glove:addList({text = "Skins",flag = "selected_glove",values = {"Disabled", "Stock"}})
+glove:addList({text = "Customs",flag = "selected_glove1",values = {"Disabled", "Stock"}})
 
 
 skinToggle:addToggle({text = "Auto Load",flag = "autoload"})
@@ -1392,7 +1388,7 @@ skinToggle:addButton({text = "Toggle Tabs", callback = function()
     skinTabToggle = not skinTabToggle
     rifleFrame.Visible  =  skinTabToggle
     sniperFrame.Visible =  skinTabToggle
-    pistolFrame.Visible = not skinTabToggle
+    pistolFrame.Visible = skinTabToggle
     knifeFrame.Visible = not skinTabToggle
     gloveFrame.Visible = not skinTabToggle
     if knifeFrame.Visible == true then
@@ -1415,7 +1411,7 @@ skinToggle:addButton({text = "Toggle Tabs", callback = function()
 
 end})
 
-pistolFrame.Visible = false
+--pistolFrame.Visible = false
 knifeFrame.Visible  = false
 gloveFrame.Visible = false
 bayonetFrame.Visible = false
@@ -1428,7 +1424,7 @@ huntsmanFrame.Visible = false
 
 
 function setBay()
-    if library.flags["OldKnife"] == "Default Knives" then
+    if library.flags["OldKnife"] == "Stock Knives" then
         game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
         game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
     else
@@ -1441,7 +1437,7 @@ function setBay()
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    if library.flags["OldKnife"] == "Default Knives" then
+    if library.flags["OldKnife"] == "Stock Knives" then
         game.ReplicatedStorage.Viewmodels["v_Bayonet"].Name = "v_CT Knife"
         game.ReplicatedStorage.Viewmodels["v_Bayonet"].Name = "v_T Knife"
     else
@@ -1449,8 +1445,30 @@ function setBay()
     end
 end
 
+function setoldButter()
+    if library.flags["OldKnife"] == "Stock Knives" then
+        game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
+        game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
+    else
+        game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
+    end
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://9918095549')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
+    end
+    Model:Destroy()
+    if library.flags["OldKnife"] == "Stock Knives" then
+        game.ReplicatedStorage.Viewmodels["v_oldButterfly"].Name = "v_CT Knife"
+        game.ReplicatedStorage.Viewmodels["v_oldButterfly"].Name = "v_T Knife"
+    else
+        game.ReplicatedStorage.Viewmodels["v_oldButterfly"].Name = "v_".. library.flags["OldKnife"]
+    end
+end
+
 function setoldKar()
-    if library.flags["OldKnife"] == "Default Knives" then
+    if library.flags["OldKnife"] == "Stock Knives" then
         game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
         game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
     else
@@ -1463,7 +1481,7 @@ function setoldKar()
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    if library.flags["OldKnife"] == "Default Knives" then
+    if library.flags["OldKnife"] == "Stock Knives" then
         game.ReplicatedStorage.Viewmodels["v_oldKarambit"].Name = "v_CT Knife"
         game.ReplicatedStorage.Viewmodels["v_oldKarambit"].Name = "v_T Knife"
     else
@@ -1472,7 +1490,7 @@ function setoldKar()
 end
 
 function setKar()
-    if library.flags["OldKnife"] == "Default Knives" then
+    if library.flags["OldKnife"] == "Stock Knives" then
         game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
         game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
     else
@@ -1485,7 +1503,7 @@ function setKar()
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    if library.flags["OldKnife"] == "Default Knives" then
+    if library.flags["OldKnife"] == "Stock Knives" then
         game.ReplicatedStorage.Viewmodels["v_Karambit"].Name = "v_CT Knife"
         game.ReplicatedStorage.Viewmodels["v_Karambit"].Name = "v_T Knife"
     else
@@ -1494,7 +1512,7 @@ function setKar()
 end
 
 function runKnife()
-    if library.flags["knife_changer"] then
+    if library.flags["sc_knives"] then
         if library.flags["NewKnife"] == "Bayonet" then
             setBay()
             if library.flags["bay_skin"] == "Vanilla" then
@@ -1621,9 +1639,155 @@ function runKnife()
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://841623787"
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://841623787"
             end
+        elseif library.flags["NewKnife"] == "Old Butterfly Knife" then
+            setoldButter()
+            if library.flags["oldbutter_skin"] == "Vanilla" then
+                setoldButter()
+            elseif library.flags["oldbutter_skin"] == "Twitch" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://1342643466"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://1342643466"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://1342643466"
+            elseif library.flags["oldbutter_skin"] == "Wetland" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://540165779"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://540165779"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://540165779"
+            elseif library.flags["oldbutter_skin"] == "Naval" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://540165614"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://540165614"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://540165614"
+            elseif library.flags["oldbutter_skin"] == "Ruby" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://841632940"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://841632940"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://841632940"
+            elseif library.flags["oldbutter_skin"] == "Splattered" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://1158075574"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://1158075574"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://1158075574"
+            elseif library.flags["oldbutter_skin"] == "Frozen Dream" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://1257243213"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://1257243213"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://1257243213"
+            elseif library.flags["oldbutter_skin"] == "Hallows" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://1141692457"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://1141692457"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://1141692457"
+            elseif library.flags["oldbutter_skin"] == "Bloodwidow" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://841613162"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://841613162"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://841613162"
+            elseif library.flags["oldbutter_skin"] == "Scapter" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://2270529123"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://2270529123"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://2270529123"
+            elseif library.flags["oldbutter_skin"] == "White Boss" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://560174166"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://560174166"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://560174166"
+            elseif library.flags["oldbutter_skin"] == "Crippled Fade" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://841623423"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://841623423"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://841623423"
+            elseif library.flags["oldbutter_skin"] == "Marbelized" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://540165482"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://540165482"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://540165482"
+            elseif library.flags["oldbutter_skin"] == "Reaper" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://2499215485"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://2499215485"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://2499215485"
+            elseif library.flags["oldbutter_skin"] == "Icicle" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://2664356728"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://2664356728"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://2664356728"
+            elseif library.flags["oldbutter_skin"] == "Jade Dream" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://540165364"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://540165364"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://540165364"
+            end
         end
     end
 end
+
+function setA1()
+    if game.ReplicatedStorage["Viewmodels"]:FindFirstChild("v_M4A1", true) then
+        game.ReplicatedStorage.Viewmodels["v_M4A1"]:Destroy()
+        wait()
+        local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+        game:GetObjects('rbxassetid://7311331935')[1].Parent = Model1
+        Model = game.ReplicatedStorage.Viewmodels.Model
+        for _, Child in pairs(Model:GetChildren()) do
+            Child.Parent = Model.Parent
+        end
+        Model:Destroy()
+    else
+        local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+        game:GetObjects('rbxassetid://7311331935')[1].Parent = Model1
+        Model = game.ReplicatedStorage.Viewmodels.Model
+        for _, Child in pairs(Model:GetChildren()) do
+            Child.Parent = Model.Parent
+        end
+        Model:Destroy()
+    end
+end
+
+function runA1()
+    if library.flags["sc_rifles"] then
+        if library.flags["selected_a1"] == "Stock" then
+            setA1()
+        elseif library.flags["selected_a1"] == "[BF] Hyper Beast" then
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer2"].TextureID = "rbxassetid://6451124368"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer"].TextureID = "rbxassetid://6451124368"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Barrel"].TextureID = "rbxassetid://6451126496"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Handle"].TextureID = "rbxassetid://6451126496"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Bolt"].TextureID = "rbxassetid://6451126496"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Grip"].TextureID = "rbxassetid://6451126496"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Back"].TextureID = "rbxassetid://6451126496"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Top"].TextureID = "rbxassetid://6451126496"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Mag"].TextureID = "rbxassetid://6451127619"
+        elseif library.flags["selected_a1"] == "[BF] Black Death" then
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer2"].TextureID = "rbxassetid://9639828499"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer"].TextureID = "rbxassetid://9639828499"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Barrel"].TextureID = "rbxassetid://9639827892"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Handle"].TextureID = "rbxassetid://9639827892"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Bolt"].TextureID = "rbxassetid://9639827892"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Grip"].TextureID = "rbxassetid://9639827892"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Back"].TextureID = "rbxassetid://9639827892"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Top"].TextureID = "rbxassetid://9639827892"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Mag"].TextureID = "rbxassetid://9639829370"
+        elseif library.flags["selected_a1"] == "Heavens Gates" then
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer2"].TextureID = "rbxassetid://2524141970"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer"].TextureID = "rbxassetid://2524141970"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Barrel"].TextureID = "rbxassetid://2524142163"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Handle"].TextureID = "rbxassetid://2524142163"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Bolt"].TextureID = "rbxassetid://2524142163"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Grip"].TextureID = "rbxassetid://2524142163"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Back"].TextureID = "rbxassetid://2524142163"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Top"].TextureID = "rbxassetid://2524142163"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Mag"].TextureID = "rbxassetid://2524139960"
+        elseif library.flags["selected_a1"] == "Lunar" then
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer2"].TextureID = "rbxassetid://3414435728"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer"].TextureID = "rbxassetid://3414435728"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Barrel"].TextureID = "rbxassetid://3414435728"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Handle"].TextureID = "rbxassetid://3414435472"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Bolt"].TextureID = "rbxassetid://2524142163"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Grip"].TextureID = "rbxassetid://3414435472"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Back"].TextureID = "rbxassetid://3414435472"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Top"].TextureID = "rbxassetid://3414435472"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Mag"].TextureID = "rbxassetid://3414435122"
+        elseif library.flags["selected_a1"] == "Animatic" then 
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer2"].TextureID = "rbxassetid://1630969918"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer"].TextureID = "rbxassetid://1630969918"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Barrel"].TextureID = "rbxassetid://1630969918"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Handle"].TextureID = "rbxassetid://1630969918"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Bolt"].TextureID = "rbxassetid://1630969918"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Grip"].TextureID = "rbxassetid://1630969918"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Back"].TextureID = "rbxassetid://1630969918"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Top"].TextureID = "rbxassetid://1630969918"
+            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Mag"].TextureID = "rbxassetid://1232538589"
+        end
+    end
+end
+
 
 
 function setSG()
@@ -1650,8 +1814,8 @@ end
 
 
 function runSG()
-    if library.flags["sg_skin"] then
-        if library.flags["selected_sg"] == "Default" then
+    if library.flags["sc_rifles"] then
+        if library.flags["selected_sg"] == "Stock" then
             setSG()
         elseif library.flags["selected_sg"] == "Yltude" then
             game.ReplicatedStorage.Viewmodels["v_SG"]["Handle"].TextureID = "rbxassetid://3270746596"
@@ -1711,8 +1875,8 @@ function setM4()
 end
 
 function runM4()
-    if library.flags["m4_skin"] then
-        if library.flags["selected_m4"] == "Default" then
+    if library.flags["sc_rifles"] then
+        if library.flags["selected_m4"] == "Stock" then
             setM4()
         elseif library.flags["selected_m4"] == "Devil" then
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://1229672746"
@@ -1774,7 +1938,7 @@ function runM4()
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://4587060763"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://4587060763"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://4587060763"
-        elseif library.flags["selected_m4"] == "Regina" then
+        elseif library.flags["selected_m4"] == "[BF] Regina" then
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://9116144313"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://9116144313"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://9116144313"
@@ -1784,7 +1948,7 @@ function runM4()
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://9116144313"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://9116144313"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://9116144313"
-        elseif library.flags["selected_m4"] == "Howl" then
+        elseif library.flags["selected_m4"] == "[BF] Howl" then
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://6451097179"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://6451097179"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://6451097179"
@@ -1794,17 +1958,7 @@ function runM4()
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://6451097179"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://6451097179"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://6451097179"
-        elseif library.flags["selected_m4"] == "Neon Revolution" then
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://9639807810"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://9639807810"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://9639807810"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = "rbxassetid://9639807810"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = "rbxassetid://9639807810"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = "rbxassetid://9639807810"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://9639807810"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://9639807810"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://9639807810"
-        elseif library.flags["selected_m4"] == "Dragon" then
+        elseif library.flags["selected_m4"] == "[BF] Dragon" then
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://6522624583"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://6522624583"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://6522624583"
@@ -1814,16 +1968,6 @@ function runM4()
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://6522624583"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://6522624583"
             game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://6522624583"
-        elseif library.flags["selected_m4"] == "Prey" then
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://6662202702"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://6662202702"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://6662202702"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = "rbxassetid://6662202702"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = "rbxassetid://6662202702"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = "rbxassetid://6662202702"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://6662202702"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://6662202702"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://6662202702"
         end
     end
 end
@@ -1844,8 +1988,8 @@ function setAWP()
 end
 
 function  runAWP()
-    if library.flags["awp_skin"] then
-        if library.flags["selected_awp"] == "Default" then
+    if library.flags["sc_snipers"] then
+        if library.flags["selected_awp"] == "Stock" then
             setAWP()
         elseif library.flags["selected_awp"] == "Grepkin" then
             game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://3037064717"
@@ -1924,7 +2068,7 @@ function  runAWP()
             game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://7943837662"
             game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://7943837662"
             game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://7943837662"
-        elseif library.flags["selected_awp1"] == "Default" then
+        elseif library.flags["selected_awp1"] == "Stock" then
 		    setAWP()
         elseif library.flags["selected_awp1"] == "Ancient Dragon" then
             game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://6668821785"
@@ -1997,7 +2141,7 @@ function  runAWP()
             game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://6657425659"
             game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://6657425659"
             game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://6657425659"
-        elseif library.flags["selected_awp2"] == "Default" then
+        elseif library.flags["selected_awp2"] == "Stock" then
             setAWP()
         elseif library.flags["selected_awp2"] == "Codol" then
             game.ReplicatedStorage.Viewmodels["v_AWP"]:Destroy()
@@ -2076,8 +2220,8 @@ function setAK()
 end
 
 function runAK()
-    if library.flags["ak_skin"] then
-        if library.flags["selected_ak"] == "Default" then
+    if library.flags["sc_rifles"] then
+        if library.flags["selected_ak"] == "Stock" then
             setAK()
         elseif library.flags["selected_ak"] == "[CBCL] Outlaws" then
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://2687973291"
@@ -2099,6 +2243,10 @@ function runAK()
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://3414429745"
     		game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://3414429745"
     		game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://3414429745"
+        elseif library.flags["selected_ak"] == "Outrunner" then
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://3180036472"
+    		game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://3180036472"
+    		game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://3180036472"
         elseif library.flags["selected_ak"] == "Yltude" then
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://4502750208"
     		game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://4502750208"
@@ -2131,7 +2279,7 @@ function runAK()
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://1761152207"
     		game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://1761152207"
     		game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://1761152207"
-        elseif library.flags["selected_ak1"] == "Default" then
+        elseif library.flags["selected_ak1"] == "Stock" then
             setAK()
         elseif library.flags["selected_ak1"] == "Asiimov" then
     		game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://6698314618"
@@ -2177,7 +2325,7 @@ function runAK()
     	    game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://6667790295"
     	    game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://6667791939"
     	    game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://6667791440"
-        elseif library.flags["selected_ak2"] == "Default" then
+        elseif library.flags["selected_ak2"] == "Stock" then
 		    setAK()
         elseif library.flags["selected_ak2"] == "Pearl I" then
 	        game.ReplicatedStorage.Viewmodels["v_AK47"]:Destroy()
@@ -2256,8 +2404,8 @@ function setDeagle()
 end
  
  function runDeagle()
-    if library.flags["deagle_skin"] then
-        if library.flags["selected_deagle"] == "Default" then
+    if library.flags["sc_pistols"] then
+        if library.flags["selected_deagle"] == "Stock" then
             setDeagle()
         elseif library.flags["selected_deagle"] == "Code Red" then
             game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Handle"].TextureID = "rbxassetid://6451093913"
@@ -2320,18 +2468,6 @@ end
             game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Slide"].TextureID = "rbxassetid://4587053979"
             game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Mag 2"].TextureID = "rbxassetid://4587053979"
             game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Mag"].TextureID = "rbxassetid://4587053979"
-        elseif library.flags["selected_deagle2"] == "Default" then
-            setDeagle()
-        elseif library.flags["selected_deagle2"] == "Cyber" then
-            game.ReplicatedStorage.Viewmodels["v_DesertEagle"]:Destroy()
-            local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-            game:GetObjects('rbxassetid://9489668863')[1].Parent = Model1
-            Model = game.ReplicatedStorage.Viewmodels.Model
-            for _, Child in pairs(Model:GetChildren()) do
-            Child.Parent = Model.Parent
-            end
-            Model:Destroy()
-            game.ReplicatedStorage.Viewmodels["v_Deagle_cyber"].Name = "v_DesertEagle"
         end
     end
 end
@@ -2360,8 +2496,8 @@ function setSSG()
 end
  
 function runSSG()
-    if library.flags["SSG_skin"] then
-        if library.flags["selected_ssg"] == "Default" then
+    if library.flags["sc_snipers"] then
+        if library.flags["selected_ssg"] == "Stock" then
             setSSG()
         elseif library.flags["selected_ssg"] == "Xmas" then
             game.ReplicatedStorage.Viewmodels["v_Scout"]["Handle"].TextureID = "rbxassetid://3037243593"
@@ -2381,7 +2517,7 @@ function runSSG()
             game.ReplicatedStorage.Viewmodels["v_Scout"]["Part"].TextureID = "rbxassetid://2490656082"
             game.ReplicatedStorage.Viewmodels["v_Scout"]["Slide"].TextureID = "rbxassetid://2490656082"
             game.ReplicatedStorage.Viewmodels["v_Scout"]["Slide 2"].TextureID = "rbxassetid://2490656082"
-        elseif library.flags["selected_ssg2"] == "Default" then
+        elseif library.flags["selected_ssg2"] == "Stock" then
             setSSG()
         elseif library.flags["selected_ssg2"] == "OG Xmas" then
             game.ReplicatedStorage.Viewmodels["v_Scout"]:Destroy()
@@ -2555,26 +2691,26 @@ btPart.Anchored = true
 btPart.Name = "btp"
 
 function loadskins()
-    if library.flags["ak_skin"] then
-        runAK()
+    if library.flags["sc_rifles"] then 
+        runAK()  
     end
-    if library.flags["awp_skin"] then
-        runAWP()
-    end
-    if library.flags["deagle_skin"] then
-        runDeagle()
-    end
-    if library.flags["SSG_skin"] then
-        runSSG()
-    end
-    if library.flags["knife_changer"] then
-        runKnife()
-    end
-    if library.flags["m4_skin"] then
+    if library.flags["sc_rifles"] then 
         runM4()
     end
-    if library.flags["sg_skin"] then
+    if library.flags["sc_rifles"] then 
         runSG()
+    end
+    if library.flags["sc_snipers"] then 
+        runAWP() 
+    end
+    if library.flags["sc_snipers"] then 
+        runSSG()
+    end
+    if library.flags["sc_pistols"] then  
+        runDeagle() 
+    end
+    if library.flags["sc_knives"] then 
+        runKnife() 
     end
 end
 
