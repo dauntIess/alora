@@ -12,7 +12,7 @@
 
 --]]
 repeat wait() until game:IsLoaded()
-if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
+--if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
 local ver = "1.4.1"
 --files
@@ -531,7 +531,7 @@ meta.__namecall = newcclosure(function(self,...)
             end
         end
 
-         --[[   if self.Name == "DataEvent" and args[1][4] then
+            if self.Name == "DataEvent" and args[1][4] then
                 local currentSkin = string.split(args[1][4][1],"_")[2]
                 local name = args[1][3]
                 if args[1][2] == "Both" then
@@ -540,7 +540,7 @@ meta.__namecall = newcclosure(function(self,...)
                 else
                     localPlayer["SkinFolder"][args[1][2].."Folder"][name].Value = currentSkin
                 end
-            end ]]
+            end
     end
     return oldNamecall(self,unpack(args))
 end)
@@ -1352,7 +1352,7 @@ pistols:addToggle({text = "Pistols", flag = "sc_pistols"})
 pistols:addList({text = "Deagle", flag = "selected_deagle", values = {"Disabled","Stock","Code Red","Glittery","Grim","Honor-Bound","Independence","Racer","Scapter","Skin Committee","Weeb","Xmas","[CBCL] DropX","[CBCL] TC"}, callback = runDeagle}) 
 
 knife:addToggle({text = "Knives", flag = "sc_knives"})
-knife:addList({text = "Your Knife", flag = "OldKnife", values = {"Stock Knives","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
+knife:addList({text = "Your Knife", flag = "OldKnife", values = {"T Knife","CT Knife","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
 
 local sexdogwwdw = {}
 knife:addList({text = "New Type",flag = "NewKnife",values = {"Bayonet","Old Bayonet","Butterfly Knife","Old Butterfly Knife","Karambit","Old Karambit","Gut Knife","Huntsman Knife"},callback = function(val)
@@ -1424,12 +1424,7 @@ huntsmanFrame.Visible = false
 
 
 function setBay()
-    if library.flags["OldKnife"] == "Stock Knives" then
-        game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-        game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-    else
-        game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
-    end
+    game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     game:GetObjects('rbxassetid://7311299522')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
@@ -1437,21 +1432,18 @@ function setBay()
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    if library.flags["OldKnife"] == "Stock Knives" then
-        game.ReplicatedStorage.Viewmodels["v_Bayonet"].Name = "v_CT Knife"
-        game.ReplicatedStorage.Viewmodels["v_Bayonet"].Name = "v_T Knife"
-    else
-        game.ReplicatedStorage.Viewmodels["v_Bayonet"].Name = "v_".. library.flags["OldKnife"]
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://7311299522')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
     end
+    Model:Destroy()
+    game.ReplicatedStorage.Viewmodels["v_Bayonet"].Name = "v_".. library.flags["OldKnife"]
 end
 
 function setoldButter()
-    if library.flags["OldKnife"] == "Stock Knives" then
-        game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-        game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-    else
-        game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
-    end
+    game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     game:GetObjects('rbxassetid://9918095549')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
@@ -1459,21 +1451,18 @@ function setoldButter()
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    if library.flags["OldKnife"] == "Stock Knives" then
-        game.ReplicatedStorage.Viewmodels["v_oldButterfly"].Name = "v_CT Knife"
-        game.ReplicatedStorage.Viewmodels["v_oldButterfly"].Name = "v_T Knife"
-    else
-        game.ReplicatedStorage.Viewmodels["v_oldButterfly"].Name = "v_".. library.flags["OldKnife"]
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://9918095549')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
     end
+    Model:Destroy()
+    game.ReplicatedStorage.Viewmodels["v_oldButterfly"].Name = "v_".. library.flags["OldKnife"]
 end
 
 function setoldKar()
-    if library.flags["OldKnife"] == "Stock Knives" then
-        game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-        game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-    else
-        game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
-    end
+    game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     game:GetObjects('rbxassetid://9912405446')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
@@ -1481,21 +1470,18 @@ function setoldKar()
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    if library.flags["OldKnife"] == "Stock Knives" then
-        game.ReplicatedStorage.Viewmodels["v_oldKarambit"].Name = "v_CT Knife"
-        game.ReplicatedStorage.Viewmodels["v_oldKarambit"].Name = "v_T Knife"
-    else
-        game.ReplicatedStorage.Viewmodels["v_oldKarambit"].Name = "v_".. library.flags["OldKnife"]
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://9912405446')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
     end
+    Model:Destroy()
+    game.ReplicatedStorage.Viewmodels["v_oldKarambit"].Name = "v_".. library.flags["OldKnife"]
 end
 
 function setKar()
-    if library.flags["OldKnife"] == "Stock Knives" then
-        game.ReplicatedStorage.Viewmodels["v_CT Knife"]:Destroy()
-        game.ReplicatedStorage.Viewmodels["v_T Knife"]:Destroy()
-    else
-        game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
-    end
+    game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     game:GetObjects('rbxassetid://7311329570')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
@@ -1503,12 +1489,14 @@ function setKar()
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    if library.flags["OldKnife"] == "Stock Knives" then
-        game.ReplicatedStorage.Viewmodels["v_Karambit"].Name = "v_CT Knife"
-        game.ReplicatedStorage.Viewmodels["v_Karambit"].Name = "v_T Knife"
-    else
-        game.ReplicatedStorage.Viewmodels["v_Karambit"].Name = "v_".. library.flags["OldKnife"]
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://7311329570')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
     end
+    Model:Destroy()
+    game.ReplicatedStorage.Viewmodels["v_Karambit"].Name = "v_".. library.flags["OldKnife"]
 end
 
 function runKnife()
