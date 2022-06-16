@@ -12,7 +12,7 @@
 
 --]]
 repeat wait() until game:IsLoaded()
---if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
+if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
 local ver = "1.4.1"
 --files
@@ -531,7 +531,7 @@ meta.__namecall = newcclosure(function(self,...)
             end
         end
 
-            if self.Name == "DataEvent" and args[1][4] then
+         --[[   if self.Name == "DataEvent" and args[1][4] then
                 local currentSkin = string.split(args[1][4][1],"_")[2]
                 local name = args[1][3]
                 if args[1][2] == "Both" then
@@ -540,7 +540,7 @@ meta.__namecall = newcclosure(function(self,...)
                 else
                     localPlayer["SkinFolder"][args[1][2].."Folder"][name].Value = currentSkin
                 end
-            end
+            end ]]
     end
     return oldNamecall(self,unpack(args))
 end)
@@ -2699,6 +2699,9 @@ function loadskins()
     end
     if library.flags["sc_rifles"] then 
         runSG()
+    end
+    if library.flags["sc_rifles"] then 
+        runA1()
     end
     if library.flags["sc_snipers"] then 
         runAWP() 
