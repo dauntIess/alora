@@ -12,9 +12,9 @@
 
 --]]
 repeat wait() until game:IsLoaded()
---if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
+if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
-local ver = "1.4.1"
+local ver = "1.4.6c"
 --files
 if not isfolder("alora") then
     makefolder("alora")
@@ -553,7 +553,7 @@ local configTab = library:addTab("Settings")
 
 local configGroup1 = configTab:createGroup(0)
 local configGroup = configTab:createGroup(0)
-local serverGroup = configTab:createGroup(0)
+local serverGroup = configTab:createGroup(1)
 
 
 configGroup:addColorpicker({text = "Menu Accent",flag = "menu_accent",ontop = true,color = Color3.new(0.4,0.4,0.4),callback = function(val)
@@ -581,7 +581,8 @@ configGroup1:addButton({text = "Save Config",callback = library.saveConfig})
 
 library:refreshConfigs()
 
-
+serverGroup:addList({text = "Map Material",flag = "map_material",values = {"Plastic","Glass"}})
+serverGroup:addSlider({text = "Map Reflectance",flag = "map_reflectance",min = 0,max = 100,value=14})
 serverGroup:addButton({text = "Polish Graphics",callback = function()
 	workspace:FindFirstChildOfClass('Terrain').WaterWaveSize = 0
 	workspace:FindFirstChildOfClass('Terrain').WaterWaveSpeed = 0
@@ -590,8 +591,8 @@ serverGroup:addButton({text = "Polish Graphics",callback = function()
 	game:GetService("Lighting").FogEnd = 999e3
 	for i,v in pairs(game:GetDescendants()) do
 		if v:IsA("Part") or v:IsA('BasePart') or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-			v.Material = "Plastic"
-			v.Reflectance = 0.14
+			v.Material = library.flags["map_material"]
+			v.Reflectance = library.flags["map_reflectance"]/100
 		elseif v:IsA("Decal") then
 			v.Transparency = 1
 		elseif v:IsA("Explosion") then
@@ -601,14 +602,13 @@ serverGroup:addButton({text = "Polish Graphics",callback = function()
 	end
     for _, v in pairs(workspace.Map.Regen:GetDescendants()) do
 		if v:IsA("BasePart") then
-			v.Material = "Plastic"
-            v.Reflectance = 0.14
+			v.Material = library.flags["map_material"]
+            v.Reflectance = library.flags["map_reflectance"]/100
 		end
 	end
 	for i,v in pairs(game:GetService("Lighting"):GetDescendants()) do
 		if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
 			v.Enabled = false
-            
 		end
 	end
 end})
