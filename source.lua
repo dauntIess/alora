@@ -551,9 +551,9 @@ local skinsTab = library:addTab("Skins")
 local miscTab = library:addTab("Misc")
 local configTab = library:addTab("Settings")
 
-local configGroup = configTab:createGroup(0)
 local configGroup1 = configTab:createGroup(0)
-local serverGroup = configTab:createGroup(1)
+local configGroup = configTab:createGroup(0)
+local serverGroup = configTab:createGroup(0)
 
 
 configGroup:addColorpicker({text = "Menu Accent",flag = "menu_accent",ontop = true,color = Color3.new(0.4,0.4,0.4),callback = function(val)
@@ -570,16 +570,19 @@ end})
 
 configGroup:addList({text = "Config",flag = "selected_config",skipflag = true,values = {}})
 configGroup:addButton({text = "Load Config",callback = library.loadConfig})
+configGroup:addButton({text = "Refresh Configs",callback = library.refreshConfigs})
+configGroup:addDivider()
+configGroup:addButton({text = "Delete Config",callback = library.deleteConfig})
 
 configGroup1:addTextbox({text = "config name",flag = "config_name"})
 configGroup1:addButton({text = "Save Config",callback = library.saveConfig})
-configGroup1:addButton({text = "Delete Config",callback = library.deleteConfig})
-configGroup1:addButton({text = "Refresh Configs",callback = library.refreshConfigs})
+
+
 
 library:refreshConfigs()
 
-serverGroup:addToggle({text = "Disable Global Shadows","gfxx"})
-serverGroup:addButton({text = "Delete Graphics",callback = function()
+
+serverGroup:addButton({text = "Polish Graphics",callback = function()
 	workspace:FindFirstChildOfClass('Terrain').WaterWaveSize = 0
 	workspace:FindFirstChildOfClass('Terrain').WaterWaveSpeed = 0
 	workspace:FindFirstChildOfClass('Terrain').WaterReflectance = 1
@@ -588,6 +591,7 @@ serverGroup:addButton({text = "Delete Graphics",callback = function()
 	for i,v in pairs(game:GetDescendants()) do
 		if v:IsA("Part") or v:IsA('BasePart') or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
 			v.Material = "Plastic"
+			v.Reflectance = 0.14
 		elseif v:IsA("Decal") then
 			v.Transparency = 1
 		elseif v:IsA("Explosion") then
@@ -598,7 +602,7 @@ serverGroup:addButton({text = "Delete Graphics",callback = function()
     for _, v in pairs(workspace.Map.Regen:GetDescendants()) do
 		if v:IsA("BasePart") then
 			v.Material = "Plastic"
-        --    v.Color = Color3.new(0,0,0)
+            v.Reflectance = 0.14
 		end
 	end
 	for i,v in pairs(game:GetService("Lighting"):GetDescendants()) do
