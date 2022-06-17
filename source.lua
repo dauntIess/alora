@@ -164,7 +164,16 @@ function isAlive(plr)
     return plr.Character and plr.Character:FindFirstChild("Humanoid") and plr.Character:FindFirstChild("Head") and plr.Character.Humanoid.Health > 0 and true or false
 end
 
-
+local globalPulse = 0
+local lg = coroutine.create(function()
+    while true do
+        for lh = 0, 2, 0.02 do
+            runService.RenderStepped:Wait()
+            globalPulse = math.abs(-(lh - 0.7))
+        end
+    end
+end)
+coroutine.resume(lg)
 
 function hasProperty(ins,pro)
     return pcall(function() _=ins[pro] end)
@@ -422,9 +431,6 @@ setreadonly(meta,false)
 local oldNamecall = meta.__namecall
 local oldNewindex = meta.__newindex
 
-
-
-
 meta.__newindex = newcclosure(function(self,idx,val)
     if self.Name == "Crosshair" and idx == "Visible" and val == false and localPlayer.PlayerGui.GUI.Crosshairs.Scope.Visible == false and library.flags["force_cross"] == true then
 		val = true
@@ -551,8 +557,9 @@ local skinsTab = library:addTab("Skins")
 local miscTab = library:addTab("Misc")
 local configTab = library:addTab("Settings")
 
-local configGroup1 = configTab:createGroup(0)
 local configGroup = configTab:createGroup(0)
+
+local configGroup1 = configTab:createGroup(1)
 local serverGroup = configTab:createGroup(1)
 
 
@@ -737,6 +744,7 @@ local outlineTransparency = 0
 local innerTransparency = 1
 local depthMode = 'AlwaysOnTop'
 
+
 other:addToggle({text = 'Player Glow',flag = 'highlights', function()
     for _, player in pairs(players:GetPlayers()) do
         if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
@@ -791,6 +799,8 @@ other:addList({text = "Glow Type",flag = "glow_mode",values = {'AlwaysOnTop','Oc
         end
     end
 end})
+
+
 
 config:addColorpicker({text = "Box Color",ontop = true,flag = "box_color",color = Color3.new(0.4,0.4,0.4)})
 config:addColorpicker({text = "Name Color",ontop = true,flag = "name_color",color = Color3.new(0.4,0.4,0.4)})
@@ -1375,7 +1385,7 @@ oldKara:addList{text = "Karambit",flag = "oldkar_skin",values = {"Vanilla","Bloo
 bayonet:addList{text = "Bayonet",flag = "bay_skin",values = {"Vanilla","Consumed","Cosmos","Crow","Digital","Easy-Bake","Frozen Dream","Goo","Hallows","Intertwine","RSL","Racer","Sapphire","Topaz","Twitch"}}
 oldbayonet:addList{text = "Bayonet",flag = "oldbay_skin",values = {"Vanilla"}}
 butterfly:addList{text = "Butterfly",flag = "butter_skin",values = {"Vanilla"}}
-oldbutterfly:addList{text = "Butterfly",flag = "oldbutter_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Hallows","Icicle","Jade Dream","Marbelized","Naval","Reaper","Ruby","Scapter","Splattered","Twitch","Wetland","White Boss"}}
+oldbutterfly:addList{text = "Butterfly",flag = "oldbutter_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Hallows","Icicle","Jade Dream","Marbelized","Naval","Reaper","Ruby","Sapphire","Scapter","Splattered","Twitch","Wetland","White Boss"}}
 huntsman:addList{text = "Huntsman",flag = "hunts_skin",values = {"Vanilla"}}
 
 glove:addToggle({text = "Gloves",flag = "glove_changer"})
@@ -2712,39 +2722,28 @@ end
 local BombTimer = 40
 local sexinfo = "Site: - ; Timer: --/--"
 
+
 workspace.ChildAdded:Connect(function(new)
 	if new.Name == "C4" and library.flags["bomb_vitals"] == true then
-
-        local fakebomb = Instance.new("Part")
-        fakebomb.Parent = new
-        fakebomb.Size = Vector3.new(1,1,1)
-        fakebomb.Anchored = true
-
-
-        new.PrimaryPart = fakebomb
-
+        local fakebomb = Instance.new("Part");fakebomb.Parent = new;fakebomb.Size = Vector3.new(1,1,1);fakebomb.Anchored = true
         local bombPlant = "-"
-
+        new.PrimaryPart = fakebomb
 		spawn(function()
             if (new.PrimaryPart.Position - workspace.Map.SpawnPoints.C4Plant.Position).Magnitude > (new.PrimaryPart.Position - workspace.Map.SpawnPoints.C4Plant2.Position).Magnitude then
                 bombPlant = "A"
             elseif (new.PrimaryPart.Position - workspace.Map.SpawnPoints.C4Plant2.Position).Magnitude > (new.PrimaryPart.Position - workspace.Map.SpawnPoints.C4Plant.Position).Magnitude then
                 bombPlant = "B"
             end
+            local highlight = Instance.new('Highlight',new);highlight.FillColor = Color3.new(1,0,0);highlight.OutlineTransparency = 1;highlight.OutlineColor = Color3.new(1,1,1);highlight.Adornee = new;highlight.DepthMode = 'AlwaysOnTop'
             
-            local highlight = Instance.new('Highlight',new);highlight.FillTransparency = 0.7;highlight.FillColor = Color3.new(1,0,0);highlight.OutlineTransparency = 1;highlight.OutlineColor = Color3.new(1,1,1);highlight.Adornee = new;highlight.DepthMode = 'AlwaysOnTop'
-			
-			repeat
-			    bvitalsOutline.Visible = true
-                bvitals.Visible = true
-                bvitalsText.Visible = true
-                bombStats.Visible = true
-				wait(1)
+            highlight.FillTransparency = 0.7
+            bvitalsOutline.Visible = true;bvitals.Visible = true;bvitalsText.Visible = true;bombStats.Visible = true
+            repeat
+                wait(1)
 				BombTimer = BombTimer - 1
                 sexinfo =  "Site: "..bombPlant.." ; Timer: "..tostring(BombTimer.. "/40")
                 bvitalsOutline.Size = (Vector2.new(502,5));bvitals.Size = (Vector2.new(BombTimer*12.5,3))
 			until BombTimer == 0 or workspace.Status.RoundOver.Value == true
-            wait(2)
             sexinfo = "Site: - ; Timer: --/--"
             bombStats.Visible = false;bvitalsOutline.Visible = false;bvitals.Visible = false;bvitalsText.Visible = false
             BombTimer = 40
@@ -2760,6 +2759,7 @@ function onStep()
     speclistText.Text = "Spectators"
     bombStats.Text = sexinfo
     local weapon = getWeaponInfo()
+    
     if library.flags["esp_enabled"] then
         for playerName,esp in next, espObjects do
             local player = players:FindFirstChild(playerName)
@@ -2875,6 +2875,12 @@ function onStep()
                 if player.Character:FindFirstChild('Highlight') then
                     player.Character.Highlight.Enabled = true
                 end
+                if player.Name == workspace.Status.HasBomb.Value then
+                    player.Character.Highlight.FillTransparency = innerTransparency
+                    player.Character.Highlight.FillColor = Color3.new(0.8,0.52,0)
+                    player.Character.Highlight.OutlineTransparency = outlineTransparency
+                    player.Character.Highlight.OutlineColor = Color3.new(0.8,0.52,0)
+                end
             end
         end
     end
@@ -2970,6 +2976,13 @@ function onStep()
                         speclistText.Text = speclistText.Text.."\n"..v.Name
                     end
                 end
+            end
+        end
+    end
+    if library.flags["bomb_vitals"] == true then
+        for i,v in next, workspace:GetChildren() do
+            if v.Name == "C4" and v:FindFirstChild('Highlight') then
+                v.Highlight.FillTransparency = globalPulse
             end
         end
     end
