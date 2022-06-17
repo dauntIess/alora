@@ -41,11 +41,10 @@ getgenv().collision = {camera, workspace.Ray_Ignore, workspace.Debris}
 local aloraWatermark = Drawing.new("Text");aloraWatermark.Font = 2;aloraWatermark.Position = Vector2.new(995,285);aloraWatermark.Visible = false;aloraWatermark.Size = 13;aloraWatermark.Color = Color3.new(1,1,1);aloraWatermark.Outline = true
 local speclistText = Drawing.new("Text");speclistText.Font = 2;speclistText.Position = Vector2.new(1037,300);speclistText.Visible = false;speclistText.Size = 13;speclistText.Color = Color3.new(1,1,1);speclistText.Outline = true
 
-local bombStats = Drawing.new("Text");bombStats.Font = 2;bombStats.Position = Vector2.new(565,167);bombStats.Visible = false;bombStats.Size = 13;bombStats.Color = Color3.new(1,1,1);bombStats.Outline = true
-
-local bvitalsText = Drawing.new("Text");bvitalsText.Font = 2;bvitalsText.Position = Vector2.new(605,145);bvitalsText.Visible = false;bvitalsText.Text="Bomb Vitals";bvitalsText.Size = 13;bvitalsText.Color = Color3.new(1,1,1);bvitalsText.Outline = true
-local bvitalsOutline = Drawing.new("Square");bvitalsOutline.Color = Color3.new(0,0,0);bvitalsOutline.Position = Vector2.new(387,160);bvitalsOutline.Visible = false;bvitalsOutline.Size = (Vector2.new(502,5));bvitalsOutline.Filled = true
-local bvitals = Drawing.new("Square");bvitals.Color = Color3.new(1,0.498039216,0);bvitals.Position = Vector2.new(388,161);bvitals.Visible = false;bvitals.Size = (Vector2.new(500,3));bvitals.Filled = true
+local bombStats = Drawing.new("Text");bombStats.Font = 2;bombStats.Position = Vector2.new(565+30,167);bombStats.Visible = false;bombStats.Size = 13;bombStats.Color = Color3.new(1,1,1);bombStats.Outline = true
+local bvitalsText = Drawing.new("Text");bvitalsText.Font = 2;bvitalsText.Position = Vector2.new(605+30,145);bvitalsText.Visible = false;bvitalsText.Text="Bomb Vitals";bvitalsText.Size = 13;bvitalsText.Color = Color3.new(1,1,1);bvitalsText.Outline = true
+local bvitalsOutline = Drawing.new("Square");bvitalsOutline.Color = Color3.new(0,0,0);bvitalsOutline.Position = Vector2.new(387+30,160);bvitalsOutline.Visible = false;bvitalsOutline.Size = (Vector2.new(502,5));bvitalsOutline.Filled = true
+local bvitals = Drawing.new("Square");bvitals.Color = Color3.new(1,0.498039216,0);bvitals.Position = Vector2.new(388+30,161);bvitals.Visible = false;bvitals.Size = (Vector2.new(500,3));bvitals.Filled = true
 
 local skyboxes = {
     ["Purple Nebula"] = {
@@ -560,7 +559,7 @@ local configTab = library:addTab("Settings")
 local configGroup = configTab:createGroup(0)
 
 local configGroup1 = configTab:createGroup(1)
-local serverGroup = configTab:createGroup(1)
+local map = configTab:createGroup(1)
 
 
 configGroup:addColorpicker({text = "Menu Accent",flag = "menu_accent",ontop = true,color = Color3.new(0.4,0.4,0.4),callback = function(val)
@@ -573,6 +572,7 @@ configGroup:addColorpicker({text = "Menu Accent",flag = "menu_accent",ontop = tr
     end
     library.libColor = val
     aloraWatermark.Color = val
+    bvitals.Color = val
 end})
 
 configGroup:addList({text = "Config",flag = "selected_config",skipflag = true,values = {}})
@@ -588,9 +588,9 @@ configGroup1:addButton({text = "Save Config",callback = library.saveConfig})
 
 library:refreshConfigs()
 
-serverGroup:addList({text = "Map Material",flag = "map_material",values = {"Plastic","Glass"}})
-serverGroup:addSlider({text = "Map Reflectance",flag = "map_reflectance",min = 0,max = 100,value=14})
-serverGroup:addButton({text = "Polish Graphics",callback = function()
+map:addList({text = "Map Material",flag = "map_material",values = {"Plastic","Glass"}})
+map:addSlider({text = "Map Reflectance",flag = "map_reflectance",min = 0,max = 100,value=14})
+map:addButton({text = "Polish Graphics",callback = function()
 	workspace:FindFirstChildOfClass('Terrain').WaterWaveSize = 0
 	workspace:FindFirstChildOfClass('Terrain').WaterWaveSpeed = 0
 	workspace:FindFirstChildOfClass('Terrain').WaterReflectance = 1
@@ -619,8 +619,6 @@ serverGroup:addButton({text = "Polish Graphics",callback = function()
 		end
 	end
 end})
-serverGroup:addDivider()
-serverGroup:addButton({text = "Rejoin Server", callback = function() teleportService:Teleport(game.PlaceId, localPlayer) end})
 
 local aimbotGroup = aimbotTab:createGroup(0)
 local rifleGroup,rifleFrame = aimbotTab:createGroup(1)
@@ -845,6 +843,8 @@ local misc2,miscFrame2 = miscTab:createGroup(1)
 
 local cross,crossFrame = miscTab:createGroup(0)
 local drawingGroup,drawingFrame = miscTab:createGroup(1)
+local server,serverFrame = miscTab:createGroup(1)
+
 local toggleTab,toggleFrame = miscTab:createGroup(0)
 
 movementGroup:addToggle({text = "Bunny Hop",flag = "bunny_hop",callback = function()
@@ -1313,6 +1313,37 @@ drawingGroup:addToggle({text = "Velocity Indicator",flag = "velo_indicator"})
 drawingGroup:addToggle({text = "WASD Indicator",flag = "wasd_indicator"})
 drawingGroup:addSlider({text = "Graph Width",flag = "graph_width",min = 1,max = 5,value = 1})
 
+local selected_game = {}
+
+server:addTextbox({text = "Job ID",flag = "sel_serverid"})
+server:addList({text = "Game",flag = "sel_gameid",values = {"Casual","Competetive"},callback = function(val)
+    if val == "Casual" then
+        selected_game = "301549746"
+    else
+        selected_game = "1480424328"
+    end
+end})
+server:addButton({text = "Join",callback = function() teleportService:TeleportToPlaceInstance(selected_game, library.flags["sel_serverid"]) end})
+server:addDivider()
+server:addButton({text = "Copy Local JobID",callback = function() 
+    setclipboard(game.JobId)
+    library:notify("Server JobID copied to clipboard")
+end})
+server:addButton({text = "Rejoin Server",callback = function() teleportService:Teleport(game.PlaceId, localPlayer) end})
+server:addButton({text = "Crash Server",callback = function()
+    if not isAlive() then
+        library:notify("Waiting until you respawn...")
+        repeat wait(1) until isAlive()
+    end
+    library:notify("Crashing server...")
+    while runService.RenderStepped:Wait() do
+        for i=1,20 do
+            pcall(function()
+                replicatedStorage.Events.DropMag:FireServer(localPlayer.Character.Gun.Mag)
+            end)
+        end
+    end
+end})
 
 local miscTabToggle = true
 toggleTab:addButton({text = "Toggle Tabs",callback = function()
@@ -1322,10 +1353,12 @@ toggleTab:addButton({text = "Toggle Tabs",callback = function()
     miscFrame2.Visible  = miscTabToggle
     crossFrame.Visible = not miscTabToggle
     drawingFrame.Visible = not miscTabToggle
+    serverFrame.Visible = not miscTabToggle
 end})
 
 crossFrame.Visible = false
 drawingFrame.Visible = false
+serverFrame.Visible = false
 
 local rifles,rifleFrame = skinsTab:createGroup(0)
 local snipers,sniperFrame = skinsTab:createGroup(1)
