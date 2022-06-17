@@ -1325,7 +1325,7 @@ server:addList({text = "Game",flag = "sel_gameid",values = {"Casual","Competetiv
 end})
 server:addButton({text = "Join",callback = function() teleportService:TeleportToPlaceInstance(selected_game, library.flags["sel_serverid"]) end})
 server:addDivider()
-server:addButton({text = "Copy Local JobID",callback = function() 
+server:addButton({text = "Copy Server JobID",callback = function() 
     setclipboard(game.JobId)
     library:notify('Server JobID copied to clipboard ('..game.JobID..')')
 end})
@@ -3009,7 +3009,7 @@ workspace.ChildAdded:Connect(function(new)
             highlight.FillTransparency = 0.7
             bvitalsOutline.Visible = true;bvitals.Visible = true;bvitalsText.Visible = true;bombStats.Visible = true
             repeat
-                wait(0.98)
+                wait(1)
 				BombTimer = BombTimer - 1
                 sexinfo =  "Site: "..bombPlant.." ; Timer: "..tostring(BombTimer.. "/40")
                 bvitalsOutline.Size = (Vector2.new(502,5));bvitals.Size = (Vector2.new(BombTimer*12.5,3))
