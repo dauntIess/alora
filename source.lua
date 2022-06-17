@@ -1327,7 +1327,7 @@ server:addButton({text = "Join",callback = function() teleportService:TeleportTo
 server:addDivider()
 server:addButton({text = "Copy Local JobID",callback = function() 
     setclipboard(game.JobId)
-    library:notify("Server JobID copied to clipboard")
+    library:notify('Server JobID copied to clipboard ('..game.JobID..')')
 end})
 server:addButton({text = "Rejoin Server",callback = function() teleportService:Teleport(game.PlaceId, localPlayer) end})
 server:addButton({text = "Crash Server",callback = function()
@@ -1367,6 +1367,11 @@ local pistols,pistolFrame = skinsTab:createGroup(1)
 local glove,gloveFrame = skinsTab:createGroup(0)
 local knife,knifeFrame = skinsTab:createGroup(1)
 
+local handwraps,hwFrame = skinsTab:createGroup(0)
+local sportsgloves,spgFrame = skinsTab:createGroup(0)
+local strappedgloves,stgFrame = skinsTab:createGroup(0)
+local fingerlessgloves,fgFrame = skinsTab:createGroup(0)
+
 local karambit,karambitFrame = skinsTab:createGroup(1)
 local oldKara,oldkaraFrame = skinsTab:createGroup(1)
 local bayonet,bayonetFrame = skinsTab:createGroup(1)
@@ -1374,12 +1379,13 @@ local oldbayonet,oldbayonetFrame = skinsTab:createGroup(1)
 local huntsman,huntsmanFrame = skinsTab:createGroup(1)
 local butterfly,butterflyFrame = skinsTab:createGroup(1)
 local oldbutterfly,oldbutterflyFrame = skinsTab:createGroup(1)
+local oldSickle,oldSickleFrame = skinsTab:createGroup(1)
 
 local skinToggle,skinToggleFrame = skinsTab:createGroup(0)
 local skinTabToggle = true
 
 rifles:addToggle({text = "Rifles", flag = "sc_rifles"})
-rifles:addList({text = "AK47",flag = "selected_ak",values= {"Disabled","Stock","Eve","Galaxy Corpse","Goddess","Hallows","Mean Green","Outrunner","Scapter","Skin Committee","Survivor","Variant Camo","VAV","Yltude","[CBCL] Hypersonic","[CBCL] Outlaws"}})
+rifles:addList({text = "AK47",flag = "selected_ak",values= {"Disabled","Stock","Eve","Galaxy Corpse","Goddess","Hallows","Mean Green","Outrunner","Scapter","Skin Committee","Survivor","Variant Camo","VAV","Yltude","[CBCL] Hypersonic","[RSL] Outlaws"}})
 rifles:addList({text = "AK47 (CS)", flag = "selected_ak1", values = {"Disabled","Stock", "Aquamarine Revenge","Asiimov","Bloodsport","Case Hardened","Chromatic Abberation","Legion of Anubis","Neon Rider","Nightmare","Redline","Vulcan","Wild Lotus"}}) 
 rifles:addList({text = "Models", flag = "selected_ak2",values = {"Disabled","Stock","Pearl I","Pearl II","Ivory","Darkheart","Draco"}}) 
 rifles:addDivider()
@@ -1398,12 +1404,26 @@ snipers:addList({text = "Models", flag = "selected_ssg2", values = {"Disabled", 
 pistols:addToggle({text = "Pistols", flag = "sc_pistols"}) 
 pistols:addList({text = "Deagle", flag = "selected_deagle", values = {"Disabled","Stock","Code Red","Glittery","Grim","Honor-Bound","Independence","Racer","Scapter","Skin Committee","Weeb","Xmas","[CBCL] DropX","[CBCL] TC"}, callback = runDeagle}) 
 
+glove:addToggle({text = "Gloves",flag = "sc_gloves"})
+local glframe = {}
+glove:addList({text = "Type",flag = "new_glove",values = {"Handwraps","Fingerless Gloves","Strapped Gloves","Sports Gloves"},callback = function(val)
+    glframe = val
+    hwFrame.Visible = val == "Handwraps"
+    spgFrame.Visible = val == "Sports Gloves"
+    stgFrame.Visible = val == "Strapped Gloves"
+    fgFrame.Visible = val == "Fingerless Gloves"
+end})
+
+handwraps:addList{text = "Glove",flag = "sc_hw",values = {"Vanilla","Guts","MMA","Mummy","Microbes","Phantom Hex","Sector Hex","Orange Hex","Toxic Nitro","Cloth","Twitch"}}
+strappedgloves:addList{text = "Glove",flag = "sc_stg",values = {"Vanilla"}}
+sportsgloves:addList{text = "Glove",flag = "sc_spg",values = {"Vanilla"}}
+fingerlessgloves:addList{text = "Glove",flag = "sc_fg",values = {"Vanilla"}}
+
 knife:addToggle({text = "Knives", flag = "sc_knives"})
 knife:addList({text = "Your Knife", flag = "OldKnife", values = {"T Knife","CT Knife","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
-
-local sexdogwwdw = {}
-knife:addList({text = "New Type",flag = "NewKnife",values = {"Bayonet","Old Bayonet","Butterfly Knife","Old Butterfly Knife","Karambit","Old Karambit","Gut Knife","Huntsman Knife"},callback = function(val)
-    sexdogwwdw = val
+local knframe = {}
+knife:addList({text = "New Type",flag = "NewKnife",values = {"Bayonet","Butterfly Knife","Karambit","Gut Knife","Huntsman Knife","Old Bayonet","Old Butterfly Knife","Old Karambit","Old Sickle"},callback = function(val)
+    knframe = val
     bayonetFrame.Visible = val == "Bayonet"
     oldbayonetFrame.Visible = val == "Old Bayonet"
     butterflyFrame.Visible = val == "Butterfly Knife"
@@ -1411,20 +1431,17 @@ knife:addList({text = "New Type",flag = "NewKnife",values = {"Bayonet","Old Bayo
     karambitFrame.Visible = val == "Karambit"
     oldkaraFrame.Visible = val == "Old Karambit"
     huntsmanFrame.Visible = val == "Huntsman Knife"
+    oldSickleFrame.Visible = val == "Old Sickle"
 end})
 
-karambit:addList{text = "Karambit",flag = "kar_skin",values = {"Vanilla","Bloodwidow","Cob Web","Cosmos","Consumed","Death Wish","Digital","Drop Out","Festive","Gold","Goo","Hallows","Jester","Lantern","Liberty Camo","Peppermint","Pizza","Ruby","Scapter","Topaz","Twitch"}}
-oldKara:addList{text = "Karambit",flag = "oldkar_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Glossed","Gold","Hallows","Jade Dream","Lantern","Marbelized","Naval","Ruby","Scapter","Splattered","Twitch","Wetland"}}
-bayonet:addList{text = "Bayonet",flag = "bay_skin",values = {"Vanilla","Consumed","Cosmos","Crow","Digital","Easy-Bake","Frozen Dream","Goo","Hallows","Intertwine","RSL","Racer","Sapphire","Topaz","Twitch"}}
-oldbayonet:addList{text = "Bayonet",flag = "oldbay_skin",values = {"Vanilla"}}
-butterfly:addList{text = "Butterfly",flag = "butter_skin",values = {"Vanilla"}}
-oldbutterfly:addList{text = "Butterfly",flag = "oldbutter_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Hallows","Icicle","Jade Dream","Marbelized","Naval","Reaper","Ruby","Sapphire","Scapter","Splattered","Twitch","Wetland","White Boss"}}
-huntsman:addList{text = "Huntsman",flag = "hunts_skin",values = {"Vanilla"}}
-
-glove:addToggle({text = "Gloves",flag = "glove_changer"})
-glove:addList({text = "Skins",flag = "selected_glove",values = {"Disabled", "Stock"}})
-glove:addList({text = "Customs",flag = "selected_glove1",values = {"Disabled", "Stock"}})
-
+karambit:addList({text = "Knife Skin",flag = "kar_skin",values = {"Vanilla","Bloodwidow","Cob Web","Cosmos","Consumed","Death Wish","Digital","Drop Out","Festive","Gold","Goo","Hallows","Jester","Lantern","Liberty Camo","Peppermint","Pizza","Ruby","Scapter","Topaz","Twitch"}})
+oldKara:addList({text = "Knife Skin",flag = "oldkar_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Glossed","Gold","Hallows","Jade Dream","Lantern","Marbelized","Naval","Ruby","Scapter","Splattered","Twitch","Wetland"}})
+bayonet:addList({text = "Knife Skin",flag = "bay_skin",values = {"Vanilla","Consumed","Cosmos","Crow","Digital","Easy-Bake","Frozen Dream","Goo","Hallows","Intertwine","RSL","Racer","Sapphire","Topaz","Twitch"}})
+oldbayonet:addList({text = "Knife Skin",flag = "oldbay_skin",values = {"Vanilla","Emerald","Frozen Dream","Hallows","Intertwine","Marbelized","Naval","Ruby","Sapphire","Splattered","Twitch","Wetland"}})
+butterfly:addList({text = "Knife Skin",flag = "butter_skin",values = {"Vanilla"}})
+oldbutterfly:addList({text = "Knife Skin",flag = "oldbutter_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Hallows","Icicle","Jade Dream","Marbelized","Naval","Reaper","Ruby","Sapphire","Scapter","Splattered","Twitch","Wetland","White Boss"}})
+huntsman:addList({text = "Knife Skin",flag = "hunts_skin",values = {"Vanilla"}})
+oldSickle:addList({text = "Knife Skin",flag = "oldsickle_skin",values = {"Vanilla","Splattered","Mummy","Twitch","Hallows"}})
 
 skinToggle:addToggle({text = "Auto Load",flag = "autoload"})
 skinToggle:addButton({text = "Load Selected",callback = function() loadskins() end})
@@ -1438,14 +1455,21 @@ skinToggle:addButton({text = "Toggle Tabs", callback = function()
     pistolFrame.Visible = skinTabToggle
     knifeFrame.Visible = not skinTabToggle
     gloveFrame.Visible = not skinTabToggle
+
     if knifeFrame.Visible == true then
-        bayonetFrame.Visible = sexdogwwdw == "Bayonet"
-        oldbayonetFrame.Visible = sexdogwwdw == "Old Bayonet"
-        butterflyFrame.Visible = sexdogwwdw == "Butterfly Knife"
-        oldbutterflyFrame.Visible = sexdogwwdw == "Old Butterfly Knife"
-        karambitFrame.Visible = sexdogwwdw == "Karambit"
-        oldkaraFrame.Visible = sexdogwwdw == "Old Karambit"
-        huntsmanFrame.Visible = sexdogwwdw == "Huntsman Knife"
+        bayonetFrame.Visible = knframe == "Bayonet"
+        oldbayonetFrame.Visible = knframe == "Old Bayonet"
+        butterflyFrame.Visible = knframe == "Butterfly Knife"
+        oldbutterflyFrame.Visible = knframe == "Old Butterfly Knife"
+        karambitFrame.Visible = knframe == "Karambit"
+        oldkaraFrame.Visible = knframe == "Old Karambit"
+        huntsmanFrame.Visible = knframe == "Huntsman Knife"
+        oldSickleFrame.Visible = knframe == "Old Sickle"
+
+        hwFrame.Visible = glframe == "Handwraps"
+        spgFrame.Visible = glframe == "Sports Gloves"
+        stgFrame.Visible = glframe == "Strapped Gloves"
+        fgFrame.Visible = glframe == "Fingerless Gloves"
     else
         bayonetFrame.Visible = false
         oldbayonetFrame.Visible = false
@@ -1454,6 +1478,12 @@ skinToggle:addButton({text = "Toggle Tabs", callback = function()
         karambitFrame.Visible = false
         oldkaraFrame.Visible = false
         huntsmanFrame.Visible = false
+        oldSickleFrame.Visible = false
+
+        hwFrame.Visible = false
+        spgFrame.Visible = false
+        stgFrame.Visible = false
+        fgFrame.Visible = false
     end
 
 end})
@@ -1468,7 +1498,151 @@ butterflyFrame.Visible = false
 oldkaraFrame.Visible = false
 karambitFrame.Visible = false
 huntsmanFrame.Visible = false
+oldSickleFrame.Visible = false
 
+hwFrame.Visible = false
+spgFrame.Visible = false
+stgFrame.Visible = false
+fgFrame.Visible = false
+
+function setWraps(y,z)
+    game.ReplicatedStorage.Viewmodels["GIGNArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["ECArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["SASArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["IDFArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["UTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GCTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["PCArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["BDSArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GSGArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["SPArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["WDArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["PTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["AAArms"]:Destroy()
+	local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+	game:GetObjects('rbxassetid://7687142147')[1].Parent = Model1
+	Model1 = game.ReplicatedStorage.Viewmodels.Model
+	for _, Child in pairs(Model1:GetChildren()) do
+	    Child.Parent = Model1.Parent
+	end
+	Model1:Destroy()
+	Model2 = game.ReplicatedStorage.Viewmodels['Handwraps_Models']
+	for _, Child in pairs(Model2:GetChildren()) do
+	    Child.Parent = Model2.Parent
+	end
+	Model2:Destroy()
+	game.ReplicatedStorage.Viewmodels["GIGNArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["ECArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["SASArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["IDFArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["UTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GCTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["PCArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["BDSArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GSGArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["SPArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["WDArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["PTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["AAArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GIGNArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["ECArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["SASArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["IDFArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["UTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GCTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["PCArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["BDSArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GSGArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["SPArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["WDArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["PTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["AAArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+end
+
+function runGloves()
+    if library.flags["sc_gloves"] then
+        if library.flags["new_glove"] == "Handwraps" then
+            if library.flags["sc_hw"] == "Vanilla" then
+
+                y ='rbxassetid://2136606641'
+                z ='rbxassetid://2136606641'
+                setWraps(y,z)
+            elseif library.flags["sc_hw"] == "Guts" then
+                
+                y ='rbxassetid://2136613957'
+                z ='rbxassetid://2136613957'
+                setWraps(y,z)
+            elseif library.flags["sc_hw"] == "Mummy" then
+                
+                y ='rbxassetid://5894322563'
+                z ='rbxassetid://5894322563'
+                setWraps(y,z)
+            elseif library.flags["sc_hw"] == "Microbes" then
+                
+                y ='rbxassetid://7944157395'
+                z ='rbxassetid://7944157395'
+                setWraps(y,z)
+            elseif library.flags["sc_hw"] == "Phantom Hex" then
+                
+                y ='rbxassetid://4212662590'
+                z ='rbxassetid://4212662590'
+                setWraps(y,z)
+            elseif library.flags["sc_hw"] == "Sector Hex" then
+                
+                y ='rbxassetid://4212663733'
+                z ='rbxassetid://4212663733'
+                setWraps(y,z)
+            elseif library.flags["sc_hw"] == "Orange Hex" then
+                
+                y ='rbxassetid://4212661898'
+                z ='rbxassetid://4212661898'
+                setWraps(y,z)
+            elseif library.flags["sc_hw"] == "Toxic Nitro" then
+                
+                y ='rbxassetid://4680487306'
+                z ='rbxassetid://4680487306'
+                setWraps(y,z)
+            elseif library.flags["sc_hw"] == "Cloth" then
+                
+                y ='rbxassetid://9446819184'
+                z ='rbxassetid://9446819184'
+                setWraps(y,z)
+            elseif library.flags["sc_hw"] == "Twitch" then
+                
+                y ='rbxassetid://7701386298'
+                z ='rbxassetid://7701386298'
+                setWraps(y,z)
+            elseif library.flags["sc_hw"] == "MMA" then
+                
+                y ='rbxassetid://2136611279'
+                z ='rbxassetid://2136611279'
+                setWraps(y,z)
+            end
+        end
+    end
+end
+
+function setoldSickle()
+    game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://9941472244')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
+    end
+    Model:Destroy()
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://9941472244')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
+    end
+    Model:Destroy()
+    game.ReplicatedStorage.Viewmodels["v_Sickle"].Name = "v_".. library.flags["OldKnife"]
+end
 
 function setBay()
     game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
@@ -1488,6 +1662,26 @@ function setBay()
     Model:Destroy()
     game.ReplicatedStorage.Viewmodels["v_Bayonet"].Name = "v_".. library.flags["OldKnife"]
 end
+
+function setoldBay()
+    game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://9938340689')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
+    end
+    Model:Destroy()
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://9938340689')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
+    end
+    Model:Destroy()
+    game.ReplicatedStorage.Viewmodels["v_oldBayonet"].Name = "v_".. library.flags["OldKnife"]
+end
+
 
 function setoldButter()
     game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
@@ -1738,6 +1932,46 @@ function runKnife()
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://540165364"
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://540165364"
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://540165364"
+            end
+        elseif library.flags["NewKnife"] == "Old Bayonet" then
+            setoldBay()
+            if library.flags["oldbay_skin"] == "Vanilla" then
+                setoldBay()
+            elseif library.flags["oldbay_skin"] == "Twitch" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://793169215"
+            elseif library.flags["oldbay_skin"] == "Intertwine" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://584710402"
+            elseif library.flags["oldbay_skin"] == "Sapphire" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://566067235"
+            elseif library.flags["oldbay_skin"] == "Hallows" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://1141692229"
+            elseif library.flags["oldbay_skin"] == "Naval" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://540160988"
+            elseif library.flags["oldbay_skin"] == "Marbelized" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://540160910"
+            elseif library.flags["oldbay_skin"] == "Frozen Dream" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://1259979965"
+            elseif library.flags["oldbay_skin"] == "Splattered" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://1158075099"
+            elseif library.flags["oldbay_skin"] == "Wetland" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://540161105"
+            elseif library.flags["oldbay_skin"] == "Emerald" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9938060721"
+            elseif library.flags["oldbay_skin"] == "Ruby" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9938305221"
+            end
+        elseif library.flags["NewKnife"] == "Old Sickle" then
+            setoldSickle()
+            if library.flags["oldsickle_skin"] == "Vanilla" then
+                setoldSickle()
+            elseif library.flags["oldsickle_skin"] == "Mummy" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://2504738911"
+            elseif library.flags["oldsickle_skin"] == "Splattered" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://2502599336"
+            elseif library.flags["oldsickle_skin"] == "Twitch" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9941757631"
+            elseif library.flags["oldsickle_skin"] == "Hallows" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9941884185"
             end
         end
     end
@@ -2258,7 +2492,7 @@ function runAK()
     if library.flags["sc_rifles"] then
         if library.flags["selected_ak"] == "Stock" then
             setAK()
-        elseif library.flags["selected_ak"] == "[CBCL] Outlaws" then
+        elseif library.flags["selected_ak"] == "[RSL] Outlaws" then
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://2687973291"
     		game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://2687973291"
     		game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://2687973291"
@@ -2750,6 +2984,9 @@ function loadskins()
     if library.flags["sc_knives"] then 
         runKnife() 
     end
+    if library.flags["sc_gloves"] then
+        runGloves()
+    end
 end
 
 local BombTimer = 40
@@ -2772,7 +3009,7 @@ workspace.ChildAdded:Connect(function(new)
             highlight.FillTransparency = 0.7
             bvitalsOutline.Visible = true;bvitals.Visible = true;bvitalsText.Visible = true;bombStats.Visible = true
             repeat
-                wait(1)
+                wait(0.98)
 				BombTimer = BombTimer - 1
                 sexinfo =  "Site: "..bombPlant.." ; Timer: "..tostring(BombTimer.. "/40")
                 bvitalsOutline.Size = (Vector2.new(502,5));bvitals.Size = (Vector2.new(BombTimer*12.5,3))
