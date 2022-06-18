@@ -1327,7 +1327,7 @@ server:addButton({text = "Join",callback = function() teleportService:TeleportTo
 server:addDivider()
 server:addButton({text = "Copy Server JobID",callback = function() 
     setclipboard(game.JobId)
-    library:notify('Server JobID copied to clipboard ('..game.JobID..')')
+    library:notify('Server JobID copied to clipboard ('..game.JobId..')')
 end})
 server:addButton({text = "Rejoin Server",callback = function() teleportService:Teleport(game.PlaceId, localPlayer) end})
 server:addButton({text = "Crash Server",callback = function()
