@@ -1456,7 +1456,7 @@ oldbayonet:addList({text = "Skin",flag = "oldbay_skin",values = {"Vanilla","Emer
 butterfly:addTextbox({text = "Butterfly Knives",flag = "blank_flag"})
 butterfly:addList({text = "Skin",flag = "butter_skin",values = {"Vanilla"}})
 
-oldbutterfly:addTextbox({text = "Old Butterfly Knives,flag = "blank_flag"})
+oldbutterfly:addTextbox({text = "Old Butterfly Knives",flag = "blank_flag"})
 oldbutterfly:addList({text = "Skin",flag = "oldbutter_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Hallows","Icicle","Jade Dream","Marbelized","Naval","Reaper","Ruby","Sapphire","Scapter","Splattered","Twitch","Wetland","White Boss"}})
 
 huntsman:addTextbox({text = "Huntsman Knife",flag = "blank_flag"})
