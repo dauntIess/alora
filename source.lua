@@ -1365,12 +1365,12 @@ local snipers,sniperFrame = skinsTab:createGroup(1)
 local pistols,pistolFrame = skinsTab:createGroup(1)
 
 local glove,gloveFrame = skinsTab:createGroup(0)
-local knife,knifeFrame = skinsTab:createGroup(1)
+local knife,knifeFrame = skinsTab:createGroup(0)
 
-local handwraps,hwFrame = skinsTab:createGroup(0)
-local sportsgloves,spgFrame = skinsTab:createGroup(0)
-local strappedgloves,stgFrame = skinsTab:createGroup(0)
-local fingerlessgloves,fgFrame = skinsTab:createGroup(0)
+local handwraps,hwFrame = skinsTab:createGroup(1)
+local sportsgloves,spgFrame = skinsTab:createGroup(1)
+local strappedgloves,stgFrame = skinsTab:createGroup(1)
+local fingerlessgloves,fgFrame = skinsTab:createGroup(1)
 
 local karambit,karambitFrame = skinsTab:createGroup(1)
 local oldKara,oldkaraFrame = skinsTab:createGroup(1)
@@ -1414,10 +1414,17 @@ glove:addList({text = "Type",flag = "new_glove",values = {"Handwraps","Fingerles
     fgFrame.Visible = val == "Fingerless Gloves"
 end})
 
-handwraps:addList{text = "Glove",flag = "sc_hw",values = {"Vanilla","Guts","MMA","Mummy","Microbes","Phantom Hex","Sector Hex","Orange Hex","Toxic Nitro","Cloth","Twitch"}}
-strappedgloves:addList{text = "Glove",flag = "sc_stg",values = {"Vanilla"}}
-sportsgloves:addList{text = "Glove",flag = "sc_spg",values = {"Vanilla"}}
-fingerlessgloves:addList{text = "Glove",flag = "sc_fg",values = {"Vanilla"}}
+handwraps:addTextbox({text = "Handwraps",flag = "blank_flag"})
+handwraps:addList{text = "Skin",flag = "sc_hw",values = {"Vanilla","Guts","MMA","Mummy","Microbes","Phantom Hex","Sector Hex","Orange Hex","Toxic Nitro","Cloth","Twitch"}}
+
+strappedgloves:addTextbox({text = "Strapped Gloves",flag = "blank_flag"})
+strappedgloves:addList{text = "Skin",flag = "sc_stg",values = {"Vanilla"}}
+
+sportsgloves:addTextbox({text = "Sports Gloves",flag = "blank_flag"})
+sportsgloves:addList{text = "Skin",flag = "sc_spg",values = {"Vanilla"}}
+
+fingerlessgloves:addTextbox({text = "Fingerless Gloves",flag = "blank_flag"})
+fingerlessgloves:addList{text = "Skin",flag = "sc_fg",values = {"Vanilla"}}
 
 knife:addToggle({text = "Knives", flag = "sc_knives"})
 knife:addList({text = "Your Knife", flag = "OldKnife", values = {"T Knife","CT Knife","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
@@ -1434,14 +1441,29 @@ knife:addList({text = "New Type",flag = "NewKnife",values = {"Bayonet","Butterfl
     oldSickleFrame.Visible = val == "Old Sickle"
 end})
 
-karambit:addList({text = "Knife Skin",flag = "kar_skin",values = {"Vanilla","Bloodwidow","Cob Web","Cosmos","Consumed","Death Wish","Digital","Drop Out","Festive","Gold","Goo","Hallows","Jester","Lantern","Liberty Camo","Peppermint","Pizza","Ruby","Scapter","Topaz","Twitch"}})
-oldKara:addList({text = "Knife Skin",flag = "oldkar_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Glossed","Gold","Hallows","Jade Dream","Lantern","Marbelized","Naval","Ruby","Scapter","Splattered","Twitch","Wetland"}})
-bayonet:addList({text = "Knife Skin",flag = "bay_skin",values = {"Vanilla","Consumed","Cosmos","Crow","Digital","Easy-Bake","Frozen Dream","Goo","Hallows","Intertwine","RSL","Racer","Sapphire","Topaz","Twitch"}})
-oldbayonet:addList({text = "Knife Skin",flag = "oldbay_skin",values = {"Vanilla","Emerald","Frozen Dream","Hallows","Intertwine","Marbelized","Naval","Ruby","Sapphire","Splattered","Twitch","Wetland"}})
-butterfly:addList({text = "Knife Skin",flag = "butter_skin",values = {"Vanilla"}})
-oldbutterfly:addList({text = "Knife Skin",flag = "oldbutter_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Hallows","Icicle","Jade Dream","Marbelized","Naval","Reaper","Ruby","Sapphire","Scapter","Splattered","Twitch","Wetland","White Boss"}})
-huntsman:addList({text = "Knife Skin",flag = "hunts_skin",values = {"Vanilla"}})
-oldSickle:addList({text = "Knife Skin",flag = "oldsickle_skin",values = {"Vanilla","Splattered","Mummy","Twitch","Hallows"}})
+karambit:addTextbox({text = "Karambits",flag = "blank_flag"})
+karambit:addList({text = "Skin",flag = "kar_skin",values = {"Vanilla","Bloodwidow","Cob Web","Cosmos","Consumed","Death Wish","Digital","Drop Out","Festive","Gold","Goo","Hallows","Jester","Lantern","Liberty Camo","Peppermint","Pizza","Ruby","Topaz","Twitch"}})
+
+oldKara:addTextbox({text = "Old Karambits",flag = "blank_flag"})
+oldKara:addList({text = "Skin",flag = "oldkar_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Gold","Hallows","Jade Dream","Lantern","Marbelized","Naval","Ruby","Scapter","Splattered","Twitch","Wetland"}})
+
+bayonet:addTextbox({text = "Bayonets",flag = "blank_flag"})
+bayonet:addList({text = "Skin",flag = "bay_skin",values = {"Vanilla","Consumed","Cosmos","Crow","Digital","Easy-Bake","Frozen Dream","Goo","Hallows","Intertwine","RSL","Racer","Sapphire","Topaz","Twitch"}})
+
+oldbayonet:addTextbox({text = "Old Bayonets",flag = "blank_flag"})
+oldbayonet:addList({text = "Skin",flag = "oldbay_skin",values = {"Vanilla","Emerald","Frozen Dream","Hallows","Intertwine","Marbelized","Naval","Ruby","Sapphire","Splattered","Twitch","Wetland"}})
+
+butterfly:addTextbox({text = "Butterfly Knives",flag = "blank_flag"})
+butterfly:addList({text = "Skin",flag = "butter_skin",values = {"Vanilla"}})
+
+oldbutterfly:addTextbox({text = "Old Butterfly Knives,flag = "blank_flag"})
+oldbutterfly:addList({text = "Skin",flag = "oldbutter_skin",values = {"Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Hallows","Icicle","Jade Dream","Marbelized","Naval","Reaper","Ruby","Sapphire","Scapter","Splattered","Twitch","Wetland","White Boss"}})
+
+huntsman:addTextbox({text = "Huntsman Knife",flag = "blank_flag"})
+huntsman:addList({text = "Skin",flag = "hunts_skin",values = {"Vanilla"}})
+
+oldSickle:addTextbox({text = "Old Sickle",flag = "blank_flag"})
+oldSickle:addList({text = "Skin",flag = "oldsickle_skin",values = {"Vanilla","Splattered","Mummy","Twitch","Hallows"}})
 
 skinToggle:addToggle({text = "Auto Load",flag = "autoload"})
 skinToggle:addButton({text = "Load Selected",callback = function() loadskins() end})
@@ -1862,9 +1884,6 @@ function runKnife()
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://1158075852"
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://1158075852"
             elseif library.flags["oldkar_skin"] == "Crippled Fade" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://841623787"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://841623787"
-            elseif library.flags["oldkar_skin"] == "Glossed" then
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://841623787"
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://841623787"
             end
