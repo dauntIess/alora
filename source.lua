@@ -2134,9 +2134,11 @@ function runRifles()
         elseif library.flags["selected_a1"] == "[BF] Hyper Beast" then
             x = "rbxassetid://6451124368";y = "rbxassetid://6451126496";z = "rbxassetid://6451127619"
             setA1(x,y,z)
-        elseif library.flags["selected_a1"] == "[BF] Black Death" then;x = "rbxassetid://9639828499";y = "rbxassetid://9639827892";z = "rbxassetid://9639829370"
+        elseif library.flags["selected_a1"] == "[BF] Black Death" then
+       	 	x = "rbxassetid://9639828499";y = "rbxassetid://9639827892";z = "rbxassetid://9639829370"
             setA1(x,y,z)
-        elseif library.flags["selected_a1"] == "Heavens Gates" then;x = "rbxassetid://2524141970";y = "rbxassetid://2524142163";z = "rbxassetid://2524139960"
+        elseif library.flags["selected_a1"] == "Heavens Gates" then
+        	x = "rbxassetid://2524141970";y = "rbxassetid://2524142163";z = "rbxassetid://2524139960"
             setA1(x,y,z)
         elseif library.flags["selected_a1"] == "Lunar" then
             x = "rbxassetid://3414435728";y = "rbxassetid://3414435472";z = "rbxassetid://3414435122"
