@@ -1440,7 +1440,7 @@ m9bayonet:addTextbox({text = "Selected Knife: M9 Bayonet",flag = "blank_flag"})
 m9bayonet:addList({text = "Texture",flag = "m9bay_skin",values = {"Vanilla","Autotronic","Black Laminate","Crimson Web","Emerald","Fade","Lore","Night","Ruby","Sapphire","Tiger Tooth","Ultra Violet"}})
 
 oldbayonet:addTextbox({text = "Selected Knife: Old Bayonet",flag = "blank_flag"})
-oldbayonet:addList({text = "Texture",flag = "oldbay_skin",values = {"Vanilla","Emerald","Frozen Dream","Hallows","Intertwine","Marbelized","Naval","Ruby","Sapphire","Splattered","Twitch","Wetland"}})
+oldbayonet:addList({text = "Texture",flag = "oldbay_skin",values = {"Vanilla","Autotronic","Doppler Emerald","Frozen Dream","Hallows","Intertwine","Lore","Marbelized","Naval","Doppler Ruby","Doppler Sapphire","Splattered","Twitch","Ultra Violet","Wetland"}})
 
 butterfly:addTextbox({text = "Selected Knife: Butterfly Knive",flag = "blank_flag"})
 butterfly:addList({text = "Texture",flag = "butter_skin",values = {"Vanilla"}})
@@ -2066,10 +2066,18 @@ function runKnives()
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://1158075099"
             elseif library.flags["oldbay_skin"] == "Wetland" then
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://540161105"
-            elseif library.flags["oldbay_skin"] == "Emerald" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9938060721"
-            elseif library.flags["oldbay_skin"] == "Ruby" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9938305221"
+            elseif library.flags["oldbay_skin"] == "Doppler Emerald" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9959022337"
+            elseif library.flags["oldbay_skin"] == "Doppler Ruby" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9959034920"
+            elseif library.flags["oldbay_skin"] == "Doppler Sapphire" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9959017518"
+            elseif library.flags["oldbay_skin"] == "Lore" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9959037317"
+            elseif library.flags["oldbay_skin"] == "Autotronic" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9959039047"
+            elseif library.flags["oldbay_skin"] == "Ultra Violet" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9959041865"
             end
         elseif library.flags["NewKnife"] == "Old Sickle" then
             setoldSickle()
@@ -2135,10 +2143,10 @@ function runRifles()
             x = "rbxassetid://6451124368";y = "rbxassetid://6451126496";z = "rbxassetid://6451127619"
             setA1(x,y,z)
         elseif library.flags["selected_a1"] == "[BF] Black Death" then
-       	 	x = "rbxassetid://9639828499";y = "rbxassetid://9639827892";z = "rbxassetid://9639829370"
+			x = "rbxassetid://9639828499";y = "rbxassetid://9639827892";z = "rbxassetid://9639829370"
             setA1(x,y,z)
         elseif library.flags["selected_a1"] == "Heavens Gates" then
-        	x = "rbxassetid://2524141970";y = "rbxassetid://2524142163";z = "rbxassetid://2524139960"
+			x = "rbxassetid://2524141970";y = "rbxassetid://2524142163";z = "rbxassetid://2524139960"
             setA1(x,y,z)
         elseif library.flags["selected_a1"] == "Lunar" then
             x = "rbxassetid://3414435728";y = "rbxassetid://3414435472";z = "rbxassetid://3414435122"
