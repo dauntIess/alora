@@ -1701,7 +1701,7 @@ function setKar()
     game.ReplicatedStorage.Viewmodels["v_Karambit"].Name = "v_".. library.flags["OldKnife"]
 end
 
-function setA1()
+function setA1(x,y,z)
     if game.ReplicatedStorage["Viewmodels"]:FindFirstChild("v_M4A1", true) then
         game.ReplicatedStorage.Viewmodels["v_M4A1"]:Destroy()
         wait()
@@ -1712,14 +1712,15 @@ function setA1()
             Child.Parent = Model.Parent
         end
         Model:Destroy()
-    else
-        local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-        game:GetObjects('rbxassetid://7311331935')[1].Parent = Model1
-        Model = game.ReplicatedStorage.Viewmodels.Model
-        for _, Child in pairs(Model:GetChildren()) do
-            Child.Parent = Model.Parent
-        end
-        Model:Destroy()
+        game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer2"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_M4A1"]["Barrel"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_M4A1"]["Handle"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_M4A1"]["Bolt"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_M4A1"]["Grip"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_M4A1"]["Back"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_M4A1"]["Top"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_M4A1"]["Mag"].TextureID = z
     end
 end
 
@@ -1745,7 +1746,7 @@ function setSSG()
     end
 end
 
-function setSG()
+function setSG(y,z)
     if game.ReplicatedStorage["Viewmodels"]:FindFirstChild("v_SG", true) then
 		game.ReplicatedStorage.Viewmodels["v_SG"]:Destroy()
     	wait()
@@ -1756,18 +1757,17 @@ function setSG()
     	    Child.Parent = Model.Parent
     	end
     	Model:Destroy()
-	else
-		local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    	game:GetObjects('rbxassetid://7311349096')[1].Parent = Model1
-    	Model = game.ReplicatedStorage.Viewmodels.Model
-    	for _, Child in pairs(Model:GetChildren()) do
-    	    Child.Parent = Model.Parent
-    	end
-    	Model:Destroy()
+        game.ReplicatedStorage.Viewmodels["v_SG"]["Handle"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_SG"]["Mag 2"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_SG"]["Front"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_SG"]["Back"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_SG"]["Bolt"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_SG"]["Mag"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_SG"]["Scope"].TextureID = z
 	end
 end
 
-function setM4()
+function setM4(x)
     if game.ReplicatedStorage["Viewmodels"]:FindFirstChild("v_M4A4", true) then
 		game.ReplicatedStorage.Viewmodels["v_M4A4"]:Destroy()
     	wait()
@@ -1778,20 +1778,21 @@ function setM4()
     	    Child.Parent = Model.Parent
     	end
     	Model:Destroy()
-	else
-		local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    	game:GetObjects('rbxassetid://7311333061')[1].Parent = Model1
-    	Model = game.ReplicatedStorage.Viewmodels.Model
-    	for _, Child in pairs(Model:GetChildren()) do
-    	    Child.Parent = Model.Parent
-    	end
-    	Model:Destroy()
+        game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = x
 	end
 end
 
-function setAWP()
+function setAWP(x,y)
     if game.ReplicatedStorage["Viewmodels"]:FindFirstChild("v_AWP", true) then
-	game.ReplicatedStorage.Viewmodels["v_AWP"]:Destroy()
+	    game.ReplicatedStorage.Viewmodels["v_AWP"]:Destroy()
     	wait()
     	local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     	game:GetObjects('rbxassetid://7311298463')[1].Parent = Model1
@@ -1800,6 +1801,12 @@ function setAWP()
     	    Child.Parent = Model.Parent
     	end
     	Model:Destroy()
+        game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = y
+        game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = x
+        game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = x
 	end
 end
 
@@ -2122,307 +2129,123 @@ end
 function runRifles()
     if library.flags["sc_rifles"] then 
         if library.flags["selected_a1"] == "Stock" then -- M4A1-S
-            setA1()
+            x = "rbxassetid://2471947735";y = "rbxassetid://2471947735";z = "rbxassetid://2471947735"
+            setA1(x,y,z)
         elseif library.flags["selected_a1"] == "[BF] Hyper Beast" then
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer2"].TextureID = "rbxassetid://6451124368"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer"].TextureID = "rbxassetid://6451124368"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Barrel"].TextureID = "rbxassetid://6451126496"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Handle"].TextureID = "rbxassetid://6451126496"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Bolt"].TextureID = "rbxassetid://6451126496"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Grip"].TextureID = "rbxassetid://6451126496"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Back"].TextureID = "rbxassetid://6451126496"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Top"].TextureID = "rbxassetid://6451126496"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Mag"].TextureID = "rbxassetid://6451127619"
-        elseif library.flags["selected_a1"] == "[BF] Black Death" then
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer2"].TextureID = "rbxassetid://9639828499"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer"].TextureID = "rbxassetid://9639828499"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Barrel"].TextureID = "rbxassetid://9639827892"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Handle"].TextureID = "rbxassetid://9639827892"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Bolt"].TextureID = "rbxassetid://9639827892"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Grip"].TextureID = "rbxassetid://9639827892"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Back"].TextureID = "rbxassetid://9639827892"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Top"].TextureID = "rbxassetid://9639827892"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Mag"].TextureID = "rbxassetid://9639829370"
-        elseif library.flags["selected_a1"] == "Heavens Gates" then
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer2"].TextureID = "rbxassetid://2524141970"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer"].TextureID = "rbxassetid://2524141970"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Barrel"].TextureID = "rbxassetid://2524142163"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Handle"].TextureID = "rbxassetid://2524142163"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Bolt"].TextureID = "rbxassetid://2524142163"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Grip"].TextureID = "rbxassetid://2524142163"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Back"].TextureID = "rbxassetid://2524142163"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Top"].TextureID = "rbxassetid://2524142163"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Mag"].TextureID = "rbxassetid://2524139960"
+            x = "rbxassetid://6451124368";y = "rbxassetid://6451126496";z = "rbxassetid://6451127619"
+            setA1(x,y,z)
+        elseif library.flags["selected_a1"] == "[BF] Black Death" then;x = "rbxassetid://9639828499";y = "rbxassetid://9639827892";z = "rbxassetid://9639829370"
+            setA1(x,y,z)
+        elseif library.flags["selected_a1"] == "Heavens Gates" then;x = "rbxassetid://2524141970";y = "rbxassetid://2524142163";z = "rbxassetid://2524139960"
+            setA1(x,y,z)
         elseif library.flags["selected_a1"] == "Lunar" then
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer2"].TextureID = "rbxassetid://3414435728"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer"].TextureID = "rbxassetid://3414435728"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Barrel"].TextureID = "rbxassetid://3414435728"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Handle"].TextureID = "rbxassetid://3414435472"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Bolt"].TextureID = "rbxassetid://2524142163"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Grip"].TextureID = "rbxassetid://3414435472"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Back"].TextureID = "rbxassetid://3414435472"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Top"].TextureID = "rbxassetid://3414435472"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Mag"].TextureID = "rbxassetid://3414435122"
+            x = "rbxassetid://3414435728";y = "rbxassetid://3414435472";z = "rbxassetid://3414435122"
+            setA1(x,y,z)
         elseif library.flags["selected_a1"] == "Animatic" then 
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer2"].TextureID = "rbxassetid://1630969918"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Silencer"].TextureID = "rbxassetid://1630969918"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Barrel"].TextureID = "rbxassetid://1630969918"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Handle"].TextureID = "rbxassetid://1630969918"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Bolt"].TextureID = "rbxassetid://1630969918"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Grip"].TextureID = "rbxassetid://1630969918"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Back"].TextureID = "rbxassetid://1630969918"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Top"].TextureID = "rbxassetid://1630969918"
-            game.ReplicatedStorage.Viewmodels["v_M4A1"]["Mag"].TextureID = "rbxassetid://1232538589"
+            x = "rbxassetid://1630969918";y = "rbxassetid://1630969918";z = "rbxassetid://1232538589"
+            setA1(x,y,z)
         end
         if library.flags["selected_sg"] == "Stock" then -- SG
-            setSG()
+            y = "rbxassetid://2471957094";z = "rbxassetid://2471931364"
+            setSG(y,z)
         elseif library.flags["selected_sg"] == "Yltude" then
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Handle"].TextureID = "rbxassetid://3270746596"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Scope"].TextureID = "rbxassetid://3270746686"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Mag 2"].TextureID = "rbxassetid://3270746596"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Front"].TextureID = "rbxassetid://3270746596"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Back"].TextureID = "rbxassetid://3270746596"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Bolt"].TextureID = "rbxassetid://3270746596"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Mag"].TextureID = "rbxassetid://3270746596"
+            y = "rbxassetid://3270746596";z = "rbxassetid://3270746686"
+            setSG(y,z)
         elseif library.flags["selected_sg"] == "[CBCL] DropX" then 
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Handle"].TextureID = "rbxassetid://3777235873"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Scope"].TextureID = "rbxassetid://3777365309"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Mag 2"].TextureID = "rbxassetid://3777235873"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Front"].TextureID = "rbxassetid://3777235873"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Back"].TextureID = "rbxassetid://3777235873"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Bolt"].TextureID = "rbxassetid://3777235873"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Mag"].TextureID = "rbxassetid://3777235873"
+            y = "rbxassetid://3777235873";z = "rbxassetid://3777365309"
+            setSG(y,z)
         elseif library.flags["selected_sg"] == "Drop Out" then
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Handle"].TextureID = "rbxassetid://5894322696"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Scope"].TextureID = "rbxassetid://5894322792"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Mag 2"].TextureID = "rbxassetid://5894322696"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Front"].TextureID = "rbxassetid://5894322696"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Back"].TextureID = "rbxassetid://5894322696"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Bolt"].TextureID = "rbxassetid://5894322696"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Mag"].TextureID = "rbxassetid://5894322696"
+            y = "rbxassetid://5894322696";z = "rbxassetid://5894322792"
+            setSG(y,z)
         elseif library.flags["selected_sg"] == "Variant Camo" then
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Handle"].TextureID = "rbxassetid://1641905659"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Scope"].TextureID = "rbxassetid://1641905859"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Mag 2"].TextureID = "rbxassetid://1641905659"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Front"].TextureID = "rbxassetid://1641905659"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Back"].TextureID = "rbxassetid://1641905659"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Bolt"].TextureID = "rbxassetid://1641905659"
-            game.ReplicatedStorage.Viewmodels["v_SG"]["Mag"].TextureID = "rbxassetid://1641905659"
+            y = "rbxassetid://1641905659";z = "rbxassetid://1641905859"
+            setSG(y,z)
         end
         if library.flags["selected_m4"] == "Stock" then
-            setM4()
+            x = "rbxassetid://2471949372"
+            setM4(x)
         elseif library.flags["selected_m4"] == "Devil" then
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://1229672746"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://1229672746"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://1229672746"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = "rbxassetid://1229672746"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = "rbxassetid://1229672746"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = "rbxassetid://1229672746"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://1229672746"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://1229672746"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://1229672746"
+            x = "rbxassetid://1229672746"
+            setM4(x)
         elseif library.flags["selected_m4"] == "[CBCL] BOT[s]" then
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://3037283257"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://3037283257"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://3037283257"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = "rbxassetid://3037283257"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = "rbxassetid://3037283257"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = "rbxassetid://3037283257"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://3037283257"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://3037283257"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://3037283257"
+            x = "rbxassetid://3037283257"
+            setM4(x)
         elseif library.flags["selected_m4"] == "[CBCL] Endline" then
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://3645642115"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://3645642115"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://3645642115"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = "rbxassetid://3645642115"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = "rbxassetid://3645642115"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = "rbxassetid://3645642115"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://3645642115"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://3645642115"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://3645642115"
+            x = "rbxassetid://3645642115"
+            setM4(x)
         elseif library.flags["selected_m4"] == "King" then
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://4229562713"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://4229562713"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://4229562713"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = "rbxassetid://4229562713"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = "rbxassetid://4229562713"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = "rbxassetid://4229562713"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://4229562713"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://4229562713"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://4229562713"
+            x = "rbxassetid://4229562713"
+            setM4(x)
         elseif library.flags["selected_m4"] == "Jester" then
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://4614562041"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://4614562041"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://4614562041"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = "rbxassetid://4614562041"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = "rbxassetid://4614562041"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = "rbxassetid://4614562041"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://4614562041"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://4614562041"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://4614562041"
+            x = "rbxassetid://4614562041"
+            setM4(x)
         elseif library.flags["selected_m4"] == "Delinquent" then
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://4587060763"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://4587060763"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://4587060763"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = "rbxassetid://4587060763"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = "rbxassetid://4587060763"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = "rbxassetid://4587060763"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://4587060763"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://4587060763"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://4587060763"
+            x = "rbxassetid://4587060763"
+            setM4(x)
         elseif library.flags["selected_m4"] == "[BF] Regina" then
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://9116144313"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://9116144313"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://9116144313"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = "rbxassetid://9116144313"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = "rbxassetid://9116144313"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = "rbxassetid://9116144313"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://9116144313"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://9116144313"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://9116144313"
+            x = "rbxassetid://9116144313"
+            setM4(x)
         elseif library.flags["selected_m4"] == "[BF] Howl" then
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://6451097179"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://6451097179"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://6451097179"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = "rbxassetid://6451097179"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = "rbxassetid://6451097179"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = "rbxassetid://6451097179"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://6451097179"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://6451097179"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://6451097179"
+            x = "rbxassetid://6451097179"
+            setM4(x)
         elseif library.flags["selected_m4"] == "[BF] Dragon" then
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Chamber"].TextureID = "rbxassetid://6522624583"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Handle"].TextureID = "rbxassetid://6522624583"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Barrel"].TextureID = "rbxassetid://6522624583"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Sight"].TextureID = "rbxassetid://6522624583"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Cover"].TextureID = "rbxassetid://6522624583"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["notex"].TextureID = "rbxassetid://6522624583"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Back"].TextureID = "rbxassetid://6522624583"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Bolt"].TextureID = "rbxassetid://6522624583"
-            game.ReplicatedStorage.Viewmodels["v_M4A4"]["Mag"].TextureID = "rbxassetid://6522624583"
+            x = "rbxassetid://6522624583"
+            setM4(x)
         end
         if library.flags["selected_awp"] == "Stock" then
-            setAWP()
+            x = "rbxassetid://2471931220";y = "rbxassetid://2472135190"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Grepkin" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://3037064717"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://1598635820"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://3037064717"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://3037064717"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://3037064717"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://3037064717"
+            x = "rbxassetid://3037064717";y = "rbxassetid://1598635820"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Nerf" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://1598678379"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://1598678227"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://1598678379"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://1598678379"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://1598678379"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://1598678379"
+            x = "rbxassetid://1598678379";y = "rbxassetid://1598678227"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "[CBCL] JTF2" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://4275330850"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://4275335996"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://4275330850"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://4275330850"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://4275330850"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://4275330850"
+            x = "rbxassetid://4275330850";y = "rbxassetid://4275335996"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Weeb" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://3099184540"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://3055561941"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://3099184540"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://3099184540"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://3099184540"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://3099184540"
+            x = "rbxassetid://3099184540";y = "rbxassetid://3055561941"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Scapter" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://2218460521"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://2218460521"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://2218460521"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://2218460521"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://2218460521"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://2218460521"
+            x = "rbxassetid://2218460521";y = "rbxassetid://2218460521"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "[CBCL] Blastech" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://2957203652"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://2957205106"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://2957203652"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://2957203652"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://2957203652"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://2957203652"
+            x = "rbxassetid://2957203652";y = "rbxassetid://2957205106"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Pinkie" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://3414434507"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://3415157031"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://3414434507"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://3414434507"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://3414434507"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://3414434507"
+            x = "rbxassetid://3414434507";y = "rbxassetid://3415157031"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Hika" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://4229559558"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://4229560278"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://4229559558"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://4229559558"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://4229559558"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://4229559558"
+            x = "rbxassetid://4229559558";y = "rbxassetid://4229560278"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Regina" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://4502758453"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://4502758601"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://4502758453"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://4502758453"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://4502758453"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://4502758453"
+            x = "rbxassetid://4502758453";y = "rbxassetid://4502758601"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Darkness" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://5861041299"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://5861333677"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://5861041299"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://5861041299"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://5861041299"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://5861041299"
+            x = "rbxassetid://5861333677";y = "rbxassetid://5861041299"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Grim" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://7943837662"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://5861139281"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://7943837662"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://7943837662"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://7943837662"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://7943837662"
+            x = "rbxassetid://7943837662";y = "rbxassetid://5861139281"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Dragon Lore" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://6451539744"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://6451541040"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://6451539744"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://6451539744"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://6451539744"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://6451539744"
+            x = "rbxassetid://6451539744";y = "rbxassetid://6451541040"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Gungnir" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://6559063434"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://6561080965"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://6559063434"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://6559063434"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://6559063434"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://6559063434"
+            x = "rbxassetid://6559063434";y = "rbxassetid://6561080965"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Prince" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://6439619884"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://6439621097"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://6439619884"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://6439619884"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://6439619884"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://6439619884"
+            x = "rbxassetid://6439619884";y = "rbxassetid://6439621097"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Hyper Beast" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://6576205981"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://6576207672"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://6576205981"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://6576205981"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://6576205981"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://6576205981"
+            x = "rbxassetid://6576205981";y = "rbxassetid://6576207672"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Twitch" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://7826240654"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://7826242521"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://7826240654"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://7826240654"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://7826240654"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://7826240654"
+            x = "rbxassetid://7826240654";y = "rbxassetid://7826242521"
+            setAWP(x,y)
         elseif library.flags["selected_awp"] == "Redline" then
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Handle"].TextureID = "rbxassetid://6657425659"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Scope"].TextureID = "rbxassetid://6657426143"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Mag"].TextureID = "rbxassetid://6657425659"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Barrel"].TextureID = "rbxassetid://6657425659"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide"].TextureID = "rbxassetid://6657425659"
-            game.ReplicatedStorage.Viewmodels["v_AWP"]["Slide 2"].TextureID = "rbxassetid://6657425659"
+            x = "rbxassetid://6657425659";y = "rbxassetid://6657426143"
+            setAWP(x,y)
         end
         if library.flags["selected_ak"] == "Stock" then
             setAK()
