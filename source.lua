@@ -1379,6 +1379,7 @@ local oldbutterfly,oldbutterflyFrame = skinsTab:createGroup(1)
 local oldSickle,oldSickleFrame = skinsTab:createGroup(1)
 local bowie,bowieFrame = skinsTab:createGroup(1)
 local daggers,daggersFrame = skinsTab:createGroup(1)
+local ursus,ursusFrame = skinsTab:createGroup(1)
 
 local skincfg = skinsTab:createGroup(0)
 
@@ -1410,7 +1411,7 @@ accessories:addList({text = "To Spoof", flag = "OldKnife", values = {"T Knife","
 local knframe = {}
 local glframe = {}
 accessories:addDivider()
-accessories:addList({text = "Knives",flag = "NewKnife",values = {"Bayonet",--[["Butterfly Knife",]]"Karambit",--[["Gut Knife","Huntsman Knife",]]"Old Bayonet","Old Butterfly Knife","Old Karambit","Old Sickle","M9 Bayonet","Bowie Knife","Shadow Daggers"},callback = function(val)
+accessories:addList({text = "Knives",flag = "NewKnife",values = {"Bayonet",--[["Butterfly Knife",]]"Karambit",--[["Gut Knife","Huntsman Knife",]]"Old Bayonet","Old Butterfly Knife","Old Karambit","Old Sickle","M9 Bayonet","Bowie Knife","Shadow Daggers",'Ursus'},callback = function(val)
     knframe = val
     bayonetFrame.Visible = val == "Bayonet"
     m9bayonetFrame.Visible = val == "M9 Bayonet"
@@ -1423,6 +1424,7 @@ accessories:addList({text = "Knives",flag = "NewKnife",values = {"Bayonet",--[["
     oldSickleFrame.Visible = val == "Old Sickle"
     bowieFrame.Visible =  val == "Bowie Knife"
     daggersFrame.Visible = val == "Shadow Daggers"
+    ursusFrame.Visible = val == "Ursus"
 end})
 accessories:addList({text = "Gloves",flag = "new_glove",values = {"Handwraps","Fingerless Gloves","Strapped Gloves","Sports Gloves"},callback = function(val)
     glframe = val
@@ -1464,6 +1466,9 @@ bowie:addList({text = "Texture",flag = "bowie_skin",values = {'Vanilla','Crimson
 
 daggers:addTextbox({text  = "Shadow Daggers",flag = "blank_flag"})
 daggers:addList({text = "Texture",flag = "daggers_skin",values = {'Vanilla','Autotronic','Black Pearl','Crimson Web','Doppler','Emerald','Fade','Ruby','Sapphire','Lore','Tiger Tooth',"Slaughter","Ultra Violet"}})
+
+ursus:addTextbox({text  = "Ursus",flag = "blank_flag"})
+ursus:addList({text = "Texture",flag = "ursus_skin",values = {'Crimson Web','Forest DDPAT','Fade','Emerald','Ruby','Sapphire','Marble Fade','Slaughter','Black Pearl','Ultra Violet'}})
 
 skincfg:addToggle({text = "Auto Load",flag = "autoload"})
 skincfg:addButton({text = "Load Selected",callback = function() loadskins() end})
@@ -1565,6 +1570,26 @@ function runGloves()
             end
         end
     end
+end
+
+
+function setUrsus()
+    game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://9993977663')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
+    end
+    Model:Destroy()
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://9993977663')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
+    end
+    Model:Destroy()
+    game.ReplicatedStorage.Viewmodels["wdhPg4tJq9"].Name = "v_".. library.flags["OldKnife"]
 end
 
 function setoldSickle()
@@ -2214,6 +2239,29 @@ function runKnives()
             elseif library.flags["oldsickle_skin"] == "Hallows" then
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].TextureID = "rbxassetid://9941884185"
             end
+        elseif library.flags["NewKnife"] == "Ursus" then
+            setUrsus()
+            if library.flags["ursus_skin"] == "Forest DDPAT" then
+                setUrsus()
+            elseif library.flags["ursus_skin"] == "Ruby" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9993540519"
+            elseif library.flags["ursus_skin"] == "Emerald" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9993529922"
+            elseif library.flags["ursus_skin"] == "Sapphire" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9992763693"
+            elseif library.flags["ursus_skin"] == "Black Pearl" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9993452174"
+            elseif library.flags["ursus_skin"] == "Ultra Violet" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9993444293"
+            elseif library.flags["ursus_skin"] == "Slaughter" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9993468879"
+            elseif library.flags["ursus_skin"] == "Fade" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9993533302"
+            elseif library.flags["ursus_skin"] == "Marble Fade" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9993472130"
+            elseif library.flags["ursus_skin"] == "Crimson Web" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9993446446"
+            end
         elseif library.flags["NewKnife"] == "Bowie Knife" then
             setBow()
             if library.flags["bowie_skin"] == "Vanilla" then
@@ -2785,7 +2833,7 @@ function loadskins()
 end
 
 local BombTimer = 40
-local sexinfo = "Site: - ; Timer: --/--"
+local sexinfo = "Site: - ; Timer: 40/40"
 
 
 workspace.ChildAdded:Connect(function(new)
@@ -2809,7 +2857,7 @@ workspace.ChildAdded:Connect(function(new)
                 sexinfo =  "Site: "..bombPlant.." ; Timer: "..tostring(BombTimer.. "/40")
                 bvitalsOutline.Size = (Vector2.new(502,5));bvitals.Size = (Vector2.new(BombTimer*12.5,3))
 			until BombTimer == 0 or workspace.Status.RoundOver.Value == true
-            sexinfo = "Site: - ; Timer: --/--"
+            sexinfo = "Site: - ; Timer: 40/40"
             bombStats.Visible = false;bvitalsOutline.Visible = false;bvitals.Visible = false;bvitalsText.Visible = false
             BombTimer = 40
 			bvitals.Size = (Vector2.new(500,3))
