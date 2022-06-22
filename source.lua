@@ -2062,106 +2062,109 @@ function runKnives()
             elseif library.flags["oldkar_skin"] == "Ultra Violet" then
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9960981372"
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9960981372"
-            elseif library.flags["oldkar_skin"] == "Crimson Web " then
+            elseif library.flags["oldkar_skin"] == "Crimson Web" then
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9961000823"
                 game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9961000823"
+            elseif library.flags["oldkar_skin"] == "Lore" then
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9960890952"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Part"].Mesh.TextureId = "rbxassetid://9960890952"
             end
         elseif library.flags["NewKnife"] == "Old Butterfly Knife" then
             setoldButter()
             if library.flags["oldbutter_skin"] == "Vanilla" then
                 setoldButter()
             elseif library.flags["oldbutter_skin"] == "Twitch" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://1342643466"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://1342643466"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://1342643466"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://1342643466"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://1342643466"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://1342643466"
             elseif library.flags["oldbutter_skin"] == "Wetland" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://540165779"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://540165779"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://540165779"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://540165779"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://540165779"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://540165779"
             elseif library.flags["oldbutter_skin"] == "Naval" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://540165614"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://540165614"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://540165614"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://540165614"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://540165614"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://540165614"
             elseif library.flags["oldbutter_skin_cs"] == "Ruby" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://9960840247"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://9960840247"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://9960840247"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://9960840247"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://9960840247"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9960840247"
             elseif library.flags["oldbutter_skin"] == "Splattered" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://1158075574"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://1158075574"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://1158075574"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://1158075574"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://1158075574"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://1158075574"
             elseif library.flags["oldbutter_skin"] == "Frozen Dream" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://1257243213"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://1257243213"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://1257243213"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://1257243213"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://1257243213"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://1257243213"
             elseif library.flags["oldbutter_skin"] == "Hallows" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://1141692457"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://1141692457"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://1141692457"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://1141692457"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://1141692457"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://1141692457"
             elseif library.flags["oldbutter_skin"] == "Bloodwidow" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://841613162"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://841613162"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://841613162"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://841613162"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://841613162"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://841613162"
             elseif library.flags["oldbutter_skin"] == "Scapter" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://2270529123"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://2270529123"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://2270529123"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://2270529123"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://2270529123"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://2270529123"
             elseif library.flags["oldbutter_skin"] == "White Boss" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://560174166"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://560174166"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://560174166"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://560174166"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://560174166"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://560174166"
             elseif library.flags["oldbutter_skin"] == "Crippled Fade" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://841623423"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://841623423"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://841623423"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://841623423"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://841623423"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://841623423"
             elseif library.flags["oldbutter_skin"] == "Marbelized" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://540165482"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://540165482"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://540165482"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://540165482"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://540165482"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://540165482"
             elseif library.flags["oldbutter_skin"] == "Reaper" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://2499215485"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://2499215485"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://2499215485"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://2499215485"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://2499215485"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://2499215485"
             elseif library.flags["oldbutter_skin"] == "Icicle" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://2664356728"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://2664356728"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://2664356728"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://2664356728"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://2664356728"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://2664356728"
             elseif library.flags["oldbutter_skin"] == "Jade Dream" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://540165364"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://540165364"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://540165364"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://540165364"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://540165364"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://540165364"
             elseif library.flags["oldbutter_skin_cs"] == "Lore" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://9960862710"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://9960862710"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://9960862710"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://9960862710"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://9960862710"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9960862710"
             elseif library.flags["oldbutter_skin_cs"] == "Sapphire" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://9960830618"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://9960830618"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://9960830618"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://9960830618"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://9960830618"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9960830618"
             elseif library.flags["oldbutter_skin_cs"] == "Emerald" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://9960836519"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://9960836519"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://9960836519"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://9960836519"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://9960836519"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9960836519"
             elseif library.flags["oldbutter_skin_cs"] == "Tiger Tooth" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://9960501453"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://9960501453"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://9960501453"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://9960501453"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://9960501453"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9960501453"
             elseif library.flags["oldbutter_skin_cs"] == "Ultra Violet" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://9960853404"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://9960853404"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://9960853404"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://9960853404"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://9960853404"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9960853404"
             elseif library.flags["oldbutter_skin_cs"] == "Autotronic" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://9960858713"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://9960858713"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://9960858713"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://9960858713"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://9960858713"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9960858713"
             elseif library.flags["oldbutter_skin_cs"] == "Crimson Web" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://9960872874"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://9960872874"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://9960872874"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://9960872874"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://9960872874"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9960872874"
             elseif library.flags["oldbutter_skin_cs"] == "Slaughter" then
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite2"].Mesh.TextureId = "rbxassetid://9958747699"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade2"].Mesh.TextureId = "rbxassetid://9958747699"
-                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle2"].Mesh.TextureId = "rbxassetid://9958747699"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Bite"].Mesh.TextureId = "rbxassetid://9958747699"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Blade"].Mesh.TextureId = "rbxassetid://9958747699"
+                game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]["Handle"].Mesh.TextureId = "rbxassetid://9958747699"
             end
         elseif library.flags["NewKnife"] == "Old Bayonet" then
             setoldBay()
