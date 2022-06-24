@@ -1380,6 +1380,7 @@ local oldSickle,oldSickleFrame = skinsTab:createGroup(1)
 local bowie,bowieFrame = skinsTab:createGroup(1)
 local daggers,daggersFrame = skinsTab:createGroup(1)
 local ursus,ursusFrame = skinsTab:createGroup(1)
+local flip,flipFrame = skinsTab:createGroup(1)
 
 local skincfg = skinsTab:createGroup(0)
 
@@ -1411,7 +1412,7 @@ accessories:addList({text = "To Spoof", flag = "OldKnife", values = {"T Knife","
 local knframe = {}
 local glframe = {}
 accessories:addDivider()
-accessories:addList({text = "Knives",flag = "NewKnife",values = {"Bayonet",--[["Butterfly Knife",]]"Karambit",--[["Gut Knife","Huntsman Knife",]]"Old Bayonet","Old Butterfly Knife","Old Karambit","Old Sickle","M9 Bayonet","Bowie Knife","Shadow Daggers",'Ursus'},callback = function(val)
+accessories:addList({text = "Knives",flag = "NewKnife",values = {"Bayonet",--[["Butterfly Knife",]]"Karambit",--[["Gut Knife","Huntsman Knife",]]"Old Bayonet","Old Butterfly Knife","Old Karambit","Old Sickle","M9 Bayonet","Bowie Knife","Shadow Daggers",'Flip Knife','Ursus'},callback = function(val)
     knframe = val
     bayonetFrame.Visible = val == "Bayonet"
     m9bayonetFrame.Visible = val == "M9 Bayonet"
@@ -1425,6 +1426,7 @@ accessories:addList({text = "Knives",flag = "NewKnife",values = {"Bayonet",--[["
     bowieFrame.Visible =  val == "Bowie Knife"
     daggersFrame.Visible = val == "Shadow Daggers"
     ursusFrame.Visible = val == "Ursus"
+    flipFrame.Visible = val == "Flip Knife"
 end})
 accessories:addList({text = "Gloves",flag = "new_glove",values = {"Handwraps","Fingerless Gloves","Strapped Gloves","Sports Gloves"},callback = function(val)
     glframe = val
@@ -1469,6 +1471,9 @@ daggers:addList({text = "Texture",flag = "daggers_skin",values = {'Vanilla','Aut
 
 ursus:addTextbox({text  = "Ursus",flag = "blank_flag"})
 ursus:addList({text = "Texture",flag = "ursus_skin",values = {'Crimson Web','Fade','Ruby','Sapphire','Marble Fade','Slaughter','Black Pearl','Ultra Violet'}})
+
+flip:addTextbox({text  = "Flip Knife",flag = "blank_flag"})
+flip:addList({text = "Texture",flag = "flip_skin",values = {'Vanilla','Black Pearl','Crimson Web','Emerald','Fade','Lore','Marble Fade','Ruby','Sapphire','Slaughter','Tiger Tooth','Ultra Violet'}})
 
 skincfg:addToggle({text = "Auto Load",flag = "autoload"})
 skincfg:addButton({text = "Load Selected",callback = function() loadskins() end})
@@ -1811,6 +1816,27 @@ function setUrsus()
     end
     Model:Destroy()
     game.ReplicatedStorage.Viewmodels["wdhPg4tJq9"].Name = "v_".. library.flags["OldKnife"]
+end
+
+function setFlip(x)
+    game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://10012051456')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
+    end
+    Model:Destroy()
+    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+    game:GetObjects('rbxassetid://10012051456')[1].Parent = Model1
+    Model = game.ReplicatedStorage.Viewmodels.Model
+    for _, Child in pairs(Model:GetChildren()) do
+        Child.Parent = Model.Parent
+    end
+    Model:Destroy()
+    game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"]["Blade"].Mesh.TextureId = x
+    game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"]["Handle"].Mesh.TextureId = x
+    game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"].Name = "v_".. library.flags["OldKnife"]
 end
 
 function setoldSickle()
@@ -2550,6 +2576,44 @@ function runKnives()
             elseif library.flags["daggers_skin"] == "Slaughter" then
                 x = 'rbxassetid://9951667903'
                 setSD(x)
+            end
+        elseif library.flags["NewKnife"] == "Flip Knife" then
+            if library.flags["flip_skin"] == "Vanilla" then
+                x = 'rbxassetid://10011928391'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Sapphire" then
+                x = 'rbxassetid://10011951434'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Ruby" then
+                x = 'rbxassetid://10012023354'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Emerald" then
+                x = 'rbxassetid://10012019172'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Lore" then
+                x = 'rbxassetid://10012030025'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Crimson Web" then
+                x = 'rbxassetid://10011942898'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Ultra Violet" then
+                x = 'rbxassetid://10011933375'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Fade" then
+                x = 'rbxassetid://10012033487'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Black Pearl" then
+                x = 'rbxassetid://10011947306'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Tiger Tooth" then
+                x = 'rbxassetid://10012036950'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Slaughter" then
+                x = 'rbxassetid://10012041038'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Marble Fade" then
+                x = 'rbxassetid://10012044670'
+                setFlip(x)
             end
         elseif library.flags["NewKnife"] == "M9 Bayonet" then
             if library.flags["m9bay_skin"] == "Vanilla" then
