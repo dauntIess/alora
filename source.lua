@@ -14,7 +14,7 @@
 repeat wait() until game:IsLoaded()
 if game:GetService("CoreGui"):FindFirstChild("sjorlib") then return end
 getgenv().error = function() end
-local ver = "1.4.6c"
+local ver = "1.4.8c"
 --files
 if not isfolder("alora") then
     makefolder("alora")
@@ -1401,7 +1401,7 @@ strappedgloves:addTextbox({text = "Selected Glove: Strapped Gloves",flag = "blan
 strappedgloves:addList{text = "Texture",flag = "sc_stg",values = {"Vanilla"}}
 
 sportsgloves:addTextbox({text = "Selected Glove: Sports Gloves",flag = "blank_flag"})
-sportsgloves:addList{text = "Texture",flag = "sc_spg",values = {"Vanilla"}}
+sportsgloves:addList{text = "Texture",flag = "sc_spg",values = {"Vanilla","Calamity","Cotton Tail","Dead Prey","Hallows","Hazard","Majesty","RSL","Royal","Skulls","Twitch","Weeb"}}
 
 fingerlessgloves:addTextbox({text = "Selected Glove: Fingerless Gloves",flag = "blank_flag"})
 fingerlessgloves:addList{text = "Texture",flag = "sc_fg",values = {"Vanilla"}}
@@ -1468,7 +1468,7 @@ daggers:addTextbox({text  = "Shadow Daggers",flag = "blank_flag"})
 daggers:addList({text = "Texture",flag = "daggers_skin",values = {'Vanilla','Autotronic','Black Pearl','Crimson Web','Doppler','Emerald','Fade','Ruby','Sapphire','Lore','Tiger Tooth',"Slaughter","Ultra Violet"}})
 
 ursus:addTextbox({text  = "Ursus",flag = "blank_flag"})
-ursus:addList({text = "Texture",flag = "ursus_skin",values = {'Crimson Web','Forest DDPAT','Fade','Emerald','Ruby','Sapphire','Marble Fade','Slaughter','Black Pearl','Ultra Violet'}})
+ursus:addList({text = "Texture",flag = "ursus_skin",values = {'Crimson Web','Fade','Ruby','Sapphire','Marble Fade','Slaughter','Black Pearl','Ultra Violet'}})
 
 skincfg:addToggle({text = "Auto Load",flag = "autoload"})
 skincfg:addButton({text = "Load Selected",callback = function() loadskins() end})
@@ -1496,6 +1496,177 @@ function setWraps(y,z)
 	end
 	Model1:Destroy()
 	Model2 = game.ReplicatedStorage.Viewmodels['Handwraps_Models']
+	for _, Child in pairs(Model2:GetChildren()) do
+	    Child.Parent = Model2.Parent
+	end
+	Model2:Destroy()
+	game.ReplicatedStorage.Viewmodels["GIGNArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["ECArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["SASArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["IDFArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["UTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GCTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["PCArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["BDSArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GSGArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["SPArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["WDArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["PTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["AAArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GIGNArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["ECArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["SASArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["IDFArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["UTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GCTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["PCArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["BDSArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GSGArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["SPArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["WDArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["PTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["AAArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+end
+
+function setSports(y,z)
+    game.ReplicatedStorage.Viewmodels["GIGNArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["ECArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["SASArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["IDFArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["UTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GCTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["PCArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["BDSArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GSGArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["SPArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["WDArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["PTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["AAArms"]:Destroy()
+	local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+	game:GetObjects('rbxassetid://7687143935')[1].Parent = Model1
+	Model1 = game.ReplicatedStorage.Viewmodels.Model
+	for _, Child in pairs(Model1:GetChildren()) do
+	    Child.Parent = Model1.Parent
+	end
+	Model1:Destroy()
+	Model2 = game.ReplicatedStorage.Viewmodels['Sports_Models']
+	for _, Child in pairs(Model2:GetChildren()) do
+	    Child.Parent = Model2.Parent
+	end
+	Model2:Destroy()
+	game.ReplicatedStorage.Viewmodels["GIGNArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["ECArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["SASArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["IDFArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["UTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GCTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["PCArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["BDSArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GSGArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["SPArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["WDArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["PTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["AAArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GIGNArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["ECArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["SASArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["IDFArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["UTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GCTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["PCArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["BDSArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GSGArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["SPArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["WDArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["PTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["AAArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+end
+
+function setStrap(y,z)
+    game.ReplicatedStorage.Viewmodels["GIGNArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["ECArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["SASArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["IDFArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["UTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GCTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["PCArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["BDSArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GSGArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["SPArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["WDArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["PTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["AAArms"]:Destroy()
+	local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+	game:GetObjects('rbxassetid://7687144943')[1].Parent = Model1
+	Model1 = game.ReplicatedStorage.Viewmodels.Model
+	for _, Child in pairs(Model1:GetChildren()) do
+	    Child.Parent = Model1.Parent
+	end
+	Model1:Destroy()
+	Model2 = game.ReplicatedStorage.Viewmodels['Strapped_Models']
+	for _, Child in pairs(Model2:GetChildren()) do
+	    Child.Parent = Model2.Parent
+	end
+	Model2:Destroy()
+	game.ReplicatedStorage.Viewmodels["GIGNArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["ECArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["SASArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["IDFArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["UTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GCTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["PCArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["BDSArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GSGArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["SPArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["WDArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["PTArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["AAArms"]["Left Arm"].LGlove.Mesh.TextureId = y
+	game.ReplicatedStorage.Viewmodels["GIGNArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["ECArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["SASArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["IDFArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["UTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GCTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["PCArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["BDSArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GSGArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["SPArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["WDArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["GTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["PTArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+	game.ReplicatedStorage.Viewmodels["AAArms"]["Right Arm"].RGlove.Mesh.TextureId = z
+end
+
+function setFinger(y,z)
+    game.ReplicatedStorage.Viewmodels["GIGNArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["ECArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["SASArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["IDFArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["UTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GCTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["PCArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["BDSArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GSGArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["SPArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["WDArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["GTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["PTArms"]:Destroy()
+	game.ReplicatedStorage.Viewmodels["AAArms"]:Destroy()
+	local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
+	game:GetObjects('rbxassetid://7687118060')[1].Parent = Model1
+	Model1 = game.ReplicatedStorage.Viewmodels.Model
+	for _, Child in pairs(Model1:GetChildren()) do
+	    Child.Parent = Model1.Parent
+	end
+	Model1:Destroy()
+	Model2 = game.ReplicatedStorage.Viewmodels['Fingerless_Models']
 	for _, Child in pairs(Model2:GetChildren()) do
 	    Child.Parent = Model2.Parent
 	end
@@ -1567,6 +1738,56 @@ function runGloves()
             elseif library.flags["sc_hw"] == "MMA" then
                 y ='rbxassetid://2136611279';z ='rbxassetid://2136611279'
                 setWraps(y,z)
+            end
+        elseif library.flags["new_glove"] == "Sports Gloves" then
+            if library.flags["sc_spg"] == "Vanilla" then
+                y ='rbxassetid://2472561474'
+                z ='rbxassetid://2472561474'
+                setSports(y,z)
+            elseif library.flags["sc_spg"] == "Cotton Tail" then
+                y ='rbxassetid://950347192'
+                z ='rbxassetid://950347192'
+                setSports(y,z)
+            elseif library.flags["sc_spg"] == "RSL" then
+                y ='rbxassetid://3367350589'
+                z ='rbxassetid://3367350589'
+                setSports(y,z)
+            elseif library.flags["sc_spg"] == "Skulls" then
+                y ='rbxassetid://5861139281'
+                z ='rbxassetid://5861139281'
+                setSports(y,z)
+            elseif library.flags["sc_spg"] == "Weeb" then
+                y ='rbxassetid://3055822171'
+                z ='rbxassetid://3055822171'
+                setSports(y,z)
+            elseif library.flags["sc_spg"] == "Royal" then
+                y ='rbxassetid://2135534686'
+                z ='rbxassetid://2135534686'
+                setSports(y,z)
+            elseif library.flags["sc_spg"] == "Majesty" then
+                y ='rbxassetid://2135581144'
+                z ='rbxassetid://2135581144'
+                setSports(y,z)
+            elseif library.flags["sc_spg"] == "Hallows" then
+                y ='rbxassetid://2504760117'
+                z ='rbxassetid://2504760117'
+                setSports(y,z)
+            elseif library.flags["sc_spg"] == "Twitch" then
+                y ='rbxassetid://6899073614'
+                z ='rbxassetid://6899073614'
+                setSports(y,z)
+            elseif library.flags["sc_spg"] == "Calamity" then
+                y ='rbxassetid://6891919220'
+                z ='rbxassetid://6891919220'
+                setSports(y,z)
+            elseif library.flags["sc_spg"] == "Dead Prey" then
+                y ='rbxassetid://7998990929'
+                z ='rbxassetid://7998990929'
+                setSports(y,z)
+            elseif library.flags["sc_spg"] == "Hazard" then
+                y ='rbxassetid://2135535438'
+                z ='rbxassetid://2135535438'
+                setSports(y,z)
             end
         end
     end
