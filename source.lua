@@ -1409,7 +1409,7 @@ fingerlessgloves:addTextbox({text = "Gloves: Fingerless Gloves",flag = "blank_fl
 fingerlessgloves:addList{text = "★",flag = "sc_fg",values = {"Vanilla"}}
 
 accessories:addToggle({text = "Accessories", flag = "sc_acc"})
-accessories:addList({text = "To Spoof", flag = "OldKnife", values = {"T Knife","CT Knife","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
+accessories:addList({text = "Your Knife", flag = "OldKnife", values = {"T Knife","CT Knife","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
 local knframe = {}
 local glframe = {}
 accessories:addDivider()
