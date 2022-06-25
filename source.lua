@@ -553,7 +553,7 @@ end)
 local aimbotTab = library:addTab("Aimbot")
 local visualsTab = library:addTab("Visuals")
 local miscTab = library:addTab("Misc")
-local skinsTab = library:addTab("Skins")
+local skinsTab = library:addTab("Skin Changer")
 local configTab = library:addTab("Settings")
 
 local configGroup = configTab:createGroup(0)
@@ -1363,11 +1363,6 @@ local rifles = skinsTab:createGroup(0)
 local pistols = skinsTab:createGroup(0)
 local accessories = skinsTab:createGroup(1)
 
-local handwraps,hwFrame = skinsTab:createGroup(1)
-local sportsgloves,spgFrame = skinsTab:createGroup(1)
-local strappedgloves,stgFrame = skinsTab:createGroup(1)
-local fingerlessgloves,fgFrame = skinsTab:createGroup(1)
-
 local karambit,karambitFrame = skinsTab:createGroup(1)
 local oldKara,oldkaraFrame = skinsTab:createGroup(1)
 local bayonet,bayonetFrame = skinsTab:createGroup(1)
@@ -1381,6 +1376,12 @@ local bowie,bowieFrame = skinsTab:createGroup(1)
 local daggers,daggersFrame = skinsTab:createGroup(1)
 local ursus,ursusFrame = skinsTab:createGroup(1)
 local flip,flipFrame = skinsTab:createGroup(1)
+local talon,talonFrame = skinsTab:createGroup(1)
+
+local handwraps,hwFrame = skinsTab:createGroup(1)
+local sportsgloves,spgFrame = skinsTab:createGroup(1)
+local strappedgloves,stgFrame = skinsTab:createGroup(1)
+local fingerlessgloves,fgFrame = skinsTab:createGroup(1)
 
 local skincfg = skinsTab:createGroup(0)
 
@@ -1388,31 +1389,31 @@ rifles:addToggle({text = "Rifles", flag = "sc_rifles"})
 rifles:addList({text = "AK47",flag = "selected_ak",values= {"Stock","Eve","Galaxy Corpse","Goddess","Hallows","Mean Green","Outrunner","Scapter","Skin Committee","Survivor","Variant Camo","VAV","Yltude","Redline","[CBCL] Hypersonic","[RSL] Outlaws","Ignore"}}) 
 rifles:addList({text = "AWP",flag = "selected_awp",values = {"Stock","Darkness","Grepkin","Grim","Hika","Nerf","Pinkie","Regina","Scapter","Weeb","[CBCL] Blastech","[CBCL] JTF2","Dragon Lore","Gungnir","Hyper Beast","Prince","Twitch","Redline","Ignore"}})
 rifles:addList({text = "M4A1-s",flag = "selected_a1",values= {"Stock","Animatic","Heavens Gates","Lunar","[BF] Black Death","[BF] Hyper Beast","Ignore"}})
-rifles:addList({text = "M4A4",flag = "selected_m4",values= {"Stock","Delinquent","Devil","Jester","King","[CBCL] BOT[s]","[CBCL] Endline","Dragon","[BF] Howl","[BF] Regina","Ignore"}--[[,callback = function(val) print(val) end]]})
+rifles:addList({text = "M4A4",flag = "selected_m4",values= {"Stock","Delinquent","Devil","Jester","King","[BF] Howl","[BF] Regina","[CBCL] BOT[s]","[CBCL] Endline","Ignore"}--[[,callback = function(val) print(val) end]]})
 rifles:addList({text = "Scout", flag = "selected_ssg", values = {"Stock","Hellborn","Neon Regulation","Xmas","Ignore"}, callback = runSSG}) 
 rifles:addList({text = "SG",flag = "selected_sg",values= {"Stock","Drop Out","Variant Camo","Yltude","[CBCL] DropX","Ignore"}})
 
 pistols:addToggle({text = "Pistols", flag = "sc_pistols"}) 
 pistols:addList({text = "Deagle", flag = "selected_deagle", values = {"Stock","Code Red","Glittery","Grim","Honor-Bound","Independence","Racer","Scapter","Skin Committee","Weeb","Xmas","[CBCL] DropX","[CBCL] TC"}, callback = runDeagle}) 
 
-handwraps:addTextbox({text = "Selected Glove: Handwraps",flag = "blank_flag"})
-handwraps:addList{text = "Texture",flag = "sc_hw",values = {"Vanilla","Guts","MMA","Mummy","Microbes","Phantom Hex","Sector Hex","Orange Hex","Toxic Nitro","Cloth","Twitch"}}
+handwraps:addTextbox({text = "Gloves: Handwraps",flag = "blank_flag"})
+handwraps:addList{text = "★",flag = "sc_hw",values = {"Vanilla","Guts","MMA","Mummy","Microbes","Phantom Hex","Sector Hex","Orange Hex","Toxic Nitro","Cloth","Twitch"}}
 
-strappedgloves:addTextbox({text = "Selected Glove: Strapped Gloves",flag = "blank_flag"})
-strappedgloves:addList{text = "Texture",flag = "sc_stg",values = {"Vanilla"}}
+strappedgloves:addTextbox({text = "Gloves: Strapped Gloves",flag = "blank_flag"})
+strappedgloves:addList{text = "★",flag = "sc_stg",values = {"Vanilla"}}
 
-sportsgloves:addTextbox({text = "Selected Glove: Sports Gloves",flag = "blank_flag"})
-sportsgloves:addList{text = "Texture",flag = "sc_spg",values = {"Vanilla","Calamity","Cotton Tail","Dead Prey","Hallows","Hazard","Majesty","RSL","Royal","Skulls","Twitch","Weeb"}}
+sportsgloves:addTextbox({text = "Gloves: Sports Gloves",flag = "blank_flag"})
+sportsgloves:addList{text = "★",flag = "sc_spg",values = {"Vanilla","Calamity","Cotton Tail","Dead Prey","Hallows","Hazard","Majesty","RSL","Royal","Skulls","Twitch","Weeb"}}
 
-fingerlessgloves:addTextbox({text = "Selected Glove: Fingerless Gloves",flag = "blank_flag"})
-fingerlessgloves:addList{text = "Texture",flag = "sc_fg",values = {"Vanilla"}}
+fingerlessgloves:addTextbox({text = "Gloves: Fingerless Gloves",flag = "blank_flag"})
+fingerlessgloves:addList{text = "★",flag = "sc_fg",values = {"Vanilla"}}
 
 accessories:addToggle({text = "Accessories", flag = "sc_acc"})
 accessories:addList({text = "To Spoof", flag = "OldKnife", values = {"T Knife","CT Knife","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
 local knframe = {}
 local glframe = {}
 accessories:addDivider()
-accessories:addList({text = "Knives",flag = "NewKnife",values = {"Bayonet",--[["Butterfly Knife",]]"Karambit",--[["Gut Knife","Huntsman Knife",]]"Old Bayonet","Old Butterfly Knife","Old Karambit","Old Sickle","M9 Bayonet","Bowie Knife","Shadow Daggers",'Flip Knife','Ursus'},callback = function(val)
+accessories:addList({text = "Knives",flag = "NewKnife",values = {"Bayonet","Bowie Knife","Karambit","M9 Bayonet","Old Bayonet","Old Butterfly Knife","Old Karambit","Old Sickle","Shadow Daggers","Talon Knife","Flip Knife","Ursus"},callback = function(val)
     knframe = val
     bayonetFrame.Visible = val == "Bayonet"
     m9bayonetFrame.Visible = val == "M9 Bayonet"
@@ -1427,6 +1428,7 @@ accessories:addList({text = "Knives",flag = "NewKnife",values = {"Bayonet",--[["
     daggersFrame.Visible = val == "Shadow Daggers"
     ursusFrame.Visible = val == "Ursus"
     flipFrame.Visible = val == "Flip Knife"
+    talonFrame.Visible = val == "Talon Knife"
 end})
 accessories:addList({text = "Gloves",flag = "new_glove",values = {"Handwraps","Fingerless Gloves","Strapped Gloves","Sports Gloves"},callback = function(val)
     glframe = val
@@ -1435,45 +1437,48 @@ accessories:addList({text = "Gloves",flag = "new_glove",values = {"Handwraps","F
     stgFrame.Visible = val == "Strapped Gloves"
     fgFrame.Visible = val == "Fingerless Gloves"
 end})
-karambit:addTextbox({text = "Karambit",flag = "blank_flag"})
-karambit:addList({text = "Texture",flag = "kar_skin",values = {"Vanilla","Bloodwidow","Cob Web","Cosmos","Consumed","Death Wish","Digital","Drop Out","Festive","Gold","Goo","Hallows","Jester","Lantern","Liberty Camo","Peppermint","Pizza","Ruby","Topaz","Twitch"}})
+karambit:addTextbox({text = "Knife: Karambit",flag = "blank_flag"})
+karambit:addList({text = "★",flag = "kar_skin",values = {"Vanilla","Bloodwidow","Cob Web","Cosmos","Consumed","Death Wish","Digital","Drop Out","Festive","Gold","Goo","Hallows","Jester","Lantern","Liberty Camo","Peppermint","Pizza","Ruby","Topaz","Twitch"}})
 
-oldKara:addTextbox({text = "Old Karambit",flag = "blank_flag"})
-oldKara:addList({text = "Texture",flag = "oldkar_skin",values = {"Vanilla","Autotronic","Bloodwidow","Crimson Web","Crippled Fade","Emerald","Frozen Dream","Gold","Hallows","Jade Dream","Lantern","Lore","Marbelized","Naval","Ruby","Sapphire","Scapter","Splattered","Twitch","Ultra Violet","Wetland"}})
+oldKara:addTextbox({text = "Knife: Old Karambit",flag = "blank_flag"})
+oldKara:addList({text = "★",flag = "oldkar_skin",values = {"Vanilla","Autotronic","Bloodwidow","Crimson Web","Crippled Fade","Emerald","Frozen Dream","Gold","Hallows","Jade Dream","Lantern","Lore","Marbelized","Naval","Ruby","Sapphire","Scapter","Splattered","Twitch","Ultra Violet","Wetland"}})
 
-bayonet:addTextbox({text = "Bayonet",flag = "blank_flag"})
-bayonet:addList({text = "Texture",flag = "bay_skin",values = {"Vanilla","Consumed","Cosmos","Crow","Digital","Easy-Bake","Frozen Dream","Goo","Hallows","Intertwine","RSL","Racer","Sapphire","Topaz","Twitch"}})
+bayonet:addTextbox({text = "Knife: Bayonet",flag = "blank_flag"})
+bayonet:addList({text = "★",flag = "bay_skin",values = {"Vanilla","Consumed","Cosmos","Crow","Digital","Easy-Bake","Frozen Dream","Goo","Hallows","Intertwine","RSL","Racer","Sapphire","Topaz","Twitch"}})
 
-m9bayonet:addTextbox({text = "M9 Bayonet",flag = "blank_flag"})
-m9bayonet:addList({text = "Texture",flag = "m9bay_skin",values = {"Vanilla","Autotronic","Black Laminate","Crimson Web","Emerald","Fade","Lore","Night","Ruby","Sapphire","Tiger Tooth","Ultra Violet"}})
+m9bayonet:addTextbox({text = "Knife: M9 Bayonet",flag = "blank_flag"})
+m9bayonet:addList({text = "★",flag = "m9bay_skin",values = {"Vanilla","Autotronic","Black Laminate","Crimson Web","Emerald","Fade","Lore","Night","Ruby","Sapphire","Tiger Tooth","Ultra Violet"}})
 
-oldbayonet:addTextbox({text = "Old Bayonet",flag = "blank_flag"})
-oldbayonet:addList({text = "Texture",flag = "oldbay_skin",values = {"Vanilla","Autotronic","Doppler Emerald","Frozen Dream","Hallows","Intertwine","Lore","Marbelized","Naval","Doppler Ruby","Doppler Sapphire","Splattered","Twitch","Ultra Violet","Wetland"}})
+oldbayonet:addTextbox({text = "Knife: Old Bayonet",flag = "blank_flag"})
+oldbayonet:addList({text = "★",flag = "oldbay_skin",values = {"Vanilla","Autotronic","Doppler Emerald","Frozen Dream","Hallows","Intertwine","Lore","Marbelized","Naval","Doppler Ruby","Doppler Sapphire","Splattered","Twitch","Ultra Violet","Wetland"}})
 
-butterfly:addTextbox({text = "Butterfly Knive",flag = "blank_flag"})
-butterfly:addList({text = "Texture",flag = "butter_skin",values = {"Vanilla"}})
+butterfly:addTextbox({text = "Knife: Butterfly Knive",flag = "blank_flag"})
+butterfly:addList({text = "★",flag = "butter_skin",values = {"Vanilla"}})
 
-oldbutterfly:addTextbox({text = "Old Butterfly Knife",flag = "blank_flag"})
-oldbutterfly:addList({text = "Original",flag = "oldbutter_skin",values = {"Vanilla","Ignore","Bloodwidow","Crippled Fade","Frozen Dream","Hallows","Icicle","Jade Dream","Marbelized","Naval","Reaper","Scapter","Splattered","Twitch","Wetland","White Boss"}})
-oldbutterfly:addList({text = "CS:GO",flag = "oldbutter_skin_cs",values ={"Vanilla","Ignore","Autotronic","Crimson Web","Emerald","Lore","Ruby","Sapphire","Slaughter","Tiger Tooth","Ultra Violet"}})
+oldbutterfly:addTextbox({text = "Knife: Old Butterfly Knife",flag = "blank_flag"})
+oldbutterfly:addList({text = "★",flag = "oldbutter_skin",values = {"Ignore","Vanilla","Bloodwidow","Crippled Fade","Frozen Dream","Hallows","Icicle","Jade Dream","Marbelized","Naval","Reaper","Scapter","Splattered","Twitch","Wetland","White Boss"}})
+oldbutterfly:addList({text = "★",flag = "oldbutter_skin_cs",values ={"Ignore","Vanilla","Autotronic","Crimson Web","Emerald","Lore","Ruby","Sapphire","Slaughter","Tiger Tooth","Ultra Violet"}})
 
-huntsman:addTextbox({text = "Huntsman Knife",flag = "blank_flag"})
-huntsman:addList({text = "Texture",flag = "hunts_skin",values = {"Vanilla"}})
+huntsman:addTextbox({text = "Knife: Huntsman Knife",flag = "blank_flag"})
+huntsman:addList({text = "★",flag = "hunts_skin",values = {"Vanilla"}})
 
-oldSickle:addTextbox({text = "Old Sickle",flag = "blank_flag"})
-oldSickle:addList({text = "Texture",flag = "oldsickle_skin",values = {"Vanilla","Splattered","Mummy","Twitch","Hallows"}})
+oldSickle:addTextbox({text = "Knife: Old Sickle",flag = "blank_flag"})
+oldSickle:addList({text = "★",flag = "oldsickle_skin",values = {"Vanilla","Splattered","Mummy","Twitch","Hallows"}})
 
-bowie:addTextbox({text  = "Bowie Knife",flag = "blank_flag"})
-bowie:addList({text = "Texture",flag = "bowie_skin",values = {'Vanilla','Crimson Web','Emerald','Ruby','Sapphire','Lore','Tiger Tooth',"Slaughter","Ultra Violet"}})
+bowie:addTextbox({text  = "Knife: Bowie Knife",flag = "blank_flag"})
+bowie:addList({text = "★",flag = "bowie_skin",values = {'Vanilla','Crimson Web','Emerald','Ruby','Sapphire','Lore','Tiger Tooth',"Slaughter","Ultra Violet"}})
 
-daggers:addTextbox({text  = "Shadow Daggers",flag = "blank_flag"})
-daggers:addList({text = "Texture",flag = "daggers_skin",values = {'Vanilla','Autotronic','Black Pearl','Crimson Web','Doppler','Emerald','Fade','Ruby','Sapphire','Lore','Tiger Tooth',"Slaughter","Ultra Violet"}})
+daggers:addTextbox({text  = "Knife: Shadow Daggers",flag = "blank_flag"})
+daggers:addList({text = "★",flag = "daggers_skin",values = {'Vanilla','Autotronic','Black Pearl','Crimson Web','Doppler','Emerald','Fade','Ruby','Sapphire','Lore','Tiger Tooth',"Slaughter","Ultra Violet"}})
 
-ursus:addTextbox({text  = "Ursus",flag = "blank_flag"})
-ursus:addList({text = "Texture",flag = "ursus_skin",values = {'Crimson Web','Fade','Ruby','Sapphire','Marble Fade','Slaughter','Black Pearl','Ultra Violet'}})
+ursus:addTextbox({text  = "Knife: Ursus",flag = "blank_flag"})
+ursus:addList({text = "★",flag = "ursus_skin",values = {'Crimson Web','Fade','Ruby','Sapphire','Marble Fade','Slaughter','Black Pearl','Ultra Violet'}})
 
-flip:addTextbox({text  = "Flip Knife",flag = "blank_flag"})
-flip:addList({text = "Texture",flag = "flip_skin",values = {'Vanilla','Black Pearl','Crimson Web','Emerald','Fade','Lore','Marble Fade','Ruby','Sapphire','Slaughter','Tiger Tooth','Ultra Violet'}})
+flip:addTextbox({text  = "Knife: Flip Knife",flag = "blank_flag"})
+flip:addList({text = "★",flag = "flip_skin",values = {'Vanilla','Black Pearl','Crimson Web','Emerald','Fade','Lore','Marble Fade','Ruby','Sapphire','Slaughter','Tiger Tooth','Ultra Violet'}})
+
+talon:addTextbox({text  = "Knife: Talon Knife",flag = "blank_flag"})
+talon:addList({text = "★",flag = "talon_skin",values = {'Black Pearl','Crimson Web','Doppler','Emerald','Fade','Forest DDPAT','Marble Fade','Ruby','Sapphire','Slaughter','Tiger Tooth','Ultra Violet'}})
 
 skincfg:addToggle({text = "Auto Load",flag = "autoload"})
 skincfg:addButton({text = "Load Selected",callback = function() loadskins() end})
@@ -1808,13 +1813,6 @@ function setUrsus()
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    game:GetObjects('rbxassetid://9993977663')[1].Parent = Model1
-    Model = game.ReplicatedStorage.Viewmodels.Model
-    for _, Child in pairs(Model:GetChildren()) do
-        Child.Parent = Model.Parent
-    end
-    Model:Destroy()
     game.ReplicatedStorage.Viewmodels["wdhPg4tJq9"].Name = "v_".. library.flags["OldKnife"]
 end
 
@@ -1827,27 +1825,26 @@ function setFlip(x)
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    game:GetObjects('rbxassetid://10012051456')[1].Parent = Model1
-    Model = game.ReplicatedStorage.Viewmodels.Model
-    for _, Child in pairs(Model:GetChildren()) do
-        Child.Parent = Model.Parent
-    end
-    Model:Destroy()
     game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"]["Blade"].Mesh.TextureId = x
     game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"]["Handle"].Mesh.TextureId = x
     game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"].Name = "v_".. library.flags["OldKnife"]
 end
 
-function setoldSickle()
+function setTalon(x)
     game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    game:GetObjects('rbxassetid://9941472244')[1].Parent = Model1
+    game:GetObjects('rbxassetid://10014635608')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
     for _, Child in pairs(Model:GetChildren()) do
         Child.Parent = Model.Parent
     end
     Model:Destroy()
+    game.ReplicatedStorage.Viewmodels["aGEnQxvWUS"]["Handle2"].TextureID = x
+    game.ReplicatedStorage.Viewmodels["aGEnQxvWUS"].Name = "v_".. library.flags["OldKnife"]
+end
+
+function setoldSickle()
+    game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     game:GetObjects('rbxassetid://9941472244')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
@@ -1861,12 +1858,6 @@ end
 function setM9(x)
     game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    game:GetObjects('rbxassetid://9969496390')[1].Parent = Model1
-    Model = game.ReplicatedStorage.Viewmodels.Model
-    for _, Child in pairs(Model:GetChildren()) do
-        Child.Parent = Model.Parent
-    end
-    Model:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     game:GetObjects('rbxassetid://9969496390')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
@@ -1880,13 +1871,6 @@ end
 
 function setSD(x)
     game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
-    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    game:GetObjects('rbxassetid://9975248130')[1].Parent = Model1
-    Model = game.ReplicatedStorage.Viewmodels.Model
-    for _, Child in pairs(Model:GetChildren()) do
-        Child.Parent = Model.Parent
-    end
-    Model:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     game:GetObjects('rbxassetid://9975248130')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
@@ -1910,25 +1894,11 @@ function setBay()
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    game:GetObjects('rbxassetid://7311299522')[1].Parent = Model1
-    Model = game.ReplicatedStorage.Viewmodels.Model
-    for _, Child in pairs(Model:GetChildren()) do
-        Child.Parent = Model.Parent
-    end
-    Model:Destroy()
     game.ReplicatedStorage.Viewmodels["v_Bayonet"].Name = "v_".. library.flags["OldKnife"]
 end
 
 function setoldBay()
     game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
-    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    game:GetObjects('rbxassetid://9938340689')[1].Parent = Model1
-    Model = game.ReplicatedStorage.Viewmodels.Model
-    for _, Child in pairs(Model:GetChildren()) do
-        Child.Parent = Model.Parent
-    end
-    Model:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     game:GetObjects('rbxassetid://9938340689')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
@@ -1948,25 +1918,11 @@ function setBow()
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    game:GetObjects('rbxassetid://9968754222')[1].Parent = Model1
-    Model = game.ReplicatedStorage.Viewmodels.Model
-    for _, Child in pairs(Model:GetChildren()) do
-        Child.Parent = Model.Parent
-    end
-    Model:Destroy()
     game.ReplicatedStorage.Viewmodels["qzVlTfklqe"].Name = "v_".. library.flags["OldKnife"]
 end
 
 function setoldButter()
     game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
-    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    game:GetObjects('rbxassetid://9918095549')[1].Parent = Model1
-    Model = game.ReplicatedStorage.Viewmodels.Model
-    for _, Child in pairs(Model:GetChildren()) do
-        Child.Parent = Model.Parent
-    end
-    Model:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     game:GetObjects('rbxassetid://9918095549')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
@@ -1986,25 +1942,11 @@ function setoldKar()
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    game:GetObjects('rbxassetid://9912405446')[1].Parent = Model1
-    Model = game.ReplicatedStorage.Viewmodels.Model
-    for _, Child in pairs(Model:GetChildren()) do
-        Child.Parent = Model.Parent
-    end
-    Model:Destroy()
     game.ReplicatedStorage.Viewmodels["v_oldKarambit"].Name = "v_".. library.flags["OldKnife"]
 end
 
 function setKar()
     game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
-    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    game:GetObjects('rbxassetid://7311329570')[1].Parent = Model1
-    Model = game.ReplicatedStorage.Viewmodels.Model
-    for _, Child in pairs(Model:GetChildren()) do
-        Child.Parent = Model.Parent
-    end
-    Model:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     game:GetObjects('rbxassetid://7311329570')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
@@ -2555,12 +2497,6 @@ function runKnives()
             elseif library.flags["daggers_skin"] == "Fade" then
                 x = 'rbxassetid://9975348967'
                 setSD(x)
-            elseif library.flags["daggers_skin"] == "Doppler" then
-                x = 'rbxassetid://9975348967'
-                setSD(x)
-            elseif library.flags["daggers_skin"] == "Fade" then
-                x = 'rbxassetid://9975348967'
-                setSD(x)
             elseif library.flags["daggers_skin"] == "Autotronic" then
                 x = 'rbxassetid://9975361260'
                 setSD(x)
@@ -2576,6 +2512,44 @@ function runKnives()
             elseif library.flags["daggers_skin"] == "Slaughter" then
                 x = 'rbxassetid://9951667903'
                 setSD(x)
+            end
+        elseif library.flags["NewKnife"] == "Talon Knife" then
+            if library.flags["talon_skin"] == "Sapphire" then
+                x = 'rbxassetid://9991829599'
+                setTalon(x)
+            elseif library.flags["talon_skin"] == "Ruby" then
+                x = 'rbxassetid://9992490297'
+                setTalon(x)
+            elseif library.flags["talon_skin"] == "Emerald" then
+                x = 'rbxassetid://9992487770'
+                setTalon(x)
+            elseif library.flags["talon_skin"] == "Crimson Web" then
+                x = 'rbxassetid://9992503559'
+                setTalon(x)
+            elseif library.flags["talon_skin"] == "Ultra Violet" then
+                x = 'rbxassetid://9992331091'
+                setTalon(x)
+            elseif library.flags["talon_skin"] == "Fade" then
+                x = 'rbxassetid://9992494791'
+                setTalon(x)
+            elseif library.flags["talon_skin"] == "Doppler" then
+                x = 'rbxassetid://9992667846'
+                setTalon(x)
+            elseif library.flags["talon_skin"] == "Tiger Tooth" then
+                x = 'rbxassetid://9992575167'
+                setTalon(x)
+            elseif library.flags["talon_skin"] == "Black Pearl" then
+                x = 'rbxassetid://9992669814'
+                setTalon(x)
+            elseif library.flags["talon_skin"] == "Slaughter" then
+                x = 'rbxassetid://9992336592'
+                setTalon(x)
+            elseif library.flags["talon_skin"] == "Marble Fade" then
+                x = 'rbxassetid://10014875858'
+                setTalon(x)
+            elseif library.flags["talon_skin"] == "Forest DDPAT" then
+                x = 'rbxassetid://10014879774'
+                setTalon(x)
             end
         elseif library.flags["NewKnife"] == "Flip Knife" then
             if library.flags["flip_skin"] == "Vanilla" then
