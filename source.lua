@@ -1397,7 +1397,7 @@ pistols:addToggle({text = "Pistols", flag = "sc_pistols"})
 pistols:addList({text = "Deagle", flag = "selected_deagle", values = {"Stock","Code Red","Glittery","Grim","Honor-Bound","Independence","Racer","Scapter","Skin Committee","Weeb","Xmas","[CBCL] DropX","[CBCL] TC"}, callback = runDeagle}) 
 
 handwraps:addTextbox({text = "Gloves: Handwraps",flag = "blank_flag"})
-handwraps:addList{text = "★",flag = "sc_hw",values = {"Vanilla","Guts","MMA","Mummy","Microbes","Phantom Hex","Sector Hex","Orange Hex","Toxic Nitro","Cloth","Twitch"}}
+handwraps:addList{text = "★",flag = "sc_hw",values = {"Vanilla","Cloth","Guts","MMA","Microbes","Mummy","Orange Hex","Phantom Hex","Sector Hex","Toxic Nitro","Twitch","Wetland"}}
 
 strappedgloves:addTextbox({text = "Gloves: Strapped Gloves",flag = "blank_flag"})
 strappedgloves:addList{text = "★",flag = "sc_stg",values = {"Vanilla"}}
@@ -1413,7 +1413,7 @@ accessories:addList({text = "Your Knife", flag = "OldKnife", values = {"T Knife"
 local knframe = {}
 local glframe = {}
 accessories:addDivider()
-accessories:addList({text = "Knives",flag = "NewKnife",values = {"Bayonet","Bowie Knife","Karambit","M9 Bayonet","Old Bayonet","Old Butterfly Knife","Old Karambit","Old Sickle","Shadow Daggers","Talon Knife","Flip Knife","Ursus"},callback = function(val)
+accessories:addList({text = "Knife Type",flag = "NewKnife",values = {"Bayonet","Bowie Knife","Karambit","M9 Bayonet","Old Bayonet","Old Butterfly Knife","Old Karambit","Old Sickle","Shadow Daggers","Talon Knife","Flip Knife","Ursus"},callback = function(val)
     knframe = val
     bayonetFrame.Visible = val == "Bayonet"
     m9bayonetFrame.Visible = val == "M9 Bayonet"
@@ -1430,7 +1430,7 @@ accessories:addList({text = "Knives",flag = "NewKnife",values = {"Bayonet","Bowi
     flipFrame.Visible = val == "Flip Knife"
     talonFrame.Visible = val == "Talon Knife"
 end})
-accessories:addList({text = "Gloves",flag = "new_glove",values = {"Handwraps","Fingerless Gloves","Strapped Gloves","Sports Gloves"},callback = function(val)
+accessories:addList({text = "Glove Type",flag = "new_glove",values = {"Handwraps","Fingerless Gloves","Strapped Gloves","Sports Gloves"},callback = function(val)
     glframe = val
     hwFrame.Visible = val == "Handwraps"
     spgFrame.Visible = val == "Sports Gloves"
@@ -1748,6 +1748,9 @@ function runGloves()
             elseif library.flags["sc_hw"] == "MMA" then
                 y ='rbxassetid://2136611279';z ='rbxassetid://2136611279'
                 setWraps(y,z)
+            elseif library.flags["sc_hw"] == "Wetland" then
+                y ='rbxassetid://2136609169';z ='rbxassetid://2136609169'
+                setWraps(y,z)
             end
         elseif library.flags["new_glove"] == "Sports Gloves" then
             if library.flags["sc_spg"] == "Vanilla" then
@@ -1755,8 +1758,8 @@ function runGloves()
                 z ='rbxassetid://2472561474'
                 setSports(y,z)
             elseif library.flags["sc_spg"] == "Cotton Tail" then
-                y ='rbxassetid://950347192'
-                z ='rbxassetid://950347192'
+                y ='rbxassetid://3096311966'
+                z ='rbxassetid://3096311966'
                 setSports(y,z)
             elseif library.flags["sc_spg"] == "RSL" then
                 y ='rbxassetid://3367350589'
@@ -1858,14 +1861,13 @@ end
 function setM9(x)
     game.ReplicatedStorage.Viewmodels["v_".. library.flags["OldKnife"]]:Destroy()
     local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
-    local Model1 = Instance.new("Model", game.ReplicatedStorage.Viewmodels)
     game:GetObjects('rbxassetid://9969496390')[1].Parent = Model1
     Model = game.ReplicatedStorage.Viewmodels.Model
     for _, Child in pairs(Model:GetChildren()) do
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    game.ReplicatedStorage.Viewmodels["qNtPlKFFAJ"]["Handle2"].TextureID = x
+    game.ReplicatedStorage.Viewmodels["qNtPlKFFAJ"]["Handle"].TextureID = x
     game.ReplicatedStorage.Viewmodels["qNtPlKFFAJ"].Name = "v_".. library.flags["OldKnife"]
 end
 
