@@ -742,7 +742,7 @@ local outlineTransparency = 0
 local innerTransparency = 1
 local depthMode = 'AlwaysOnTop'
 
-other:addToggle({text = 'Player Glow',flag = 'highlights', function()
+other:addToggle({text = 'Chams',flag = 'highlights', function()
     for _, player in pairs(players:GetPlayers()) do
         if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
             player.Character:FindFirstChild('Highlight').OutlineColor = color
@@ -754,7 +754,7 @@ other:addToggle({text = 'Player Glow',flag = 'highlights', function()
     end
 end
 })
-other:addColorpicker({text = "Glow Fill Color",ontop = true,flag = "glow_color",color = Color3.new(1, 0.7, 1),callback = function(value)
+other:addColorpicker({text = "Chams Fill Color",ontop = true,flag = "glow_color",color = Color3.new(1, 0.7, 1),callback = function(value)
     color = value
     for _, player in pairs(players:GetPlayers()) do
         if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
@@ -763,7 +763,7 @@ other:addColorpicker({text = "Glow Fill Color",ontop = true,flag = "glow_color",
     end
 end})
 
-other:addColorpicker({text = "Glow Outline Color",ontop = true,flag = "glow_color2",color = Color3.new(1, 0.3, 1),callback = function(value)
+other:addColorpicker({text = "Chams Outline Color",ontop = true,flag = "glow_color2",color = Color3.new(1, 0.3, 1),callback = function(value)
     color2 = value
     for _, player in pairs(players:GetPlayers()) do
         if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
@@ -772,7 +772,7 @@ other:addColorpicker({text = "Glow Outline Color",ontop = true,flag = "glow_colo
     end
 end})
 
-other:addSlider({text = 'Outline Glow Transparency',flag = "glow_outtrans",value = 10,min = 0, max = 10,callback = function(value)
+other:addSlider({text = 'Chams Outline Transparency',flag = "glow_outtrans",value = 10,min = 0, max = 10,callback = function(value)
     outlineTransparency = value / 10
     for _, player in pairs(players:GetPlayers()) do
         if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
@@ -780,7 +780,7 @@ other:addSlider({text = 'Outline Glow Transparency',flag = "glow_outtrans",value
         end
     end
 end})
-other:addSlider({text = 'Inner Transparency',flag = "glow_intrans",value = 10,min = 0, max = 10,callback = function(value)
+other:addSlider({text = 'Chams Inner Transparency',flag = "glow_intrans",value = 10,min = 0, max = 10,callback = function(value)
     innerTransparency = value / 10
     for _, player in pairs(players:GetPlayers()) do
         if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
@@ -788,7 +788,7 @@ other:addSlider({text = 'Inner Transparency',flag = "glow_intrans",value = 10,mi
         end
     end
 end})
-other:addList({text = "Glow Type",flag = "glow_mode",values = {'AlwaysOnTop','Occluded'},callback = function(value)
+other:addList({text = "Chams Type",flag = "glow_mode",values = {'AlwaysOnTop','Occluded'},callback = function(value)
     depthMode = value
     for _, player in pairs(players:GetPlayers()) do
         if player.Team ~= localPlayer.Team and player.Status.Alive.Value == true and player.Character:FindFirstChild('Highlight') then
