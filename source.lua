@@ -39,12 +39,12 @@ local client = getsenv(localPlayer.PlayerGui.Client)
 getgenv().collision = {camera, workspace.Ray_Ignore, workspace.Debris}
 
 local aloraWatermark = Drawing.new("Text");aloraWatermark.Font = 2;aloraWatermark.Position = Vector2.new(995,285);aloraWatermark.Visible = false;aloraWatermark.Size = 13;aloraWatermark.Color = Color3.new(1,1,1);aloraWatermark.Outline = true
-local speclistText = Drawing.new("Text");speclistText.Font = 2;speclistText.Position = Vector2.new(1037,300);speclistText.Visible = false;speclistText.Size = 13;speclistText.Color = Color3.new(1,1,1);speclistText.Outline = true
+local speclistText = Drawing.new("Text");speclistText.Font = 2;speclistText.Position = Vector2.new(8,305);speclistText.Visible = false;speclistText.Size = 13;speclistText.Color = Color3.new(1,1,1);speclistText.Outline = true
 
-local bombStats = Drawing.new("Text");bombStats.Font = 2;bombStats.Position = Vector2.new(565+30,167);bombStats.Visible = false;bombStats.Size = 13;bombStats.Color = Color3.new(1,1,1);bombStats.Outline = true
-local bvitalsText = Drawing.new("Text");bvitalsText.Font = 2;bvitalsText.Position = Vector2.new(605+30,145);bvitalsText.Visible = false;bvitalsText.Text="Bomb Vitals";bvitalsText.Size = 13;bvitalsText.Color = Color3.new(1,1,1);bvitalsText.Outline = true
-local bvitalsOutline = Drawing.new("Square");bvitalsOutline.Color = Color3.new(0,0,0);bvitalsOutline.Position = Vector2.new(387+30,160);bvitalsOutline.Visible = false;bvitalsOutline.Size = (Vector2.new(502,5));bvitalsOutline.Filled = true
-local bvitals = Drawing.new("Square");bvitals.Color = Color3.new(1,0.498039216,0);bvitals.Position = Vector2.new(388+30,161);bvitals.Visible = false;bvitals.Size = (Vector2.new(500,3));bvitals.Filled = true
+local bombStats = Drawing.new("Text");bombStats.Font = 2;bombStats.Position = Vector2.new(565+30,167+450);bombStats.Visible = false;bombStats.Size = 13;bombStats.Color = Color3.new(1,1,1);bombStats.Outline = true
+local bvitalsText = Drawing.new("Text");bvitalsText.Font = 2;bvitalsText.Position = Vector2.new(605+30,145+450);bvitalsText.Visible = false;bvitalsText.Text="Bomb Vitals";bvitalsText.Size = 13;bvitalsText.Color = Color3.new(1,1,1);bvitalsText.Outline = true
+local bvitalsOutline = Drawing.new("Square");bvitalsOutline.Color = Color3.new(0,0,0);bvitalsOutline.Position = Vector2.new(387+30,160+450);bvitalsOutline.Visible = false;bvitalsOutline.Size = (Vector2.new(502,5));bvitalsOutline.Filled = true
+local bvitals = Drawing.new("Square");bvitals.Color = Color3.new(1,0.498039216,0);bvitals.Position = Vector2.new(388+30,161+450);bvitals.Visible = false;bvitals.Size = (Vector2.new(500,3));bvitals.Filled = true
 
 local skyboxes = {
     ["Purple Nebula"] = {
@@ -1386,15 +1386,15 @@ local fingerlessgloves,fgFrame = skinsTab:createGroup(1)
 local skincfg = skinsTab:createGroup(0)
 
 rifles:addToggle({text = "Rifles", flag = "sc_rifles"})
-rifles:addList({text = "AK47",flag = "selected_ak",values= {"Stock","Eve","Galaxy Corpse","Goddess","Hallows","Mean Green","Outrunner","Scapter","Skin Committee","Survivor","Variant Camo","VAV","Yltude","Redline","[CBCL] Hypersonic","[RSL] Outlaws","Ignore"}}) 
+rifles:addList({text = "AK47",flag = "selected_ak",values= {"Stock","Eve","Galaxy Corpse","Goddess","Hallows","Mean Green","Old Mean Green","Outrunner","Overgrown","Scapter","Skin Committee","Survivor","Variant Camo","VAV","Old VAV","Yltude","Redline","Weeb","[CBCL] Hypersonic","[RSL] Outlaws","Ignore"}}) 
 rifles:addList({text = "AWP",flag = "selected_awp",values = {"Stock","Darkness","Grepkin","Grim","Hika","Nerf","Pinkie","Regina","Scapter","Weeb","[CBCL] Blastech","[CBCL] JTF2","Dragon Lore","Gungnir","Hyper Beast","Prince","Twitch","Redline","Ignore"}})
-rifles:addList({text = "M4A1-s",flag = "selected_a1",values= {"Stock","Animatic","Heavens Gates","Lunar","[BF] Black Death","[BF] Hyper Beast","Ignore"}})
-rifles:addList({text = "M4A4",flag = "selected_m4",values= {"Stock","Delinquent","Devil","Jester","King","[BF] Howl","[BF] Regina","[CBCL] BOT[s]","[CBCL] Endline","Ignore"}--[[,callback = function(val) print(val) end]]})
-rifles:addList({text = "Scout", flag = "selected_ssg", values = {"Stock","Hellborn","Neon Regulation","Xmas","Ignore"}, callback = runSSG}) 
+rifles:addList({text = "M4A1",flag = "selected_a1",values= {"Stock","Animatic","Lunar","Black Death","Hyper Beast","Weeb","[RSL] Heavens Gates","Ignore"}})
+rifles:addList({text = "M4A4",flag = "selected_m4",values= {"Stock","Delinquent","Devil","Howl","Jester","King","Regina","TC","Weeb","[CBCL] BOT[s]","[CBCL] Endline","Ignore"}--[[,callback = function(val) print(val) end]]})
+rifles:addList({text = "Scout", flag = "selected_ssg", values = {"Stock","Hellborn","Neon Regulation","Xmas","Ignore"}}) 
 rifles:addList({text = "SG",flag = "selected_sg",values= {"Stock","Drop Out","Variant Camo","Yltude","[CBCL] DropX","Ignore"}})
 
 pistols:addToggle({text = "Pistols", flag = "sc_pistols"}) 
-pistols:addList({text = "Deagle", flag = "selected_deagle", values = {"Stock","Code Red","Glittery","Grim","Honor-Bound","Independence","Racer","Scapter","Skin Committee","Weeb","Xmas","[CBCL] DropX","[CBCL] TC"}, callback = runDeagle}) 
+pistols:addList({text = "Deagle", flag = "selected_deagle", values = {"Stock","Code Red","Glittery","Grim","Honor-Bound","Independence","Racer","Scapter","Survivor","Skin Committee","Weeb","Xmas","[CBCL] DropX","[CBCL] TC"}}) 
 
 handwraps:addTextbox({text = "Gloves: Handwraps",flag = "blank_flag"})
 handwraps:addList{text = "★",flag = "sc_hw",values = {"Vanilla","Cloth","Guts","MMA","Microbes","Mummy","Orange Hex","Phantom Hex","Sector Hex","Toxic Nitro","Twitch","Wetland"}}
@@ -2638,13 +2638,13 @@ function runRifles()
         if library.flags["selected_a1"] == "Stock" then -- M4A1-S
             x = "rbxassetid://2471947735";y = "rbxassetid://2471947735";z = "rbxassetid://2471947735"
             setA1(x,y,z)
-        elseif library.flags["selected_a1"] == "[BF] Hyper Beast" then
+        elseif library.flags["selected_a1"] == "Hyper Beast" then
             x = "rbxassetid://6451124368";y = "rbxassetid://6451126496";z = "rbxassetid://6451127619"
             setA1(x,y,z)
-        elseif library.flags["selected_a1"] == "[BF] Black Death" then
+        elseif library.flags["selected_a1"] == "Black Death" then
 			x = "rbxassetid://9639828499";y = "rbxassetid://9639827892";z = "rbxassetid://9639829370"
             setA1(x,y,z)
-        elseif library.flags["selected_a1"] == "Heavens Gates" then
+        elseif library.flags["selected_a1"] == "[RSL] Heavens Gates" then
 			x = "rbxassetid://2524141970";y = "rbxassetid://2524142163";z = "rbxassetid://2524139960"
             setA1(x,y,z)
         elseif library.flags["selected_a1"] == "Lunar" then
@@ -2652,6 +2652,9 @@ function runRifles()
             setA1(x,y,z)
         elseif library.flags["selected_a1"] == "Animatic" then 
             x = "rbxassetid://1630969918";y = "rbxassetid://1630969918";z = "rbxassetid://1232538589"
+            setA1(x,y,z)
+        elseif library.flags["selected_a1"] == "Weeb" then 
+            x = "rbxassetid://9947955218";y = "rbxassetid://9947954718";z = "rbxassetid://9947953624"
             setA1(x,y,z)
         end
         if library.flags["selected_sg"] == "Stock" then -- SG
@@ -2691,14 +2694,20 @@ function runRifles()
         elseif library.flags["selected_m4"] == "Delinquent" then
             x = "rbxassetid://4587060763"
             setM4(x)
-        elseif library.flags["selected_m4"] == "[BF] Regina" then
+        elseif library.flags["selected_m4"] == "Regina" then
             x = "rbxassetid://9116144313"
             setM4(x)
-        elseif library.flags["selected_m4"] == "[BF] Howl" then
+        elseif library.flags["selected_m4"] == "Howl" then
             x = "rbxassetid://6451097179"
             setM4(x)
         elseif library.flags["selected_m4"] == "[BF] Dragon" then
             x = "rbxassetid://6522624583"
+            setM4(x)
+        elseif library.flags["selected_m4"] == "TC" then
+            x = "rbxassetid://6698394338"
+            setM4(x)
+        elseif library.flags["selected_m4"] == "Weeb" then
+            x = "rbxassetid://9947885213"
             setM4(x)
         end
         if library.flags["selected_awp"] == "Stock" then
@@ -2818,34 +2827,22 @@ function runRifles()
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://6663268904"
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://6663270884"
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://6663270220"
-        elseif library.flags["selected_ak"] == "Asiimov" then
-    		game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://6698314618"
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://6698316807"
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://6820836083"
-        elseif library.flags["selected_ak"] == "Aquamarine Revenge" then
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://6448558943"
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://6448557262"
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://6448560045"
-        elseif library.flags["selected_ak"] == "Bloodsport" then
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://6698325103"
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://6698327498"
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://6698326376"
-        elseif library.flags["selected_ak"] == "Wild Lotus" then
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://6451260038"
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://6451261292"
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://6451260682"
-        elseif library.flags["selected_ak"] == "Vulcan" then
-	        game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://6698167994"
-    	    game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://6698170295"
-    	    game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://6698169370"
-	    elseif library.flags["selected_ak"] == "Neon Rider" then
-    		game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://6451119080"
-    		game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://6451120406"
-    		game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://6451117699"
-	    elseif library.flags["selected_ak"] == "Legion of Anubis" then
-    	    game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://6451429545"
-    	    game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://6476838768"
-    	    game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://6451427955"
+        elseif library.flags["selected_ak"] == "Weeb" then
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://9939760856"
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://9939760856"
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://9939760856"
+        elseif library.flags["selected_ak"] == "Overgrown" then
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://9947332614"
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://9947332614"
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://9947332614"
+        elseif library.flags["selected_ak"] == "Old Mean Green" then
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://1598747370"
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://1598747370"
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://1598747370"
+        elseif library.flags["selected_ak"] == "Old VAV" then
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://1270708136"
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://1270708136"
+            game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://1270708136"
         end
         if library.flags["selected_ssg"] == "Stock" then
             setSSG()
@@ -2910,6 +2907,11 @@ function runPistols()
             game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Slide"].TextureID = "rbxassetid://3801635136"
             game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Mag 2"].TextureID = "rbxassetid://3801635136"
             game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Mag"].TextureID = "rbxassetid://3801635136"
+        elseif library.flags["selected_deagle"] == "Survivor" then
+            game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Handle"].TextureID = "rbxassetid://2490655609"
+            game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Slide"].TextureID = "rbxassetid://2490655609"
+            game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Mag 2"].TextureID = "rbxassetid://2490655609"
+            game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Mag"].TextureID = "rbxassetid://2490655609"
         elseif library.flags["selected_deagle"] == "Scapter" then
             game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Handle"].TextureID = "rbxassetid://2226675143"
             game.ReplicatedStorage.Viewmodels["v_DesertEagle"]["Slide"].TextureID = "rbxassetid://2226675143"
