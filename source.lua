@@ -1386,7 +1386,7 @@ local fingerlessgloves,fgFrame = skinsTab:createGroup(1)
 local skincfg = skinsTab:createGroup(0)
 
 rifles:addToggle({text = "Rifles", flag = "sc_rifles"})
-rifles:addList({text = "AK47",flag = "selected_ak",values= {"Stock","Eve","Galaxy Corpse","Goddess","Hallows","Mean Green","Old Mean Green","Outrunner","Overgrown","Scapter","Skin Committee","Survivor","Variant Camo","VAV","Old VAV","Yltude","Redline","Weeb","[CBCL] Hypersonic","[RSL] Outlaws","Ignore"}}) 
+rifles:addList({text = "AK47",flag = "selected_ak",values= {"Stock","Eve","Galaxy Corpse","Goddess","Hallows","Mean Green","Old Mean Green","Outrunner","Scapter","Skin Committee","Survivor","Variant Camo","VAV","Old VAV","Yltude","Redline","Weeb","[CBCL] Hypersonic","[RSL] Outlaws","Ignore"}}) 
 rifles:addList({text = "AWP",flag = "selected_awp",values = {"Stock","Darkness","Grepkin","Grim","Hika","Nerf","Pinkie","Regina","Scapter","Weeb","[CBCL] Blastech","[CBCL] JTF2","Dragon Lore","Gungnir","Hyper Beast","Prince","Twitch","Redline","Ignore"}})
 rifles:addList({text = "M4A1",flag = "selected_a1",values= {"Stock","Animatic","Lunar","Black Death","Hyper Beast","Weeb","[RSL] Heavens Gates","Ignore"}})
 rifles:addList({text = "M4A4",flag = "selected_m4",values= {"Stock","Delinquent","Devil","Howl","Jester","King","Regina","TC","Weeb","[CBCL] BOT[s]","[CBCL] Endline","Ignore"}--[[,callback = function(val) print(val) end]]})
@@ -1406,7 +1406,7 @@ sportsgloves:addTextbox({text = "Gloves: Sports Gloves",flag = "blank_flag"})
 sportsgloves:addList{text = "★",flag = "sc_spg",values = {"Vanilla","Calamity","Cotton Tail","Dead Prey","Hallows","Hazard","Majesty","RSL","Royal","Skulls","Twitch","Weeb"}}
 
 fingerlessgloves:addTextbox({text = "Gloves: Fingerless Gloves",flag = "blank_flag"})
-fingerlessgloves:addList{text = "★",flag = "sc_fg",values = {"Vanilla"}}
+fingerlessgloves:addList{text = "★",flag = "sc_fg",values = {"Vanilla","Crystal","Digital","Kimura","Patch","Scapter","Spookiness"}}
 
 accessories:addToggle({text = "Accessories", flag = "sc_acc"})
 accessories:addList({text = "Your Knife", flag = "OldKnife", values = {"T Knife","CT Knife","Bayonet","Butterfly Knife","Falchion Knife","Gut Knife","Huntsman Knife","Karambit"}})
@@ -1751,6 +1751,36 @@ function runGloves()
             elseif library.flags["sc_hw"] == "Wetland" then
                 y ='rbxassetid://2136609169';z ='rbxassetid://2136609169'
                 setWraps(y,z)
+            end
+        elseif library.flags["new_glove"] == "Fingerless Gloves" then
+            if library.flags["sc_fg"] == "Vanilla" then
+                y ='rbxassetid://943399154'
+                z ='rbxassetid://943399154'
+                setFinger(y,z)
+            elseif library.flags["sc_fg"] == "Kimura" then
+                y ='rbxassetid://6816805251'
+                z ='rbxassetid://6816805251'
+                setFinger(y,z)
+            elseif library.flags["sc_fg"] == "Spookiness" then
+                y ='rbxassetid://7944129369'
+                z ='rbxassetid://7944129369'
+                setFinger(y,z)
+            elseif library.flags["sc_fg"] == "Patch" then
+                y ='rbxassetid://2135974348'
+                z ='rbxassetid://2135974348'
+                setFinger(y,z)
+            elseif library.flags["sc_fg"] == "Digital" then
+                y ='rbxassetid://2135974031'
+                z ='rbxassetid://2135974031'
+                setFinger(y,z)
+            elseif library.flags["sc_fg"] == "Scapter" then
+                y ='rbxassetid://2217790167'
+                z ='rbxassetid://2217790167'
+                setFinger(y,z)
+            elseif library.flags["sc_fg"] == "Crystal" then
+                y ='rbxassetid://2135973675'
+                z ='rbxassetid://2135973675'
+                setFinger(y,z)
             end
         elseif library.flags["new_glove"] == "Sports Gloves" then
             if library.flags["sc_spg"] == "Vanilla" then
@@ -2831,10 +2861,6 @@ function runRifles()
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://9939760856"
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://9939760856"
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://9939760856"
-        elseif library.flags["selected_ak"] == "Overgrown" then
-            game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://9947332614"
-            game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://9947332614"
-            game.ReplicatedStorage.Viewmodels["v_AK47"]["Mag"].TextureID = "rbxassetid://9947332614"
         elseif library.flags["selected_ak"] == "Old Mean Green" then
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Handle"].TextureID = "rbxassetid://1598747370"
             game.ReplicatedStorage.Viewmodels["v_AK47"]["Bolt"].TextureID = "rbxassetid://1598747370"
