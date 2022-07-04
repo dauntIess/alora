@@ -1858,8 +1858,8 @@ function setFlip(x)
         Child.Parent = Model.Parent
     end
     Model:Destroy()
-    game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"]["Blade"].Mesh.TextureId = x
-    game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"]["Handle"].Mesh.TextureId = x
+    game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"]["Blade"].TextureID = x
+    game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"]["Handle2"].TextureID = x
     game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"].Name = "v_".. library.flags["OldKnife"]
 end
 
