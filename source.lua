@@ -1859,7 +1859,7 @@ function setFlip(x)
     end
     Model:Destroy()
     game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"]["Blade"].TextureID = x
-    game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"]["Handle2"].TextureID = x
+    game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"]["Handle3"].TextureID = x
     game.ReplicatedStorage.Viewmodels["fbV3JtLSMO"].Name = "v_".. library.flags["OldKnife"]
 end
 
