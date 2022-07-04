@@ -1475,7 +1475,7 @@ ursus:addTextbox({text  = "Knife: Ursus",flag = "blank_flag"})
 ursus:addList({text = "★",flag = "ursus_skin",values = {'Crimson Web','Fade','Ruby','Sapphire','Marble Fade','Slaughter','Black Pearl','Ultra Violet'}})
 
 flip:addTextbox({text  = "Knife: Flip Knife",flag = "blank_flag"})
-flip:addList({text = "★",flag = "flip_skin",values = {'Vanilla','Black Pearl','Crimson Web','Emerald','Fade','Lore','Marble Fade','Ruby','Sapphire','Slaughter','Tiger Tooth','Ultra Violet'}})
+flip:addList({text = "★",flag = "flip_skin",values = {'Vanilla','Autotronic','Black Pearl','Crimson Web','Emerald','Fade','Lore','Marble Fade','Ruby','Sapphire','Slaughter','Tiger Tooth','Ultra Violet'}})
 
 talon:addTextbox({text  = "Knife: Talon Knife",flag = "blank_flag"})
 talon:addList({text = "★",flag = "talon_skin",values = {'Black Pearl','Crimson Web','Doppler','Emerald','Fade','Forest DDPAT','Marble Fade','Ruby','Sapphire','Slaughter','Tiger Tooth','Ultra Violet'}})
@@ -2619,6 +2619,9 @@ function runKnives()
                 setFlip(x)
             elseif library.flags["flip_skin"] == "Marble Fade" then
                 x = 'rbxassetid://10012044670'
+                setFlip(x)
+            elseif library.flags["flip_skin"] == "Autotronic" then
+                x = 'rbxassetid://10117221855'
                 setFlip(x)
             end
         elseif library.flags["NewKnife"] == "M9 Bayonet" then
